@@ -1,0 +1,23 @@
+{
+  "draw": 0,
+  "recordsTotal": 2,
+  "recordsFiltered": 2,
+  "data": [
+    {
+      "createTime": 1435426869000,
+      "code": "10001",
+      "stationFlag": 1,
+      "id": 28,
+      "name": "山东郯城",
+      "updateTime": 1434270775000
+    },
+    {
+      "createTime": 1435426888000,
+      "code": "10002",
+      "stationFlag": 1,
+      "id": 29,
+      "name": "山东2",
+      "updateTime": 1434387193000
+    }
+  ]
+}

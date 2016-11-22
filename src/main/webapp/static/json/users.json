@@ -1,0 +1,64 @@
+{
+  "draw": 0,
+  "recordsTotal": 6,
+  "recordsFiltered": 6,
+  "data": [
+    {
+      "createTime": 1435745063000,
+      "givenName": "管理员",
+      "id": 1,
+      "status": 1,
+      "updateTime": 1414910324000,
+      "userName": "admin",
+      "userPasswrod": "21232f297a57a5a743894a0e4a801fc3"
+    },
+    {
+      "createTime": 1435745070000,
+      "givenName": "管理员1",
+      "id": 2,
+      "status": 1,
+      "updateTime": 1414910419000,
+      "userName": "admin1",
+      "userPasswrod": "e00cf25ad42683b3df678c61f42c6bda"
+    },
+    {
+      "createTime": 1435745076000,
+      "givenName": "管理员2",
+      "id": 3,
+      "status": 1,
+      "updateTime": 1414996869000,
+      "userName": "admin2",
+      "userPasswrod": "c84258e9c39059a89ab77d846ddab909"
+    },
+    {
+      "createTime": 1436061994000,
+      "givenName": "管理员4",
+      "id": 6,
+      "loginCount": 0,
+      "status": 1,
+      "updateTime": 1436061994000,
+      "userName": "admin4",
+      "userPasswrod": "fc1ebc848e31e0a68e868432225e3c82"
+    },
+    {
+      "createTime": 1436062467000,
+      "givenName": "管理员3",
+      "id": 7,
+      "loginCount": 0,
+      "status": 1,
+      "updateTime": 1436062467000,
+      "userName": "admin3",
+      "userPasswrod": "32cacb2f994f6b42183a1300d9a3e8d6"
+    },
+    {
+      "createTime": 1436062755000,
+      "givenName": "管理员5",
+      "id": 8,
+      "loginCount": 0,
+      "status": 1,
+      "updateTime": 1436062755000,
+      "userName": "admin5",
+      "userPasswrod": "26a91342190d515231d7238b0c5438e1"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "activeUser": "admin",
+  "monthTotal": 0,
+  "monthNoneReCheck": 0,
+  "vehMonthCounts": [
+    {
+      "month": 5,
+      "vehCount": 6
+    },
+    {
+      "month": 6,
+      "vehCount": 11
+    }
+  ]
+}
