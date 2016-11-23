@@ -6,19 +6,35 @@ public class CorrelationAnalysis
 
     private TbColumn tb_col2;
 
-    private double param_gradient;
+    private long n;
 
-    private double param_intercept;
+    private double intercept;
 
-    private double correlation;
+    private double interceptStdErr;
 
-    private double R2;
+    private double slope;
 
-    private double SST;
+    private double slopeStdErr;
 
-    private double SSE;
+    private double slopeConfidenceIntercal;
 
-    private double SSR;
+    private double r;
+
+    private double rSquare;
+
+    private double significance;
+
+    private double meanSquareError;
+
+    private double regressionSumSquare;
+
+    private double sumofCrossProducts;
+
+    private double sumSquaredErrors;
+
+    private double totalSumSquares;
+
+    private double xSumSquares;
 
     public TbColumn getTb_col1()
     {
@@ -40,73 +56,153 @@ public class CorrelationAnalysis
         this.tb_col2 = tb_col2;
     }
 
-    public double getParam_gradient()
+    public long getN()
     {
-        return param_gradient;
+        return n;
     }
 
-    public void setParam_gradient(double param_gradient)
+    public void setN(long n)
     {
-        this.param_gradient = param_gradient;
+        this.n = n;
     }
 
-    public double getParam_intercept()
+    public double getIntercept()
     {
-        return param_intercept;
+        return intercept;
     }
 
-    public void setParam_intercept(double param_intercept)
+    public void setIntercept(double intercept)
     {
-        this.param_intercept = param_intercept;
+        this.intercept = intercept;
     }
 
-    public double getCorrelation()
+    public double getInterceptStdErr()
     {
-        return correlation;
+        return interceptStdErr;
     }
 
-    public void setCorrelation(double correlation)
+    public void setInterceptStdErr(double interceptStdErr)
     {
-        this.correlation = correlation;
+        this.interceptStdErr = interceptStdErr;
     }
 
-    public double getSSE()
+    public double getSlope()
     {
-        return SSE;
+        return slope;
     }
 
-    public void setSSE(double SSE)
+    public void setSlope(double slope)
     {
-        this.SSE = SSE;
+        this.slope = slope;
     }
 
-    public double getSSR()
+    public double getSlopeStdErr()
     {
-        return SSR;
+        return slopeStdErr;
     }
 
-    public void setSSR(double SSR)
+    public void setSlopeStdErr(double slopeStdErr)
     {
-        this.SSR = SSR;
+        this.slopeStdErr = slopeStdErr;
     }
 
-    public double getSST()
+    public double getSlopeConfidenceIntercal()
     {
-        return SST;
+        return slopeConfidenceIntercal;
     }
 
-    public void setSST(double SST)
+    public void setSlopeConfidenceIntercal(double slopeConfidenceIntercal)
     {
-        this.SST = SST;
+        this.slopeConfidenceIntercal = slopeConfidenceIntercal;
     }
 
-    public double getR2()
+    public double getR()
     {
-        return R2;
+        return r;
     }
 
-    public void setR2(double r2)
+    public void setR(double r)
     {
-        R2 = r2;
+        this.r = r;
+    }
+
+    public double getrSquare()
+    {
+        return rSquare;
+    }
+
+    public void setrSquare(double rSquare)
+    {
+        this.rSquare = rSquare;
+    }
+
+    public double getSignificance()
+    {
+        return significance;
+    }
+
+    public void setSignificance(double significance)
+    {
+        this.significance = significance;
+    }
+
+    public double getMeanSquareError()
+    {
+        return meanSquareError;
+    }
+
+    public void setMeanSquareError(double meanSquareError)
+    {
+        this.meanSquareError = meanSquareError;
+    }
+
+    public double getRegressionSumSquare()
+    {
+        return regressionSumSquare;
+    }
+
+    public void setRegressionSumSquare(double regressionSumSquare)
+    {
+        this.regressionSumSquare = regressionSumSquare;
+    }
+
+    public double getSumofCrossProducts()
+    {
+        return sumofCrossProducts;
+    }
+
+    public void setSumofCrossProducts(double sumofCrossProducts)
+    {
+        this.sumofCrossProducts = sumofCrossProducts;
+    }
+
+    public double getSumSquaredErrors()
+    {
+        return sumSquaredErrors;
+    }
+
+    public void setSumSquaredErrors(double sumSquaredErrors)
+    {
+        this.sumSquaredErrors = sumSquaredErrors;
+    }
+
+    public double getTotalSumSquares()
+    {
+        return totalSumSquares;
+    }
+
+    public void setTotalSumSquares(double totalSumSquares)
+    {
+        this.totalSumSquares = totalSumSquares;
+    }
+
+    public double getxSumSquares()
+    {
+        return xSumSquares;
+    }
+
+    public void setxSumSquares(double xSumSquares)
+    {
+        this.xSumSquares = xSumSquares;
     }
 }

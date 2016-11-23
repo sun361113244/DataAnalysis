@@ -39,15 +39,23 @@ public class RegressionAnalysisLocalImpl implements RegressionAnalysis,Serializa
                     CorrelationAnalysis correlationAnalysis = new CorrelationAnalysis();
                     correlationAnalysis.setTb_col1(tbColumns.get(i).clone());
                     correlationAnalysis.setTb_col2(tbColumns.get(j).clone());
-                    correlationAnalysis.setSST(regression.getMeanSquareError());
-                    correlationAnalysis.setSSE(regression.getSlopeStdErr());
-                    correlationAnalysis.setSSR(regression.getTotalSumSquares());
-                    correlationAnalysis.setR2(regression.getRSquare());
-                    correlationAnalysis.setParam_gradient(regression.getSlope());
-                    correlationAnalysis.setParam_intercept(regression.getIntercept());
+                    correlationAnalysis.setN(regression.getN());
+                    correlationAnalysis.setSlope(regression.getSlope());
+                    correlationAnalysis.setSlopeStdErr(regression.getSlopeStdErr());
+                    correlationAnalysis.setSlopeConfidenceIntercal(regression.getSlopeConfidenceInterval());
+                    correlationAnalysis.setIntercept(regression.getIntercept());
+                    correlationAnalysis.setInterceptStdErr(regression.getInterceptStdErr());
+                    correlationAnalysis.setR(regression.getR());
+                    correlationAnalysis.setrSquare(regression.getRSquare());
+                    correlationAnalysis.setSignificance(regression.getSignificance());
+                    correlationAnalysis.setMeanSquareError(regression.getMeanSquareError());
+                    correlationAnalysis.setRegressionSumSquare(regression.getRegressionSumSquares());
+                    correlationAnalysis.setSumofCrossProducts(regression.getSumOfCrossProducts());
+                    correlationAnalysis.setSumSquaredErrors(regression.getSumSquaredErrors());
+                    correlationAnalysis.setTotalSumSquares(regression.getTotalSumSquares());
+                    correlationAnalysis.setxSumSquares(regression.getXSumSquares());
 
-                    if(correlationAnalysis.getR2() >= r2_upper)
-                        correlationAnalysises.add(correlationAnalysis);
+                    correlationAnalysises.add(correlationAnalysis);
                 }
             }
         }

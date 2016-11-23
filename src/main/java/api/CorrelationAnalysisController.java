@@ -78,7 +78,6 @@ public class CorrelationAnalysisController
 
         List<CorrelationAnalysis> correlationAnalysises = correlationAnalysisService.selectSummaryInfo(jdbcDF , tbColumns , r2_upper);
 
-        System.out.println(JSON.toJSONString(correlationAnalysises));
         List<CorrelationAnalysisVo> correlationAnalysisesVos = CorrelationAnalysisVo.toVoList(correlationAnalysises);
 
         mav.addObject("correlationAnalysis_summary" , correlationAnalysisesVos);

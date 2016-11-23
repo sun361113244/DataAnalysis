@@ -59,14 +59,12 @@ public class RegressionAnalysisSparkImpl implements RegressionAnalysis ,Serializ
                     CorrelationAnalysis correlationAnalysis = new CorrelationAnalysis();
                     correlationAnalysis.setTb_col1(tbColumns.get(i).clone());
                     correlationAnalysis.setTb_col2(tbColumns.get(j).clone());
-                    correlationAnalysis.setSST(regressionRes.getSST());
-                    correlationAnalysis.setSSE(regressionRes.getSSE());
-                    correlationAnalysis.setSSR(regressionRes.getSSR());
-                    correlationAnalysis.setR2(regressionRes.getR2());
-                    correlationAnalysis.setParam_gradient(regressionRes.getWeights()[0]);
-                    correlationAnalysis.setParam_intercept(regressionRes.getWeights()[1]);
+                    correlationAnalysis.setRegressionSumSquare(regressionRes.getSSR());
+                    correlationAnalysis.setrSquare(regressionRes.getR2());
+                    correlationAnalysis.setSlope(regressionRes.getWeights()[0]);
+                    correlationAnalysis.setIntercept(regressionRes.getWeights()[1]);
 
-                    if(regressionRes.getR2() >= r2_upper)
+                    if(correlationAnalysis.getrSquare() >= r2_upper)
                         correlationAnalysises.add(correlationAnalysis);
                 }
             }

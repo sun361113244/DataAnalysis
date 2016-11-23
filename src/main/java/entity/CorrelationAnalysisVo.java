@@ -1,5 +1,7 @@
 package entity;
 
+import util.Config;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,33 +11,66 @@ public class CorrelationAnalysisVo
 
     private TbColumn tb_col2;
 
-    private String param_gradient;
+    private String n;
 
-    private String param_intercept;
+    private String intercept;
 
-    private String correlation;
+    private String interceptStdErr;
 
-    private String R2;
+    private String slope;
 
-    private String SST;
+    private String slopeStdErr;
 
-    private String SSE;
+    private String slopeConfidenceIntercal;
 
-    private String SSR;
+    private String r2;
+
+    private String significance;
+
+    private String meanSquareError;
+
+    private String regressionSumSquare;
+
+    private String sumofCrossProducts;
+
+    private String sumSquaredErrors;
+
+    private String totalSumSquares;
+
+    private String xSumSquares;
+
+    private String msg;
 
     public CorrelationAnalysisVo(CorrelationAnalysis correlationAnalysis)
     {
         this.tb_col1 = correlationAnalysis.getTb_col1();
         this.tb_col2 = correlationAnalysis.getTb_col2();
 
-        this.param_gradient = String.format("%.2f", correlationAnalysis.getParam_gradient() == 0 ? 0 : correlationAnalysis.getParam_gradient());
-        this.param_intercept = String.format("%.2f", correlationAnalysis.getParam_intercept() == 0 ? 0 : correlationAnalysis.getParam_intercept());
-        this.correlation = String.format("%.2f", correlationAnalysis.getCorrelation() == 0 ? 0 : correlationAnalysis.getCorrelation());
-        this.R2 = String.format("%.2f", correlationAnalysis.getR2() == 0 ? 0 : correlationAnalysis.getR2());
-        this.SST = String.format("%.2f", correlationAnalysis.getSST() == 0 ? 0 : correlationAnalysis.getSST());
-        this.SSE = String.format("%.2f", correlationAnalysis.getSSE() == 0 ? 0 : correlationAnalysis.getSSE());
-        this.SSR = String.format("%.2f", correlationAnalysis.getSSR() == 0 ? 0 : correlationAnalysis.getSSR());
+        this.n = String.format("%d", correlationAnalysis.getN() == 0 ? 0 : correlationAnalysis.getN());
+        this.intercept = String.format("%.2f", correlationAnalysis.getIntercept() == 0 ? 0 : correlationAnalysis.getIntercept());
+        this.interceptStdErr = String.format("%.2f", correlationAnalysis.getInterceptStdErr() == 0 ? 0 : correlationAnalysis.getInterceptStdErr());
+        this.slope = String.format("%.2f", correlationAnalysis.getSlope() == 0 ? 0 : correlationAnalysis.getSlope());
+        this.slopeStdErr = String.format("%.2f", correlationAnalysis.getSlopeStdErr() == 0 ? 0 : correlationAnalysis.getSlopeStdErr());
+        this.slopeConfidenceIntercal = String.format("%.2f", correlationAnalysis.getSlopeConfidenceIntercal() == 0 ? 0 : correlationAnalysis.getSlopeConfidenceIntercal());
+        this.r2 = String.format("%.2f", correlationAnalysis.getrSquare() == 0 ? 0 : correlationAnalysis.getrSquare());
+        this.significance = String.format("%.2f", correlationAnalysis.getSignificance() == 0 ? 0 : correlationAnalysis.getSignificance());
+        this.meanSquareError = String.format("%.2f", correlationAnalysis.getMeanSquareError() == 0 ? 0 : correlationAnalysis.getMeanSquareError());
+        this.regressionSumSquare = String.format("%.2f", correlationAnalysis.getRegressionSumSquare() == 0 ? 0 : correlationAnalysis.getRegressionSumSquare());
+        this.sumofCrossProducts = String.format("%.2f", correlationAnalysis.getSumofCrossProducts() == 0 ? 0 : correlationAnalysis.getSumofCrossProducts());
+        this.sumSquaredErrors = String.format("%.2f", correlationAnalysis.getSumSquaredErrors() == 0 ? 0 : correlationAnalysis.getSumSquaredErrors());
+        this.totalSumSquares = String.format("%.2f", correlationAnalysis.getTotalSumSquares() == 0 ? 0 : correlationAnalysis.getTotalSumSquares());
+        this.xSumSquares = String.format("%.2f", correlationAnalysis.getxSumSquares() == 0 ? 0 : correlationAnalysis.getxSumSquares());
 
+        this.msg = String.format("%s 每%s 1 %s %s %.2f<br/>" ,
+                correlationAnalysis.getTb_col1().getCol_name() ,
+                correlationAnalysis.getIntercept() >= 0 ? "增长" : "减少" ,
+                correlationAnalysis.getTb_col2().getCol_name() ,
+                correlationAnalysis.getIntercept() >= 0 ? "增长" : "减少" ,
+                Math.abs(correlationAnalysis.getIntercept()));
+        this.msg += String.format("%s 能够解释%s %s的内容<br/>" ,
+                correlationAnalysis.getTb_col1().getCol_name() ,
+                correlationAnalysis.getTb_col2().getCol_name() ,
+                String.format("%.2f%%", correlationAnalysis.getrSquare() == 0 ? 0 : correlationAnalysis.getrSquare() * 100));
     }
 
     public static List<CorrelationAnalysisVo> toVoList(List<CorrelationAnalysis> correlationAnalysises)
@@ -43,7 +78,8 @@ public class CorrelationAnalysisVo
         List<CorrelationAnalysisVo> correlationAnalysisVos = new ArrayList<CorrelationAnalysisVo>();
         for (CorrelationAnalysis correlationAnalysis : correlationAnalysises)
         {
-            correlationAnalysisVos.add(new CorrelationAnalysisVo(correlationAnalysis));
+            if(correlationAnalysis.getrSquare() >= Config.GFI)
+                correlationAnalysisVos.add(new CorrelationAnalysisVo(correlationAnalysis));
         }
         return correlationAnalysisVos;
     }
@@ -68,73 +104,153 @@ public class CorrelationAnalysisVo
         this.tb_col2 = tb_col2;
     }
 
-    public String getParam_gradient()
+    public String getN()
     {
-        return param_gradient;
+        return n;
     }
 
-    public void setParam_gradient(String param_gradient)
+    public void setN(String n)
     {
-        this.param_gradient = param_gradient;
+        this.n = n;
     }
 
-    public String getParam_intercept()
+    public String getIntercept()
     {
-        return param_intercept;
+        return intercept;
     }
 
-    public void setParam_intercept(String param_intercept)
+    public void setIntercept(String intercept)
     {
-        this.param_intercept = param_intercept;
+        this.intercept = intercept;
     }
 
-    public String getCorrelation()
+    public String getInterceptStdErr()
     {
-        return correlation;
+        return interceptStdErr;
     }
 
-    public void setCorrelation(String correlation)
+    public void setInterceptStdErr(String interceptStdErr)
     {
-        this.correlation = correlation;
+        this.interceptStdErr = interceptStdErr;
+    }
+
+    public String getSlope()
+    {
+        return slope;
+    }
+
+    public void setSlope(String slope)
+    {
+        this.slope = slope;
+    }
+
+    public String getSlopeStdErr()
+    {
+        return slopeStdErr;
+    }
+
+    public void setSlopeStdErr(String slopeStdErr)
+    {
+        this.slopeStdErr = slopeStdErr;
+    }
+
+    public String getSlopeConfidenceIntercal()
+    {
+        return slopeConfidenceIntercal;
+    }
+
+    public void setSlopeConfidenceIntercal(String slopeConfidenceIntercal)
+    {
+        this.slopeConfidenceIntercal = slopeConfidenceIntercal;
     }
 
     public String getR2()
     {
-        return R2;
+        return r2;
     }
 
     public void setR2(String r2)
     {
-        R2 = r2;
+        this.r2 = r2;
     }
 
-    public String getSST()
+    public String getSignificance()
     {
-        return SST;
+        return significance;
     }
 
-    public void setSST(String SST)
+    public void setSignificance(String significance)
     {
-        this.SST = SST;
+        this.significance = significance;
     }
 
-    public String getSSE()
+    public String getMeanSquareError()
     {
-        return SSE;
+        return meanSquareError;
     }
 
-    public void setSSE(String SSE)
+    public void setMeanSquareError(String meanSquareError)
     {
-        this.SSE = SSE;
+        this.meanSquareError = meanSquareError;
     }
 
-    public String getSSR()
+    public String getRegressionSumSquare()
     {
-        return SSR;
+        return regressionSumSquare;
     }
 
-    public void setSSR(String SSR)
+    public void setRegressionSumSquare(String regressionSumSquare)
     {
-        this.SSR = SSR;
+        this.regressionSumSquare = regressionSumSquare;
+    }
+
+    public String getSumofCrossProducts()
+    {
+        return sumofCrossProducts;
+    }
+
+    public void setSumofCrossProducts(String sumofCrossProducts)
+    {
+        this.sumofCrossProducts = sumofCrossProducts;
+    }
+
+    public String getSumSquaredErrors()
+    {
+        return sumSquaredErrors;
+    }
+
+    public void setSumSquaredErrors(String sumSquaredErrors)
+    {
+        this.sumSquaredErrors = sumSquaredErrors;
+    }
+
+    public String getTotalSumSquares()
+    {
+        return totalSumSquares;
+    }
+
+    public void setTotalSumSquares(String totalSumSquares)
+    {
+        this.totalSumSquares = totalSumSquares;
+    }
+
+    public String getxSumSquares()
+    {
+        return xSumSquares;
+    }
+
+    public void setxSumSquares(String xSumSquares)
+    {
+        this.xSumSquares = xSumSquares;
+    }
+
+    public String getMsg()
+    {
+        return msg;
+    }
+
+    public void setMsg(String msg)
+    {
+        this.msg = msg;
     }
 }
