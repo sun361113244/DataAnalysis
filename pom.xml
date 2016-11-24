@@ -13,6 +13,7 @@
     <javax.servlet.version>3.1.0</javax.servlet.version>
     <org.springframework.version>4.1.0.RELEASE</org.springframework.version>
     <mysql.connector.java.version>5.1.31</mysql.connector.java.version>
+    <postgresql.version>9.4.1211.jre7</postgresql.version>
     <!-- mybatis start -->
     <org.mybatis.version>3.2.8</org.mybatis.version>
     <org.mybatis-spring.version>1.2.2</org.mybatis-spring.version>
@@ -40,7 +41,9 @@
     <!-- spark start -->
     <spark.version>2.0.1</spark.version>
     <!-- spark end -->
-
+    <!-- commons-math3 start -->
+    <commons.math3.version>9.4.1211.jre7</commons.math3.version>
+    <!-- commons-math3 end -->
   </properties>
   <url>http://maven.apache.org</url>
   <dependencies>
@@ -150,6 +153,11 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>${mysql.connector.java.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
     </dependency>
     <dependency>
       <groupId>com.alibaba</groupId>

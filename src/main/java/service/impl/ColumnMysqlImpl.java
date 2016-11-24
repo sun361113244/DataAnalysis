@@ -35,11 +35,12 @@ public class ColumnMysqlImpl implements ColumnService
             tbColumn.setCol_name(structField.name());
             tbColumn.setCol_type(structField.dataType().typeName());
             tbColumn.setNullable(structField.nullable());
-            tbColumn.setFeatureType(featureTypeRecongnizeService.recongnizeFeatureType(jdbcDF , structField.name() , col_index));
+            tbColumn.setFeatureType(featureTypeRecongnizeService.recongnizeFeatureType(jdbcDF , structField , col_index));
 
             tbColumns.add(tbColumn);
             col_index++;
         }
         return tbColumns;
     }
+
 }

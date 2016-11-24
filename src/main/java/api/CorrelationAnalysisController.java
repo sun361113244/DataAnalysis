@@ -46,14 +46,13 @@ public class CorrelationAnalysisController
         Dataset<Row> jdbcDF = loadDataSet(dBName , tblName);
 
         List<TbColumn> tbColumns = columnService.loadSchema(jdbcDF);
+
+        List<CorrelationAnalysis> correlationAnalysises = correlationAnalysisService.selectSummaryInfo(jdbcDF , tbColumns , r2_upper);
 //
-//        List<CorrelationAnalysis> correlationAnalysises = correlationAnalysisService.selectSummaryInfo(jdbcDF , tbColumns , r2_upper);
+        List<CorrelationAnalysisVo> correlationAnalysisesVos = CorrelationAnalysisVo.toVoList(correlationAnalysises);
 //
-//        System.out.println(JSON.toJSONString(correlationAnalysises));
-//        List<CorrelationAnalysisVo> correlationAnalysisesVos = CorrelationAnalysisVo.toVoList(correlationAnalysises);
-//
-//        mav.addObject("correlationAnalysis_summary" , correlationAnalysisesVos);
-//        mav.addObject("result" , 1);
+        mav.addObject("correlationAnalysis_summary" , correlationAnalysisesVos);
+        mav.addObject("result" , 1);
 
         return mav;
     }
@@ -63,25 +62,25 @@ public class CorrelationAnalysisController
     {
         ModelAndView mav = new ModelAndView("JsonView");
 
-        if(!isInputIllegal(dBName, tblName , r2))
-        {
-            mav.addObject("result" , -1);
-            return mav;
-        }
-
-        if(r2 != null)
-            r2_upper= r2;
-
-        Dataset<Row> jdbcDF = loadDataSet(dBName , tblName);
-
-        List<TbColumn> tbColumns = columnService.loadSchema(jdbcDF);
-
-        List<CorrelationAnalysis> correlationAnalysises = correlationAnalysisService.selectSummaryInfo(jdbcDF , tbColumns , r2_upper);
-
-        List<CorrelationAnalysisVo> correlationAnalysisesVos = CorrelationAnalysisVo.toVoList(correlationAnalysises);
-
-        mav.addObject("correlationAnalysis_summary" , correlationAnalysisesVos);
-        mav.addObject("result" , 1);
+//        if(!isInputIllegal(dBName, tblName , r2))
+//        {
+//            mav.addObject("result" , -1);
+//            return mav;
+//        }
+//
+//        if(r2 != null)
+//            r2_upper= r2;
+//
+//        Dataset<Row> jdbcDF = loadDataSet(dBName , tblName);
+//
+//        List<TbColumn> tbColumns = columnService.loadSchema(jdbcDF);
+//
+//        List<CorrelationAnalysis> correlationAnalysises = correlationAnalysisService.selectSummaryInfo(jdbcDF , tbColumns , r2_upper);
+//
+//        List<CorrelationAnalysisVo> correlationAnalysisesVos = CorrelationAnalysisVo.toVoList(correlationAnalysises);
+//
+//        mav.addObject("correlationAnalysis_summary" , correlationAnalysisesVos);
+//        mav.addObject("result" , 1);
 
         return mav;
     }

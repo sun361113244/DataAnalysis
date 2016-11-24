@@ -15,6 +15,8 @@ public class testCorrelationAnalysis
     {
         CorrelationAnalysisController correlationAnalysisController = SpringContextHolder.getBean("correlationAnalysisController");
 
-        correlationAnalysisController.summary(null , "longley" , null , 1 , 4);
+        correlationAnalysisController.summaryLocal(null , "t1479455211578" , null , 1 , 4);
+
+
     }
 }
