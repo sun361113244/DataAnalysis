@@ -61,15 +61,11 @@ public class CorrelationAnalysisVo
         this.totalSumSquares = String.format("%.2f", correlationAnalysis.getTotalSumSquares() == 0 ? 0 : correlationAnalysis.getTotalSumSquares());
         this.xSumSquares = String.format("%.2f", correlationAnalysis.getxSumSquares() == 0 ? 0 : correlationAnalysis.getxSumSquares());
 
-        this.msg = String.format("%s 每增长 1 ,%s %s %.2f<br/>" ,
+        this.msg = String.format("\"%s\" 每增长 1 ,\"%s\" %s 约%.2f<br/>" ,
                 correlationAnalysis.getTb_col1().getCol_name() ,
                 correlationAnalysis.getTb_col2().getCol_name() ,
                 correlationAnalysis.getSlope() >= 0 ? "增长" : "减少" ,
                 Math.abs(correlationAnalysis.getSlope()));
-//        this.msg += String.format("%s 能够解释%s %s的内容<br/>" ,
-//                correlationAnalysis.getTb_col1().getCol_name() ,
-//                correlationAnalysis.getTb_col2().getCol_name() ,
-//                String.format("%.2f%%", correlationAnalysis.getrSquare() == 0 ? 0 : correlationAnalysis.getrSquare() * 100));
     }
 
     public static List<CorrelationAnalysisVo> toVoList(List<CorrelationAnalysis> correlationAnalysises)
@@ -82,8 +78,7 @@ public class CorrelationAnalysisVo
         List<CorrelationAnalysisVo> correlationAnalysisVos = new ArrayList<CorrelationAnalysisVo>();
         for (CorrelationAnalysis correlationAnalysis : correlationAnalysises)
         {
-            if(correlationAnalysis.getrSquare() >= r2upper)
-                correlationAnalysisVos.add(new CorrelationAnalysisVo(correlationAnalysis));
+            correlationAnalysisVos.add(new CorrelationAnalysisVo(correlationAnalysis));
         }
         return correlationAnalysisVos;
     }

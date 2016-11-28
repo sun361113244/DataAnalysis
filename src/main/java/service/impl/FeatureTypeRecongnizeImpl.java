@@ -1,20 +1,16 @@
 package service.impl;
 
 import entity.FeatureType;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.RelationalGroupedDataset;
-import org.apache.spark.sql.Row;
+import org.apache.spark.api.java.function.MapFunction;
+import org.apache.spark.sql.*;
 import org.apache.spark.sql.types.StructField;
 import org.springframework.stereotype.Service;
-import service.FeatureTypeRecongnizeService;
-import util.StringUtil;
+import service.FeatureTypeRecongnizeLocalService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
+import java.sql.SQLException;
 
 @Service
-public class FeatureTypeRecongnizeImpl implements FeatureTypeRecongnizeService
+public class FeatureTypeRecongnizeImpl
 {
     final static int chkNum = 1000;
 
@@ -22,77 +18,40 @@ public class FeatureTypeRecongnizeImpl implements FeatureTypeRecongnizeService
 
     public FeatureType recongnizeFeatureType(Dataset<Row> jdbcDF, StructField structField, int col_index)
     {
-        Dataset<Row> colDt = jdbcDF.limit(chkNum);
-//        List<Row> colList = colDt.collectAsList();
-
-        if(isID(jdbcDF , structField , col_index))
-            return FeatureType.ID;
-
-        if(isCategory(jdbcDF , structField , col_index))
-            return FeatureType.CATEGORY;
-
-//        if(isDate(jdbcDF , structField , col_index))
-//            return FeatureType.DATE;
-//
-//        if(isDatetime(jdbcDF , structField , col_index))
-//            return FeatureType.DATETIME;
-
-        if(isContinuous(jdbcDF , structField , col_index))
-            return FeatureType.CONTINUOUS;
-
-
-//        if(isWord(jdbcDF , structField , col_index))
-//            return FeatureType.WORD;
-
-        return FeatureType.TEXT;
-    }
-
-    private boolean isContinuous(Dataset<Row> jdbcDF, StructField structField, int col_index)
-    {
-        for(Row row : jdbcDF.collectAsList())
-        {
-            if(!row.isNullAt(col_index) && !StringUtil.isNumeric(row.get(col_index).toString()))
-                return false;
-        }
-        return true;
-    }
-
-    private boolean isCategory(Dataset<Row> jdbcDF, StructField structField, int col_index)
-    {
-        RelationalGroupedDataset groupedDataset = jdbcDF.groupBy(structField.name());
+        Dataset<Row> groupDt = jdbcDF.limit(chkNum);
+        RelationalGroupedDataset groupedDataset = groupDt.groupBy(structField.name());
 
         if(groupedDataset.count().count() < group_by_rec_num)
-            return true;
-        else
-            return false;
+            return FeatureType.CATEGORY;
+
+        Dataset<String> colDt = groupDt.select(structField.name()).map(
+                new MapFunction<Row,  String>()
+                {
+                    public String call(Row row) throws Exception
+                    {
+//                        if(!row.isNullAt(0) && !StringUtil.isNumeric(row.get(0).toString()))
+//                            return "TEXT";
+                        return null;
+                    }
+                } , Encoders.STRING()
+        );
+
+        System.out.println(colDt.count());
+//        if(colDt.)
+//        colDt.fi
+
+//        List<Row> colList = colDt.collectAsList();
+//        for(Row row : colList)
+//        {
+//            if(!row.isNullAt(col_index) && !StringUtil.isNumeric(row.get(col_index).toString()))
+//                return FeatureType.TEXT;
+//        }
+
+        return FeatureType.CONTINUOUS;
     }
 
-    private boolean isWord(Dataset<Row> jdbcDF, StructField structField, int col_index)
+    public FeatureType recongnizeFeatureType(String tableName, int colNum, String col_name) throws SQLException
     {
-        return false;
-    }
-
-    private boolean isDatetime(Dataset<Row> jdbcDF, StructField structField, int col_index)
-    {
-        if(structField.name().equals("datetime") || structField.name().equals("timestamp"))
-            return true;
-
-        return false;
-    }
-
-    private boolean isDate(Dataset<Row> jdbcDF, StructField structField, int col_index)
-    {
-        if(structField.name().equals("datetime") || structField.name().equals("timestamp"))
-            return true;
-
-        return false;
-    }
-
-    private boolean isID(Dataset<Row> jdbcDF, StructField structField, int col_index)
-    {
-        if(col_index == 0 && structField.name().toUpperCase().contains("id"))
-            return true;
-        else
-            return false;
+        return null;
     }
 }

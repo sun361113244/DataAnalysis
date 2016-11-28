@@ -3,13 +3,11 @@ package util;
 import org.apache.spark.sql.SparkSession;
 import org.springframework.stereotype.Component;
 
-@Component
 public class SparkContextBean
 {
-
     private volatile static SparkSession spark;
 
-    private SparkContextBean()
+    static
     {
         String master = "local";
         String appName = "sparkapp";
@@ -24,14 +22,6 @@ public class SparkContextBean
 
     public static SparkSession getSparkSession()
     {
-        if(spark == null)
-        {
-            synchronized (SparkContextBean.class)
-            {
-                if(spark == null)
-                    new SparkContextBean();
-            }
-        }
         return spark;
     }
 }
