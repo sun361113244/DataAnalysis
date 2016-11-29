@@ -22,7 +22,7 @@ public class CorrelationAnalysisLocalJdbcServiceImpl implements CorrelationAnaly
     private JdbcUtil jdbcUtil;
 
     @Override
-    public List<CorrelationAnalysis> selectSummaryInfo(String tblName, List<TbColumn> tbColumns, double r2_upper) throws SQLException
+    public List<CorrelationAnalysis> selectSummaryInfo(String tblName, List<TbColumn> tbColumns) throws SQLException
     {
         List<CorrelationAnalysis> correlationAnalysises = new ArrayList<>();
         List<List<Object>> rows = jdbcUtil.findMoreResult(String.format("select * from %s" , tblName) ,null);

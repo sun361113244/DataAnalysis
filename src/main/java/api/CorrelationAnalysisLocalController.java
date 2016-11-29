@@ -54,11 +54,11 @@ public class CorrelationAnalysisLocalController
         {
             tbColumns = columnService.loadSchema(tblName);
             descriptiveStatistics = descriptiveStatisticsLocalService.selectDescriptiveStatistics(tblName ,tbColumns);
-            correlationAnalysises = correlationAnalysisLocalService.selectSummaryInfo(tblName , tbColumns , r2_upper);
+            correlationAnalysises = correlationAnalysisLocalService.selectSummaryInfo(tblName , tbColumns);
 
-            checkRegressionResult(tbColumns , descriptiveStatistics ,correlationAnalysises);
+            checkRegressionResult(tbColumns , descriptiveStatistics ,correlationAnalysises , r2_upper);
 
-        } catch (SQLException e)
+        } catch (Exception e)
         {
             mav.addObject("result" , -2);
             mav.addObject("msg" , "数据库操作错误");
@@ -72,11 +72,10 @@ public class CorrelationAnalysisLocalController
         mav.addObject("correlationAnalysis_summary" , correlationAnalysisesVos);
         mav.addObject("result" , 1);
 
-        System.out.println(JSON.toJSONString(descriptiveStatistics));
         return mav;
     }
 
-    private void checkRegressionResult(List<TbColumn> tbColumns, List<DescriptiveStatistic> descriptiveStatistics, List<CorrelationAnalysis> correlationAnalysises)
+    private void checkRegressionResult(List<TbColumn> tbColumns, List<DescriptiveStatistic> descriptiveStatistics, List<CorrelationAnalysis> correlationAnalysises, double r2_upper)
     {
         Iterator<CorrelationAnalysis> iter = correlationAnalysises.iterator();
         while (iter.hasNext())
@@ -87,23 +86,11 @@ public class CorrelationAnalysisLocalController
                 if(elem.getTb_col1().getCol_num() == descriptiveStatistic.getTbCol().getCol_num() &&
                         elem.getTb_col1().getFeatureType() == FeatureType.CONTINUOUS)
                 {
-                    System.out.println("--------------------------------------------");
-                    System.out.println(elem.getTb_col1().getCol_num());
-                    System.out.println(-8 * Math.sqrt((double)6/descriptiveStatistic.getN()));
-                    System.out.println(descriptiveStatistic.getSkewness());
-                    System.out.println(descriptiveStatistic.getKurtosis());
-
-                    System.out.println(((-8 * Math.sqrt(6/descriptiveStatistic.getN()) <= descriptiveStatistic.getSkewness()) &&
-                            (8 * Math.sqrt(6/descriptiveStatistic.getN()) >= descriptiveStatistic.getSkewness())) );
-                    System.out.println(((-8 * Math.sqrt(24/descriptiveStatistic.getN()) <= descriptiveStatistic.getKurtosis()) &&
-                            (8 * Math.sqrt(24/descriptiveStatistic.getN()) >= descriptiveStatistic.getKurtosis())) );
-                    System.out.println((elem.getrSquare() < Config.GFI));
-
                     if(!((-8 * Math.sqrt((double)6/descriptiveStatistic.getN()) <= descriptiveStatistic.getSkewness()) &&
                             (8 * Math.sqrt((double)6/descriptiveStatistic.getN()) > descriptiveStatistic.getSkewness())) ||
                             !((-8 * Math.sqrt((double)24/descriptiveStatistic.getN()) <= descriptiveStatistic.getKurtosis()) &&
                             (8 * Math.sqrt((double)24/descriptiveStatistic.getN()) > descriptiveStatistic.getKurtosis())) ||
-                            (elem.getrSquare() < Config.GFI))
+                            (elem.getrSquare() < r2_upper))
                     {
                         iter.remove();
                     }

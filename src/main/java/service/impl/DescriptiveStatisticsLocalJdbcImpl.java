@@ -54,7 +54,7 @@ public class DescriptiveStatisticsLocalJdbcImpl implements DescriptiveStatistics
 
                 descriptiveStatistic.setSkewness(stats.getSkewness());
                 descriptiveStatistic.setKurtosis(stats.getKurtosis());
-//                descriptiveStatistic.setMedian(stats.m);
+                descriptiveStatistic.setMedian(stats.getPercentile(50));
 
                 double interval = (stats.getMax() - stats.getMin()) / 12;
                 double[] interval_upper = new double[12];
@@ -64,7 +64,10 @@ public class DescriptiveStatisticsLocalJdbcImpl implements DescriptiveStatistics
                     interval_upper[j] = interval_upper[j-1] + interval;
                 }
 
+                List<Double> exceptionVals = new ArrayList<>();
                 Map<Double , Integer> pMap = new HashedMap();
+                double whisker_lower = stats.getPercentile(25) - 1.5 * (stats.getPercentile(75) - stats.getPercentile(25));
+                double whisker_upper = stats.getPercentile(75) + 1.5 * (stats.getPercentile(75) - stats.getPercentile(25));
                 for(List<Object> row : rows)
                 {
                     double val = Double.parseDouble(row.get(i).toString());
@@ -78,6 +81,11 @@ public class DescriptiveStatisticsLocalJdbcImpl implements DescriptiveStatistics
                                 pMap.put(interval_upper[k] , 1);
                         }
                     }
+                    if(val > whisker_upper || val <  whisker_lower)
+                    {
+                        if(!exceptionVals.contains(val))
+                            exceptionVals.add(val);
+                    }
                 }
                 List<GroupRatio> frequencyRation = new ArrayList<>();
                 for(Map.Entry<Double , Integer> entry : pMap.entrySet())
@@ -90,6 +98,8 @@ public class DescriptiveStatisticsLocalJdbcImpl implements DescriptiveStatistics
 
                     frequencyRation.add(groupRatio);
                 }
+
+                descriptiveStatistic.setExceptionVals(exceptionVals);
                 descriptiveStatistic.setGroupRatios(frequencyRation);
 
                 descriptiveStatistics.add(descriptiveStatistic);

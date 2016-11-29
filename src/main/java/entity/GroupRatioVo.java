@@ -51,10 +51,14 @@ public class GroupRatioVo
 
     public static List<GroupRatioVo> toVolist(List<GroupRatio> groupRatios)
     {
+        if(groupRatios == null)
+            return null;
+
         List<GroupRatioVo> groupRatioVos = new ArrayList<>();
         for(GroupRatio groupRatio : groupRatios)
         {
-            groupRatioVos.add(new GroupRatioVo(groupRatio));
+            if(groupRatio != null)
+                groupRatioVos.add(new GroupRatioVo(groupRatio));
         }
         return groupRatioVos;
     }

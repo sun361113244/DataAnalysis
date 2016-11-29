@@ -24,6 +24,9 @@ public class ColumnLocalJdbcImpl implements ColumnLocalService
     {
         List<TbColumn> tbColumns = jdbcUtil.findSchema(tableName);
 
+        if(tbColumns == null)
+            return null;
+
         for(TbColumn tbColumn : tbColumns)
         {
             tbColumn.setFeatureType(featureTypeRecongnizeService.recongnizeFeatureType(tableName , tbColumn.getCol_num() , tbColumn.getCol_name()));

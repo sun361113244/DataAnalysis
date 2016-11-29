@@ -32,6 +32,8 @@ public class DescriptiveStatistic
 
     private List<GroupRatio> groupRatios;
 
+    private List<Double> exceptionVals;
+
     public TbColumn getTbCol()
     {
         return tbCol;
@@ -172,4 +174,13 @@ public class DescriptiveStatistic
         this.groupRatios = groupRatios;
     }
 
+    public List<Double> getExceptionVals()
+    {
+        return exceptionVals;
+    }
+
+    public void setExceptionVals(List<Double> exceptionVals)
+    {
+        this.exceptionVals = exceptionVals;
+    }
 }

@@ -20,6 +20,9 @@ public class DescriptiveStatisticVo
     private String kurtosis;
     private String median;
     private List<GroupRatioVo> groupRatios;
+    private List<String> exceptionVals;
+    private String msg;
+    private boolean show;
 
     public DescriptiveStatisticVo(DescriptiveStatistic descriptiveStatistic)
     {
@@ -39,14 +42,48 @@ public class DescriptiveStatisticVo
 
         if(descriptiveStatistic.getGroupRatios() != null)
             this.groupRatios = GroupRatioVo.toVolist(descriptiveStatistic.getGroupRatios());
+        if(descriptiveStatistic.getExceptionVals() != null)
+        {
+            this.exceptionVals = new ArrayList<>();
+            for(Double val : descriptiveStatistic.getExceptionVals())
+            {
+                this.exceptionVals.add(String.format("%.2f", val == 0 ? 0 : val));
+            }
+        }
+
+        if(descriptiveStatistic.getTbCol().getFeatureType() == FeatureType.CATEGORY)
+        {
+            this.show = true;
+        }
+        if(descriptiveStatistic.getTbCol().getFeatureType() == FeatureType.CONTINUOUS)
+        {
+            this.show = true;
+
+            this.msg = String.format("范围是:%s ~ %s." , this.min , this.max );
+            if(descriptiveStatistic.getSkewness() < -1 * Math.sqrt((double)6/descriptiveStatistic.getN()))
+                this.msg += String.format("大多数值在高处.中位数是%s." ,this.getMedian() );
+            if(descriptiveStatistic.getSkewness() > 1 * Math.sqrt((double)6/descriptiveStatistic.getN()))
+                this.msg += String.format("大多数值在低处.中位数是%s." ,this.getMedian() );
+            if(this.exceptionVals!= null && this.exceptionVals.size() != 0)
+            {
+                this.msg += "异常值:";
+                for(int i = 0; i < this.exceptionVals.size(); i++)
+                    this.msg += this.exceptionVals.get(i) + ",";
+                this.msg = this.msg.substring(0 , this.msg.length() - 1);
+            }
+        }
     }
 
     public static List<DescriptiveStatisticVo> toVoList(List<DescriptiveStatistic> descriptiveStatistics)
     {
+        if(descriptiveStatistics == null)
+            return null;
+
         List<DescriptiveStatisticVo> descriptiveStatisticVos = new ArrayList<>();
         for (DescriptiveStatistic descriptiveStatistic : descriptiveStatistics)
         {
-            descriptiveStatisticVos.add(new DescriptiveStatisticVo(descriptiveStatistic));
+            if(descriptiveStatistic != null)
+                descriptiveStatisticVos.add(new DescriptiveStatisticVo(descriptiveStatistic));
         }
         return descriptiveStatisticVos;
     }
@@ -199,5 +236,35 @@ public class DescriptiveStatisticVo
     public void setSkewness(String skewness)
     {
         this.skewness = skewness;
+    }
+
+    public List<String> getExceptionVals()
+    {
+        return exceptionVals;
+    }
+
+    public void setExceptionVals(List<String> exceptionVals)
+    {
+        this.exceptionVals = exceptionVals;
+    }
+
+    public String getMsg()
+    {
+        return msg;
+    }
+
+    public void setMsg(String msg)
+    {
+        this.msg = msg;
+    }
+
+    public boolean isShow()
+    {
+        return show;
+    }
+
+    public void setShow(boolean show)
+    {
+        this.show = show;
     }
 }

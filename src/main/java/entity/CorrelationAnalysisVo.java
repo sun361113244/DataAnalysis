@@ -62,23 +62,22 @@ public class CorrelationAnalysisVo
         this.xSumSquares = String.format("%.2f", correlationAnalysis.getxSumSquares() == 0 ? 0 : correlationAnalysis.getxSumSquares());
 
         this.msg = String.format("\"%s\" 每增长 1 ,\"%s\" %s 约%.2f<br/>" ,
-                correlationAnalysis.getTb_col1().getCol_name() ,
-                correlationAnalysis.getTb_col2().getCol_name() ,
+                correlationAnalysis.getTb_col1() != null && correlationAnalysis.getTb_col1().getCol_name() != null ?  correlationAnalysis.getTb_col1().getCol_name() : "",
+                correlationAnalysis.getTb_col2() != null && correlationAnalysis.getTb_col2().getCol_name() != null ?  correlationAnalysis.getTb_col2().getCol_name() : "",
                 correlationAnalysis.getSlope() >= 0 ? "增长" : "减少" ,
                 Math.abs(correlationAnalysis.getSlope()));
     }
 
     public static List<CorrelationAnalysisVo> toVoList(List<CorrelationAnalysis> correlationAnalysises)
     {
-        return toVoList(correlationAnalysises , Config.GFI);
-    }
+        if(correlationAnalysises == null)
+            return null;
 
-    public static List<CorrelationAnalysisVo> toVoList(List<CorrelationAnalysis> correlationAnalysises , double r2upper)
-    {
-        List<CorrelationAnalysisVo> correlationAnalysisVos = new ArrayList<CorrelationAnalysisVo>();
+        List<CorrelationAnalysisVo> correlationAnalysisVos = new ArrayList<>();
         for (CorrelationAnalysis correlationAnalysis : correlationAnalysises)
         {
-            correlationAnalysisVos.add(new CorrelationAnalysisVo(correlationAnalysis));
+            if(correlationAnalysis != null)
+                correlationAnalysisVos.add(new CorrelationAnalysisVo(correlationAnalysis));
         }
         return correlationAnalysisVos;
     }
