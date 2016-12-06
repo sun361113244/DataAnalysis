@@ -20,7 +20,7 @@ public class ColumnLocalJdbcImpl implements ColumnLocalService
     private FeatureTypeRecongnizeLocalService featureTypeRecongnizeService;
 
     @Override
-    public List<TbColumn> loadSchema(String tableName) throws SQLException
+    public List<TbColumn> loadSchema(String tableName, List<List<Object>> dataLists) throws SQLException
     {
         List<TbColumn> tbColumns = jdbcUtil.findSchema(tableName);
 
@@ -29,7 +29,7 @@ public class ColumnLocalJdbcImpl implements ColumnLocalService
 
         for(TbColumn tbColumn : tbColumns)
         {
-            tbColumn.setFeatureType(featureTypeRecongnizeService.recongnizeFeatureType(tableName , tbColumn.getCol_num() , tbColumn.getCol_name()));
+            tbColumn.setFeatureType(featureTypeRecongnizeService.recongnizeFeatureType(dataLists , tbColumn));
         }
         return tbColumns;
     }

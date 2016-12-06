@@ -20,6 +20,10 @@ public class Config
 
     private static final ResourceBundle analysisBundle = ResourceBundle.getBundle("analysis");
 
+    public static final int THREAD_COUNT = Integer.parseInt(analysisBundle.getString("thread_count"));
+
+    public static final long ANALYSE_TIMEOUT = Long.parseLong(analysisBundle.getString("analyse_timeout"));
+
     public static final int MIN_REG_DOT = Integer.parseInt(analysisBundle.getString("minimum_regress_dot"));
 
     public static final double GFI = Double.parseDouble(analysisBundle.getString("goodness_of_fit"));

@@ -3,9 +3,7 @@ package service.impl;
 import entity.CorrelationAnalysis;
 import entity.FeatureType;
 import entity.TbColumn;
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
-import org.apache.spark.sql.Row;
 import org.springframework.stereotype.Service;
 import service.CorrelationAnalysisLocalService;
 import util.JdbcUtil;
@@ -18,14 +16,10 @@ import java.util.List;
 @Service
 public class CorrelationAnalysisLocalJdbcServiceImpl implements CorrelationAnalysisLocalService
 {
-    @Resource
-    private JdbcUtil jdbcUtil;
-
     @Override
-    public List<CorrelationAnalysis> selectSummaryInfo(String tblName, List<TbColumn> tbColumns) throws SQLException
+    public List<CorrelationAnalysis> selectSummaryInfo(List<List<Object>> rows, List<TbColumn> tbColumns) throws SQLException
     {
         List<CorrelationAnalysis> correlationAnalysises = new ArrayList<>();
-        List<List<Object>> rows = jdbcUtil.findMoreResult(String.format("select * from %s" , tblName) ,null);
 
         for(int i = 0 ;i < tbColumns.size(); i++ )
         {
@@ -38,7 +32,8 @@ public class CorrelationAnalysisLocalJdbcServiceImpl implements CorrelationAnaly
 
                     for(List<Object> row : rows)
                     {
-                        regression.addData(Double.parseDouble(row.get(i).toString()) , Double.parseDouble(row.get(j).toString()));
+                        if(row.get(i) != null && row.get(j) != null)
+                            regression.addData(Double.parseDouble(row.get(i).toString()) , Double.parseDouble(row.get(j).toString()));
                     }
 
                     CorrelationAnalysis correlationAnalysis = new CorrelationAnalysis();

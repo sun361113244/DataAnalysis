@@ -60,6 +60,13 @@ public class DescriptiveStatisticVo
             this.show = true;
 
             this.msg = String.format("范围是:%s ~ %s." , this.min , this.max );
+            if(descriptiveStatistic.getSkewness() >= -2 * Math.sqrt((double)6/descriptiveStatistic.getN()) &&
+                    descriptiveStatistic.getSkewness() <= -2 * Math.sqrt((double)6/descriptiveStatistic.getN()) &&
+                    descriptiveStatistic.getKurtosis() >= -2 * Math.sqrt((double)24/descriptiveStatistic.getN()) &&
+                    descriptiveStatistic.getKurtosis() <= -2 * Math.sqrt((double)24/descriptiveStatistic.getN()))
+            {
+                this.msg += String.format("数据符合均值%s ,方差%s正态分布 ." ,this.getMean() , this.variance );
+            }
             if(descriptiveStatistic.getSkewness() < -1 * Math.sqrt((double)6/descriptiveStatistic.getN()))
                 this.msg += String.format("大多数值在高处.中位数是%s." ,this.getMedian() );
             if(descriptiveStatistic.getSkewness() > 1 * Math.sqrt((double)6/descriptiveStatistic.getN()))

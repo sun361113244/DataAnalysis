@@ -35,6 +35,9 @@
     <!-- hadoop start -->
     <hadoop.version>2.7.2</hadoop.version>
     <!-- hadoop end -->
+    <!-- scala start-->
+    <scala.version>2.12.0</scala.version>
+    <!-- scala end -->
     <!-- mahout start -->
     <mahout.version>0.12.2</mahout.version>
     <!-- mahout end -->
@@ -269,7 +272,23 @@
     </dependency>
     <!-- spark end -->
 
-    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
+    <!-- scala start -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-compiler</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-reflect</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <!-- scala end -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-math3</artifactId>
@@ -282,12 +301,17 @@
     <finalName>DataAnalysis</finalName>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+        <version>2.15.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

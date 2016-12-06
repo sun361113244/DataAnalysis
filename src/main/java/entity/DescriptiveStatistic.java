@@ -28,7 +28,11 @@ public class DescriptiveStatistic
 
     private double kurtosis;
 
+    private double quarter1;
+
     private double median;
+
+    private double quarter3;
 
     private List<GroupRatio> groupRatios;
 
@@ -154,6 +158,16 @@ public class DescriptiveStatistic
         this.kurtosis = kurtosis;
     }
 
+    public double getQuarter1()
+    {
+        return quarter1;
+    }
+
+    public void setQuarter1(double quarter1)
+    {
+        this.quarter1 = quarter1;
+    }
+
     public double getMedian()
     {
         return median;
@@ -162,6 +176,16 @@ public class DescriptiveStatistic
     public void setMedian(double median)
     {
         this.median = median;
+    }
+
+    public double getQuarter3()
+    {
+        return quarter3;
+    }
+
+    public void setQuarter3(double quarter3)
+    {
+        this.quarter3 = quarter3;
     }
 
     public List<GroupRatio> getGroupRatios()

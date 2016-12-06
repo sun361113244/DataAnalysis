@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CorrelationAnalysisLocalService
 {
-    List<CorrelationAnalysis> selectSummaryInfo(String tblName, List<TbColumn> tbColumns) throws SQLException;
+    List<CorrelationAnalysis> selectSummaryInfo(List<List<Object>> tblName, List<TbColumn> tbColumns) throws SQLException;
 }

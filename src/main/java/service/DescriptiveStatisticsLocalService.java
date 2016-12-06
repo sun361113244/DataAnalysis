@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface DescriptiveStatisticsLocalService
 {
-    List<DescriptiveStatistic> selectDescriptiveStatistics(String tblName, List<TbColumn> tbColumns) throws SQLException;
+    List<DescriptiveStatistic> selectDescriptiveStatistics(List<List<Object>> rows, List<TbColumn> tbColumns) throws SQLException;
 }

@@ -1,45 +1,86 @@
 package service.impl;
 
 import entity.FeatureType;
+import entity.TbColumn;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Service;
 import service.FeatureTypeRecongnizeLocalService;
-import util.JdbcUtil;
 import util.StringUtil;
 
-import javax.annotation.Resource;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class FeatureTypeRecongnizeLocalJdbcImpl implements FeatureTypeRecongnizeLocalService
 {
-    @Resource
-    private JdbcUtil jdbcUtil;
-
     @Override
-    public FeatureType recongnizeFeatureType(String tableName, int colNum, String col_name) throws SQLException
+    public FeatureType recongnizeFeatureType(List<List<Object>> dataLists, TbColumn tbColumn)
     {
-        String sql = String.format("select * from %s limit %d " , tableName , 1000);
-        List<List<Object>> dataLists = jdbcUtil.findMoreResult(sql , null);
-
-        if(colNum == 0 && col_name.toLowerCase().contains("id"))
-        {
+        if(isIDType(dataLists , tbColumn))
             return FeatureType.ID;
-        }
 
-        List<Object> groupList = groupBylist(dataLists , colNum);
-        double threshhold = Math.sqrt((double)dataLists.size()) > 10 ? Math.sqrt((double) dataLists.size()) : 10;
-        if(groupList != null && groupList.size() <= threshhold)
+        if(isCategoryType(dataLists , tbColumn))
             return FeatureType.CATEGORY;
 
-        for(List<Object> list : dataLists)
+        if(isDateType(dataLists , tbColumn))
+            return FeatureType.DATE;
+
+        if(isContinuousType(dataLists , tbColumn))
+            return FeatureType.CONTINUOUS;
+
+        return FeatureType.TEXT;
+    }
+
+    private boolean isContinuousType(List<List<Object>> dataLists, TbColumn tbColumn)
+    {
+        if(tbColumn.getCol_type().equals("java.lang.Integer") ||
+                tbColumn.getCol_type().equals("java.lang.Long") ||
+                tbColumn.getCol_type().equals("java.lang.Double") ||
+                tbColumn.getCol_type().equals("java.lang.Float"))
         {
-            if(list.get(colNum) != null && !StringUtil.isNumeric(list.get(colNum).toString()))
-                return FeatureType.TEXT;
+            for(List<Object> list : dataLists)
+            {
+                if(list.get(tbColumn.getCol_num()) != null && !StringUtil.isNumeric(list.get(tbColumn.getCol_num()).toString()))
+                    return false;
+            }
+            return true;
         }
-        return FeatureType.CONTINUOUS;
+        return false;
+    }
+
+    private boolean isDateType(List<List<Object>> dataLists, TbColumn tbColumn)
+    {
+        return false;
+    }
+
+    private boolean isCategoryType(List<List<Object>> dataLists, TbColumn tbColumn)
+    {
+        if(tbColumn.getCol_type().equals("java.lang.Integer") ||
+                tbColumn.getCol_type().equals("java.lang.Long") ||
+                tbColumn.getCol_type().equals("java.lang.String"))
+        {
+            List<Object> groupList = groupBylist(dataLists , tbColumn.getCol_num());
+            double threshhold = Math.sqrt((double)dataLists.size()) > 10 ? Math.sqrt((double) dataLists.size()) : 10;
+            if(groupList != null && groupList.size() <= threshhold)
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
+
+    private boolean isIDType(List<List<Object>> dataLists, TbColumn tbColumn)
+    {
+        if(tbColumn.getCol_num() == 0 &&
+                tbColumn.getCol_name().toLowerCase().contains("id") &&
+                (tbColumn.getCol_type().equals("java.lang.Integer") || tbColumn.getCol_type().equals("java.lang.Long")) &&
+                !tbColumn.isNullable())
+        {
+            return true;
+        }
+        return false;
     }
 
     private List<Object> groupBylist(List<List<Object>> dataLists, int colNum)
