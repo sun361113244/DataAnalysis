@@ -26,7 +26,7 @@ public class LogAspects
     @Resource
     private LogService logService;
 
-    @Around("execution(* api..*(..))")
+    @Around(value = "execution(public org.springframework.web.servlet.ModelAndView api..*(..))")
     public ModelAndView logRound(ProceedingJoinPoint pjp)
     {
         ModelAndView mav = new ModelAndView("JsonView");

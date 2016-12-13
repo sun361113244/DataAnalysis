@@ -36,6 +36,8 @@ public class DescriptiveStatistic
 
     private List<GroupRatio> groupRatios;
 
+    private FrequencyHistogramAnalysis frequencyHistogramAnalysis;
+
     private KDEAnalysis kdeAnalysis;
 
     private List<Double> exceptionVals;
@@ -198,6 +200,16 @@ public class DescriptiveStatistic
     public void setGroupRatios(List<GroupRatio> groupRatios)
     {
         this.groupRatios = groupRatios;
+    }
+
+    public FrequencyHistogramAnalysis getFrequencyHistogramAnalysis()
+    {
+        return frequencyHistogramAnalysis;
+    }
+
+    public void setFrequencyHistogramAnalysis(FrequencyHistogramAnalysis frequencyHistogramAnalysis)
+    {
+        this.frequencyHistogramAnalysis = frequencyHistogramAnalysis;
     }
 
     public KDEAnalysis getKdeAnalysis()

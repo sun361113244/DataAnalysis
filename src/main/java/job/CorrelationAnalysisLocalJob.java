@@ -1,9 +1,6 @@
 package job;
 
-import entity.CorrelationAnalysis;
-import entity.DescriptiveStatistic;
-import entity.FeatureType;
-import entity.TbColumn;
+import entity.*;
 import service.ColumnLocalService;
 import service.CorrelationAnalysisLocalService;
 import service.DescriptiveStatisticsLocalService;
@@ -18,9 +15,7 @@ import java.util.Map;
 
 public class CorrelationAnalysisLocalJob implements AnalysisJob
 {
-    private double r2_upper = Config.GFI;
-
-    private String tblName;
+    private AnalysisFilter analysisFilter;
 
     private JdbcUtil jdbcUtil;
 
@@ -30,10 +25,9 @@ public class CorrelationAnalysisLocalJob implements AnalysisJob
 
     private CorrelationAnalysisLocalService correlationAnalysisLocalService;
 
-    public CorrelationAnalysisLocalJob(String tblName , double r2_upper)
+    public CorrelationAnalysisLocalJob(AnalysisFilter analysisFilter)
     {
-        this.tblName = tblName;
-        this.r2_upper = r2_upper;
+        this.analysisFilter = analysisFilter;
         jdbcUtil = SpringContextHolder.getBean("jdbcUtil");
 
         columnService = SpringContextHolder.getBean("columnLocalJdbcImpl");
@@ -43,14 +37,14 @@ public class CorrelationAnalysisLocalJob implements AnalysisJob
     @Override
     public Map<String , Object> call() throws Exception
     {
-        String sql = String.format("select * from %s " , tblName);
+        String sql = String.format("select * from %s " , analysisFilter.getTblName());
         List<List<Object>> dataLists = jdbcUtil.findMoreResult(sql , null);
 
-        List<TbColumn> tbColumns = columnService.loadSchema(tblName, dataLists);
-        List<DescriptiveStatistic> descriptiveStatistics = descriptiveStatisticsLocalService.selectDescriptiveStatistics(dataLists ,tbColumns);
+        List<TbColumn> tbColumns = columnService.loadSchema(analysisFilter.getTblName(), dataLists);
+        List<DescriptiveStatistic> descriptiveStatistics = descriptiveStatisticsLocalService.selectDescriptiveStatistics(dataLists ,tbColumns, analysisFilter);
         List<CorrelationAnalysis> correlationAnalysises = correlationAnalysisLocalService.selectSummaryInfo(dataLists , tbColumns);
 
-        checkRegressionResult(tbColumns , descriptiveStatistics ,correlationAnalysises , r2_upper);
+        checkRegressionResult(tbColumns , descriptiveStatistics ,correlationAnalysises , analysisFilter.getR2());
 
         Map<String , Object> resMap = new HashMap<>();
         resMap.put("descriptiveStatistics" , descriptiveStatistics);

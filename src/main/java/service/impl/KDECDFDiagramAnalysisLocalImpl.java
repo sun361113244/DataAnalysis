@@ -7,17 +7,18 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Order(value = 3)
+@Order(value = 4)
 @Service
 public class KDECDFDiagramAnalysisLocalImpl extends KDEDiagramAnalysisLocalImpl
 {
     @Override
-    public void selectContinuousStatisticResult(DescriptiveStatistic descriptiveStatistic, List<List<Object>> rows, List<TbColumn> tbColumns, int i)
+    public void selectContinuousStatisticResult(DescriptiveStatistic descriptiveStatistic, List<List<Object>> rows, List<TbColumn> tbColumns, AnalysisFilter analysisFilter, int i)
     {
-        super.selectContinuousStatisticResult(descriptiveStatistic , rows , tbColumns ,i);
+        super.selectContinuousStatisticResult(descriptiveStatistic , rows , tbColumns , analysisFilter, i);
 
         List<XYPoint> cdfPoints = new ArrayList<>();
-        if(descriptiveStatistic.getKdeAnalysis() != null)
+        if(descriptiveStatistic.getKdeAnalysis() != null &&
+                descriptiveStatistic.getKdeAnalysis().getXyPoints() != null)
         {
             XYPoint cdfAnalysisFirst = new XYPoint();
             cdfAnalysisFirst.setX(descriptiveStatistic.getKdeAnalysis().getXyPoints().get(0).getX());

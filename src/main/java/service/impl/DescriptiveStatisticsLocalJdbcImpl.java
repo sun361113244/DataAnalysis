@@ -1,5 +1,6 @@
 package service.impl;
 
+import entity.AnalysisFilter;
 import entity.DescriptiveStatistic;
 import entity.GroupRatio;
 import entity.TbColumn;
@@ -21,7 +22,8 @@ public class DescriptiveStatisticsLocalJdbcImpl implements DescriptiveStatistics
     private List<ContinuousFeatureAnalysisService> continuousFeatureAnalysisServiceList;
 
     @Override
-    public List<DescriptiveStatistic> selectDescriptiveStatistics(List<List<Object>> rows, List<TbColumn> tbColumns) throws SQLException
+    public List<DescriptiveStatistic> selectDescriptiveStatistics(List<List<Object>> rows, List<TbColumn> tbColumns,
+                                                                  AnalysisFilter analysisFilter) throws SQLException
     {
         List<DescriptiveStatistic> descriptiveStatistics = new ArrayList<>();
 
@@ -36,10 +38,10 @@ public class DescriptiveStatisticsLocalJdbcImpl implements DescriptiveStatistics
                 case ID:
                     break;
                 case CONTINUOUS:
-                    descriptiveStatistic = selectContinuousDescriptiveStatisticResult(rows , tbColumns , i);
+                    descriptiveStatistic = selectContinuousDescriptiveStatisticResult(rows , tbColumns ,analysisFilter, i);
                     break;
                 case CATEGORY:
-                    descriptiveStatistic = selectCategoryDescriptiveStatisticResult(rows , tbColumns , i);
+                    descriptiveStatistic = selectCategoryDescriptiveStatisticResult(rows , tbColumns ,analysisFilter, i);
                     break;
                 case DATE:
                     break;
@@ -56,7 +58,8 @@ public class DescriptiveStatisticsLocalJdbcImpl implements DescriptiveStatistics
         return descriptiveStatistics;
     }
 
-    private DescriptiveStatistic selectCategoryDescriptiveStatisticResult(List<List<Object>> rows, List<TbColumn> tbColumns, int i)
+    private DescriptiveStatistic selectCategoryDescriptiveStatisticResult(List<List<Object>> rows, List<TbColumn> tbColumns,
+                                                                          AnalysisFilter analysisFilter, int i)
     {
         int groupCount = 0;
         Map<String , Integer> groupMap = new HashedMap();
@@ -99,20 +102,28 @@ public class DescriptiveStatisticsLocalJdbcImpl implements DescriptiveStatistics
         return descriptiveStatistic;
     }
 
-    private DescriptiveStatistic selectContinuousDescriptiveStatisticResult(List<List<Object>> rows, List<TbColumn> tbColumns, int i)
+    private DescriptiveStatistic selectContinuousDescriptiveStatisticResult(List<List<Object>> rows, List<TbColumn> tbColumns,
+                                                                            AnalysisFilter analysisFilter, int i)
     {
         DescriptiveStatistic descriptiveStatistic = new DescriptiveStatistic();
 
-        continuousFeatureAnalysisServiceList.get(0).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns , i);
+        continuousFeatureAnalysisServiceList.get(0).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns,analysisFilter , i);
 
-        if( Math.abs(descriptiveStatistic.getMax() - descriptiveStatistic.getMin()) / (3.5 * descriptiveStatistic.getStandardDeviation() / Math.sqrt(descriptiveStatistic.getN())) > 5 )
+        if(analysisFilter.getShowFrequencyHistogramStat() != 0 && Math.abs(descriptiveStatistic.getMax() - descriptiveStatistic.getMin()) / (3.5 * descriptiveStatistic.getStandardDeviation() / Math.sqrt(descriptiveStatistic.getN())) > 5 )
         {
-            continuousFeatureAnalysisServiceList.get(1).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns , i);
+            if(analysisFilter.getShowFrequencyHistogramStat() == 1)
+                continuousFeatureAnalysisServiceList.get(1).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns ,analysisFilter , i);
+            if(analysisFilter.getShowFrequencyHistogramStat() == 2)
+                continuousFeatureAnalysisServiceList.get(2).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns ,analysisFilter , i);
+
 //            selectColumnExceptionValue(descriptiveStatistic ,rows , tbColumns , i);
         }
-        if(descriptiveStatistic.getN() >= 10)
+        if(analysisFilter.getShowKDEStat() != 0 && descriptiveStatistic.getN() >= 10)
         {
-            continuousFeatureAnalysisServiceList.get(2).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns , i);
+            if(analysisFilter.getShowKDEStat() == 1)
+                continuousFeatureAnalysisServiceList.get(3).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns , analysisFilter , i);
+            if(analysisFilter.getShowKDEStat() == 2)
+                continuousFeatureAnalysisServiceList.get(4).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns , analysisFilter , i);
         }
 
         return descriptiveStatistic;

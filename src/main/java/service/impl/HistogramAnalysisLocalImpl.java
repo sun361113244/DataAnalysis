@@ -1,25 +1,23 @@
 package service.impl;
 
-import entity.DescriptiveStatistic;
-import entity.GroupRatio;
-import entity.TbColumn;
+import entity.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import service.ContinuousFeatureAnalysisService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Order(value = 2)
+@Order(value = 1)
 @Service
-public class FrequencyDiagramAnalysisLocalImpl implements ContinuousFeatureAnalysisService
+public class HistogramAnalysisLocalImpl implements ContinuousFeatureAnalysisService
 {
-
     @Override
-    public void selectContinuousStatisticResult(DescriptiveStatistic descriptiveStatistic ,
-                                                List<List<Object>> rows, List<TbColumn> tbColumns, int i)
+    public void selectContinuousStatisticResult(DescriptiveStatistic descriptiveStatistic,
+                                                List<List<Object>> rows, List<TbColumn> tbColumns, AnalysisFilter analysisFilter, int i)
     {
         double interval = 3.5 * descriptiveStatistic.getStandardDeviation() / Math.sqrt(descriptiveStatistic.getN());
         int groupNum = (int) (Math.abs(descriptiveStatistic.getMax() - descriptiveStatistic.getMin()) / interval > 100 ? 100 :
@@ -55,17 +53,21 @@ public class FrequencyDiagramAnalysisLocalImpl implements ContinuousFeatureAnaly
             }
         }
 
-        List<GroupRatio> frequencyRation = new ArrayList<>();
+        FrequencyHistogramAnalysis frequencyHistogramAnalysis = new FrequencyHistogramAnalysis();
+        List<FrequencyUnit> frequencyUnits = new ArrayList<>();
         for(Map.Entry<Double , Integer> entry : pMap.entrySet())
         {
-            GroupRatio groupRatio = new GroupRatio();
-            groupRatio.setCol_name(String.format("%.2f",
-                    entry.getKey() == 0 ? 0 : entry.getKey()));
-            groupRatio.setCount(entry.getValue());
-            groupRatio.setRatio((double) entry.getValue() / descriptiveStatistic.getN());
-            frequencyRation.add(groupRatio);
-        }
-        descriptiveStatistic.setGroupRatios(frequencyRation);
+            FrequencyUnit frequencyUnit = new FrequencyUnit();
+            frequencyUnit.setUnitStart(entry.getKey());
+            frequencyUnit.setInterval(interval);
+            frequencyUnit.setCount(entry.getValue());
+            frequencyUnit.setRatio((double) entry.getValue() / descriptiveStatistic.getN());
 
+            frequencyUnits.add(frequencyUnit);
+        }
+
+        Collections.sort(frequencyUnits);
+        frequencyHistogramAnalysis.setFrequencyUnits(frequencyUnits);
+        descriptiveStatistic.setFrequencyHistogramAnalysis(frequencyHistogramAnalysis);
     }
 }

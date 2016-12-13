@@ -1,5 +1,6 @@
 package aspects;
 
+import entity.AnalysisFilter;
 import entity.TbColumn;
 import exception.ArgsException;
 import org.aspectj.lang.JoinPoint;
@@ -26,14 +27,15 @@ public class ArgsCheckAspects
     @Resource
     private JdbcUtil jdbcUtil;
 
-    @Before("execution(* api..*(..))")
+    @Before("execution(public org.springframework.web.servlet.ModelAndView api..*(..))")
     public void beforecheck(JoinPoint jp) throws Exception
     {
         List<Object> args = Arrays.asList(jp.getArgs());
         if(args.get(0) == null)
             throw new ArgsException("不存在表名!");
 
-        String tblName = args.get(0).toString();
+        AnalysisFilter analysisFilter = (AnalysisFilter)args.get(0);
+        String tblName = analysisFilter.getTblName();
         if(tblName == null || tblName.length() > 100 || tblName.contains(";") || tblName.contains("("))
             throw new ArgsException("表名异常!");
 

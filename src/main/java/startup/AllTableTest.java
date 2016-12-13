@@ -20,6 +20,6 @@ public class AllTableTest
     {
 //        List<String> tblNames = jdbcUtil.selectAllTables();
 
-        api.summary("iris" , 0.6);
+//        api.summary("iris" , 0.6);
     }
 }

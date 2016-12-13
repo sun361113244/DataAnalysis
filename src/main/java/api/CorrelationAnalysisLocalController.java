@@ -2,7 +2,6 @@ package api;
 
 import entity.*;
 import job.CorrelationAnalysisLocalJob;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,22 +24,11 @@ public class CorrelationAnalysisLocalController
     private double r2_upper = Config.GFI;
 
     @RequestMapping("/summary")
-    public ModelAndView summary(String tblName, Double r2) throws Exception
+    public ModelAndView summary(AnalysisFilter analysisFilter) throws Exception
     {
         ModelAndView mav = new ModelAndView("JsonView");
 
-        tblName = StringEscapeUtils.escapeSql(tblName);
-        if(!isInputIllegal(tblName , r2))
-        {
-            mav.addObject("result" , -1);
-            mav.addObject("msg" , "输入参数不合法");
-            return mav;
-        }
-
-        if(r2 != null)
-            r2_upper= r2;
-
-        CorrelationAnalysisLocalJob job = new CorrelationAnalysisLocalJob(tblName , r2_upper);
+        CorrelationAnalysisLocalJob job = new CorrelationAnalysisLocalJob(analysisFilter);
         Future<Map<String , Object>> correlationAnalysis = executorContext.submit(job);
 
         Map<String , Object> furureRes = correlationAnalysis.get(Config.ANALYSE_TIMEOUT, TimeUnit.SECONDS);
@@ -55,16 +43,5 @@ public class CorrelationAnalysisLocalController
         mav.addObject("result" , 1);
 
         return mav;
-    }
-
-    private boolean isInputIllegal(String tblName, Double r2)
-    {
-        if(r2 != null && (r2 < 0 || r2 > 1))
-            return false;
-
-        if(tblName == null || tblName.length() > 100 || tblName.contains(";") || tblName.contains("("))
-            return false;
-
-        return true;
     }
 }

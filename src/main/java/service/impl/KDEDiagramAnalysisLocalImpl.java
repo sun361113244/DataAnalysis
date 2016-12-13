@@ -1,9 +1,6 @@
 package service.impl;
 
-import entity.DescriptiveStatistic;
-import entity.KDEAnalysis;
-import entity.TbColumn;
-import entity.XYPoint;
+import entity.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import service.ContinuousFeatureAnalysisService;
@@ -12,12 +9,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//@Order(value = 3)
-//@Service
+@Order(value = 3)
+@Service
 public class KDEDiagramAnalysisLocalImpl implements ContinuousFeatureAnalysisService
 {
     @Override
-    public void selectContinuousStatisticResult(DescriptiveStatistic descriptiveStatistic, List<List<Object>> rows, List<TbColumn> tbColumns, int i)
+    public void selectContinuousStatisticResult(DescriptiveStatistic descriptiveStatistic, List<List<Object>> rows, List<TbColumn> tbColumns, AnalysisFilter analysisFilter, int i)
     {
         double h = 3.5 * descriptiveStatistic.getStandardDeviation() / Math.sqrt(descriptiveStatistic.getN());
 

@@ -1,10 +1,13 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DescriptiveStatisticVo
+public class DescriptiveStatisticVo implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     private TbColumn tbCol;
     private String min;
     private String max;

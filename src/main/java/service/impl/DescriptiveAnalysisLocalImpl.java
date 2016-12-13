@@ -1,5 +1,6 @@
 package service.impl;
 
+import entity.AnalysisFilter;
 import entity.DescriptiveStatistic;
 import entity.TbColumn;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
@@ -14,7 +15,8 @@ import java.util.List;
 public class DescriptiveAnalysisLocalImpl implements ContinuousFeatureAnalysisService
 {
     @Override
-    public void selectContinuousStatisticResult(DescriptiveStatistic descriptiveStatistic , List<List<Object>> rows, List<TbColumn> tbColumns, int i)
+    public void selectContinuousStatisticResult(DescriptiveStatistic descriptiveStatistic, List<List<Object>> rows,
+                                                List<TbColumn> tbColumns, AnalysisFilter analysisFilter, int i)
     {
         DescriptiveStatistics stats = new DescriptiveStatistics();
 

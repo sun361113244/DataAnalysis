@@ -1,5 +1,6 @@
 package job;
 
+import entity.AnalysisFilter;
 import entity.DescriptiveStatistic;
 import entity.TbColumn;
 import service.ColumnLocalService;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class DescriptiveStatisticLocalJob implements AnalysisJob
 {
-    private String tblName;
+    private AnalysisFilter analysisFilter;
 
     private JdbcUtil jdbcUtil;
 
@@ -21,9 +22,9 @@ public class DescriptiveStatisticLocalJob implements AnalysisJob
 
     private DescriptiveStatisticsLocalService descriptiveStatisticsLocalService;
 
-    public DescriptiveStatisticLocalJob(String tblName)
+    public DescriptiveStatisticLocalJob(AnalysisFilter analysisFilter)
     {
-        this.tblName = tblName;
+        this.analysisFilter = analysisFilter;
 
         jdbcUtil = SpringContextHolder.getBean("jdbcUtil");
         columnService = SpringContextHolder.getBean("columnLocalJdbcImpl");
@@ -33,11 +34,11 @@ public class DescriptiveStatisticLocalJob implements AnalysisJob
     @Override
     public Map<String , Object> call() throws Exception
     {
-        String sql = String.format("select * from %s " , tblName);
+        String sql = String.format("select * from %s " , analysisFilter.getTblName());
         List<List<Object>> dataLists = jdbcUtil.findMoreResult(sql , null);
 
-        List<TbColumn> tbColumns = columnService.loadSchema(tblName , dataLists);
-        List<DescriptiveStatistic> descriptiveStatistics = descriptiveStatisticsLocalService.selectDescriptiveStatistics(dataLists ,tbColumns);
+        List<TbColumn> tbColumns = columnService.loadSchema(analysisFilter.getTblName() , dataLists);
+        List<DescriptiveStatistic> descriptiveStatistics = descriptiveStatisticsLocalService.selectDescriptiveStatistics(dataLists ,tbColumns ,analysisFilter);
 
         Map<String , Object> resMap = new HashMap<>();
         resMap.put("descriptiveStatistics" , descriptiveStatistics);

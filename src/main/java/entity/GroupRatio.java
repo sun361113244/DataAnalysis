@@ -37,4 +37,6 @@ public class GroupRatio
     {
         this.ratio = ratio;
     }
+
+
 }
