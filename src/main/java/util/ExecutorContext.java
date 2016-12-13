@@ -1,22 +1,24 @@
 package util;
 
 import job.AnalysisJob;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.*;
 
+@Component
 public class ExecutorContext
 {
-    private static final int NTHREADS = Config.THREAD_COUNT;
+    private int NTHREADS = Config.THREAD_COUNT;
 
-    private static final ExecutorService exec = Executors.newFixedThreadPool(NTHREADS);
+    private ExecutorService exec = Executors.newFixedThreadPool(NTHREADS);
 
     private ExecutorContext()
     {
 
     }
 
-    public static Future<Map<String , Object>> submit(AnalysisJob job)
+    public Future<Map<String , Object>> submit(AnalysisJob job)
     {
         return exec.submit(job);
     }

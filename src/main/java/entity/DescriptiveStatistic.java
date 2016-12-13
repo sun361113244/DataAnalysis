@@ -36,6 +36,8 @@ public class DescriptiveStatistic
 
     private List<GroupRatio> groupRatios;
 
+    private KDEAnalysis kdeAnalysis;
+
     private List<Double> exceptionVals;
 
     public TbColumn getTbCol()
@@ -196,6 +198,16 @@ public class DescriptiveStatistic
     public void setGroupRatios(List<GroupRatio> groupRatios)
     {
         this.groupRatios = groupRatios;
+    }
+
+    public KDEAnalysis getKdeAnalysis()
+    {
+        return kdeAnalysis;
+    }
+
+    public void setKdeAnalysis(KDEAnalysis kdeAnalysis)
+    {
+        this.kdeAnalysis = kdeAnalysis;
     }
 
     public List<Double> getExceptionVals()

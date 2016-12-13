@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import util.Config;
 import util.ExecutorContext;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -18,6 +19,9 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/CorrelationAnalysisLocal")
 public class CorrelationAnalysisLocalController
 {
+    @Resource
+    private ExecutorContext executorContext;
+
     private double r2_upper = Config.GFI;
 
     @RequestMapping("/summary")
@@ -37,7 +41,7 @@ public class CorrelationAnalysisLocalController
             r2_upper= r2;
 
         CorrelationAnalysisLocalJob job = new CorrelationAnalysisLocalJob(tblName , r2_upper);
-        Future<Map<String , Object>> correlationAnalysis = ExecutorContext.submit(job);
+        Future<Map<String , Object>> correlationAnalysis = executorContext.submit(job);
 
         Map<String , Object> furureRes = correlationAnalysis.get(Config.ANALYSE_TIMEOUT, TimeUnit.SECONDS);
 

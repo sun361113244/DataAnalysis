@@ -2,7 +2,11 @@ package aspects;
 
 import com.alibaba.fastjson.JSON;
 import entity.AnalysisLog;
+import exception.ArgsException;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -14,11 +18,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.concurrent.TimeoutException;
 
+@Aspect
+@Component
+@Order(1)
 public class LogAspects
 {
     @Resource
     private LogService logService;
 
+    @Around("execution(* api..*(..))")
     public ModelAndView logRound(ProceedingJoinPoint pjp)
     {
         ModelAndView mav = new ModelAndView("JsonView");
@@ -34,7 +42,13 @@ public class LogAspects
             exceptionMsg = ex.toString();
             mav.addObject("result" , -3);
             mav.addObject("msg" , "超时");
-        }catch (Throwable throwable)
+        } catch (ArgsException ex)
+        {
+            exceptionMsg = ex.getMessage();
+            mav.addObject("result" , -4);
+            mav.addObject("msg" , exceptionMsg);
+        }
+        catch (Throwable throwable)
         {
             exceptionMsg = throwable.getMessage();
             mav.addObject("result" , -2);

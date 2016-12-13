@@ -19,7 +19,7 @@
     <context:annotation-config/>
 
     <!-- 扫描文件（自动将service层注入） -->
-    <context:component-scan base-package="service , api , util"/>
+    <context:component-scan base-package="service , api , util , startup"/>
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close" p:maxActive="20">

@@ -77,6 +77,18 @@ public class JdbcUtil
         return flag;
     }
 
+    public List<String> selectAllTables() throws SQLException
+    {
+        List<String> tblNames = new ArrayList<>();
+        String[] types = {"TABLE"};
+        resultSet = connection.getMetaData().getTables(null , null,"%" , types);
+        while (resultSet.next())
+        {
+            tblNames.add(resultSet.getString(3));
+        }
+        return tblNames;
+    }
+
     public List<TbColumn> findSchema(String tableName) throws SQLException
     {
         List<TbColumn> tbColumns = new ArrayList<>();
@@ -244,25 +256,28 @@ public class JdbcUtil
     public static void main(String[] args) throws SQLException
     {
         JdbcUtil jdbcUtils = new JdbcUtil();
-        jdbcUtils.getConnection();
 
-        String sql = "select * from iris ";
-        List<List<Object>> params = jdbcUtils.findMoreResult(sql , null);
-
-        for(List<Object> map : params)
-        {
-
-            for(Object obj : map)
-            {
-                System.out.print(obj + "\t");
-            }
-            System.out.println();
-        }
-
-        List<TbColumn> tbColumns = jdbcUtils.findSchema("iris");
+        List<String> tableNames = jdbcUtils.selectAllTables();
 
 
-        System.out.println(JSON.toJSONString(tbColumns));
+
+//        String sql = "select * from iris ";
+//        List<List<Object>> params = jdbcUtils.findMoreResult(sql , null);
+//
+//        for(List<Object> map : params)
+//        {
+//
+//            for(Object obj : map)
+//            {
+//                System.out.print(obj + "\t");
+//            }
+//            System.out.println();
+//        }
+//
+//        List<TbColumn> tbColumns = jdbcUtils.findSchema("iris");
+
+
+        System.out.println(JSON.toJSONString(tableNames));
 
     }
 }

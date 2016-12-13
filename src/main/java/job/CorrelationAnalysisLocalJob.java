@@ -66,7 +66,7 @@ public class CorrelationAnalysisLocalJob implements AnalysisJob
             CorrelationAnalysis elem = iter.next();
             for(DescriptiveStatistic descriptiveStatistic : descriptiveStatistics)
             {
-                if(elem.getTb_col1().getCol_num() == descriptiveStatistic.getTbCol().getCol_num() &&
+                if(descriptiveStatistic != null && elem.getTb_col1().getCol_num() == descriptiveStatistic.getTbCol().getCol_num() &&
                         elem.getTb_col1().getFeatureType() == FeatureType.CONTINUOUS)
                 {
                     if(!((-8 * Math.sqrt((double)6/descriptiveStatistic.getN()) <= descriptiveStatistic.getSkewness()) &&

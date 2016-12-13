@@ -6,15 +6,16 @@
 
     <!-- 工作的bean -->
     <bean id="myJob" class="sys.scheduler.MyJob" />
+    <bean id="AllTableTestJob" class="startup.AllTableTest" />
 
     <!-- job的配置开始 -->
     <bean id="myJobDetail"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
-            <ref bean="myJob" />
+            <ref bean="AllTableTestJob" />
         </property>
         <property name="targetMethod">
-            <value>work</value>
+            <value>handler</value>
         </property>
     </bean>
     <!-- job的配置结束 -->
@@ -27,7 +28,7 @@
         </property>
         <property name="cronExpression">
             <!--middle night 24. do it  -->
-            <value>0/1 * * * * ?</value>
+            <value>0 17 12 * * ?</value>
         </property>
     </bean>
     <!-- 调度的配置结束 -->
