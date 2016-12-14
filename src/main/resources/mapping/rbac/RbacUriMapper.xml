@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rbac.mapper.RbacUriMapper">
+    <resultMap id="UriResultMap" type="rbac.entity.RbacUri">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="permission" jdbcType="VARCHAR" property="permission" />
+        <result column="uri" jdbcType="VARCHAR" property="uri" />
+        <result column="iconCls" jdbcType="VARCHAR" property="iconcls" />
+        <result column="tree_code" jdbcType="VARCHAR" property="treeCode" />
+        <result column="show_type" jdbcType="TINYINT" property="showType" />
+        <result column="sort" jdbcType="TINYINT" property="sort" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+    <sql id="Uri_Column_List">
+        rbac_uri.id, rbac_uri.parent_id, rbac_uri.name, rbac_uri.permission, rbac_uri.uri, rbac_uri.iconCls, rbac_uri.tree_code,
+        rbac_uri.show_type, rbac_uri.sort, rbac_uri.create_time,rbac_uri.update_time
+    </sql>
+    <select id="selectUriList" resultMap="UriResultMap">
+        SELECT
+        <include refid="Uri_Column_List"/>
+        FROM rbac_uri
+    </select>
+    <insert id="insertUri" parameterType="rbac.entity.RbacUri">
+        insert into rbac_uri(parent_id, name, permission, uri,iconCls , tree_code, show_type, sort,
+        create_time, update_time)
+        values (#{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR},
+        #{uri,jdbcType=VARCHAR} ,#{iconcls,jdbcType=VARCHAR},#{treeCode,jdbcType=VARCHAR},#{showType,jdbcType=INTEGER},
+        #{sort,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <delete id="deleteUriById">
+        DELETE FROM rbac_uri
+        WHERE id = #{id ,jdbcType=INTEGER}
+    </delete>
+    <update id="updateUri" parameterType="rbac.entity.RbacUri">
+        update rbac_uri
+        <set >
+            <if test="parentId != null" >
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="permission != null" >
+                permission = #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="uri != null" >
+                uri = #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="iconcls != null" >
+                iconCls = #{iconcls,jdbcType=VARCHAR},
+            </if>
+            <if test="treeCode != null" >
+                tree_code = #{treeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="showType != null" >
+                show_type = #{showType,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null" >
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime}
+            </if>
+        </set>
+        where id = #{id , jdbcType=INTEGER}
+    </update>
+</mapper>

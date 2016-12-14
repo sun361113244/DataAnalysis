@@ -431,7 +431,7 @@
     // token:    'M'
     // padded:   ['MM', 2]
     // ordinal:  'Mo'
-    // callback: function () { this.month() + 1 }
+    // analysis.callback: function () { this.month() + 1 }
     function addFormatToken (token, padded, ordinal, callback) {
         var func = callback;
         if (typeof callback === 'string') {
@@ -1653,7 +1653,7 @@
         if (model._isUTC) {
             res = model.clone();
             diff = (isMoment(input) || isDate(input) ? +input : +local__createLocal(input)) - (+res);
-            // Use low-level api, because this fn is low-level api.
+            // Use low-level analysis.api, because this fn is low-level analysis.api.
             res._d.setTime(+res._d + diff);
             utils_hooks__hooks.updateOffset(res, false);
             return res;
@@ -7888,7 +7888,7 @@
             sameElse : 'L'
         },
         relativeTime : {
-            future : 'po %s',
+            future : 'analysis.po %s',
             past : 'prieš %s',
             s : translateSeconds,
             m : translateSingular,

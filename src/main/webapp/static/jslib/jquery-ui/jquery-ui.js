@@ -1303,7 +1303,7 @@ $.fn.position = function( options ) {
 		});
 
 		if ( options.using ) {
-			// adds feedback as second argument to using callback, if present
+			// adds feedback as second argument to using analysis.callback, if present
 			using = function( props ) {
 				var left = targetOffset.left - position.left,
 					right = left + targetWidth - elemWidth,
@@ -3878,9 +3878,9 @@ function Datepicker() {
 			// [2] = cell title (optional), e.g. $.datepicker.noWeekends
 		beforeShow: null, // Function that takes an input field and
 			// returns a set of custom settings for the date picker
-		onSelect: null, // Define a callback function when a date is selected
-		onChangeMonthYear: null, // Define a callback function when the month or year is changed
-		onClose: null, // Define a callback function when the datepicker is closed
+		onSelect: null, // Define a analysis.callback function when a date is selected
+		onChangeMonthYear: null, // Define a analysis.callback function when the month or year is changed
+		onClose: null, // Define a analysis.callback function when the datepicker is closed
 		numberOfMonths: 1, // Number of months to show at a time
 		showCurrentAtPos: 0, // The position in multipe months at which to show the current month (starting at 0)
 		stepMonths: 1, // Number of months to step back/forward
@@ -4356,7 +4356,7 @@ $.extend(Datepicker.prototype, {
 						if (onSelect) {
 							dateStr = $.datepicker._formatDate(inst);
 
-							// trigger custom callback
+							// trigger custom analysis.callback
 							onSelect.apply((inst.input ? inst.input[0] : null), [dateStr, inst]);
 						} else {
 							$.datepicker._hideDatepicker();
@@ -4793,7 +4793,7 @@ $.extend(Datepicker.prototype, {
 
 		onSelect = this._get(inst, "onSelect");
 		if (onSelect) {
-			onSelect.apply((inst.input ? inst.input[0] : null), [dateStr, inst]);  // trigger custom callback
+			onSelect.apply((inst.input ? inst.input[0] : null), [dateStr, inst]);  // trigger custom analysis.callback
 		} else if (inst.input) {
 			inst.input.trigger("change"); // fire the change event
 		}
@@ -8544,7 +8544,7 @@ var dialog = $.widget( "ui.dialog", {
 				props;
 			// Default to a non-submitting button
 			props = $.extend( { type: "button" }, props );
-			// Change the context for the click callback to be the main element
+			// Change the context for the click analysis.callback to be the main element
 			click = props.click;
 			props.click = function() {
 				click.apply( that.element[ 0 ], arguments );
@@ -10419,7 +10419,7 @@ function _normalizeArguments( effect, options, speed, callback ) {
 		options = {};
 	}
 
-	// catch (effect, callback)
+	// catch (effect, analysis.callback)
 	if ( $.isFunction( options ) ) {
 		callback = options;
 		speed = null;
@@ -10433,7 +10433,7 @@ function _normalizeArguments( effect, options, speed, callback ) {
 		options = {};
 	}
 
-	// catch (effect, options, callback)
+	// catch (effect, options, analysis.callback)
 	if ( $.isFunction( speed ) ) {
 		callback = speed;
 		speed = null;
@@ -10466,7 +10466,7 @@ function standardAnimationOption( option ) {
 		return true;
 	}
 
-	// Complete callback
+	// Complete analysis.callback
 	if ( $.isFunction( option ) ) {
 		return true;
 	}
@@ -10481,7 +10481,7 @@ function standardAnimationOption( option ) {
 }
 
 $.fn.extend({
-	effect: function( /* effect, options, speed, callback */ ) {
+	effect: function( /* effect, options, speed, analysis.callback */ ) {
 		var args = _normalizeArguments.apply( this, arguments ),
 			mode = args.mode,
 			queue = args.queue,
@@ -12022,7 +12022,7 @@ var selectable = $.widget("ui.selectable", $.ui.mouse, {
 				selectee.selected = false;
 				selectee.$element.addClass("ui-unselecting");
 				selectee.unselecting = true;
-				// selectable UNSELECTING callback
+				// selectable UNSELECTING analysis.callback
 				that._trigger("unselecting", event, {
 					unselecting: selectee.element
 				});
@@ -12040,7 +12040,7 @@ var selectable = $.widget("ui.selectable", $.ui.mouse, {
 				selectee.unselecting = !doSelect;
 				selectee.selecting = doSelect;
 				selectee.selected = doSelect;
-				// selectable (UN)SELECTING callback
+				// selectable (UN)SELECTING analysis.callback
 				if (doSelect) {
 					that._trigger("selecting", event, {
 						selecting: selectee.element
@@ -12104,7 +12104,7 @@ var selectable = $.widget("ui.selectable", $.ui.mouse, {
 				if (!selectee.selecting) {
 					selectee.$element.addClass("ui-selecting");
 					selectee.selecting = true;
-					// selectable SELECTING callback
+					// selectable SELECTING analysis.callback
 					that._trigger("selecting", event, {
 						selecting: selectee.element
 					});
@@ -12124,7 +12124,7 @@ var selectable = $.widget("ui.selectable", $.ui.mouse, {
 							selectee.$element.addClass("ui-unselecting");
 							selectee.unselecting = true;
 						}
-						// selectable UNSELECTING callback
+						// selectable UNSELECTING analysis.callback
 						that._trigger("unselecting", event, {
 							unselecting: selectee.element
 						});
@@ -12137,7 +12137,7 @@ var selectable = $.widget("ui.selectable", $.ui.mouse, {
 
 						selectee.$element.addClass("ui-unselecting");
 						selectee.unselecting = true;
-						// selectable UNSELECTING callback
+						// selectable UNSELECTING analysis.callback
 						that._trigger("unselecting", event, {
 							unselecting: selectee.element
 						});
@@ -13093,7 +13093,7 @@ var slider = $.widget( "ui.slider", $.ui.mouse, {
 			if ( newVal !== this.values( index ) ) {
 				newValues = this.values();
 				newValues[ index ] = newVal;
-				// A slide can be canceled by returning false from the slide callback
+				// A slide can be canceled by returning false from the slide analysis.callback
 				allowed = this._trigger( "slide", event, {
 					handle: this.handles[ index ],
 					value: newVal,
@@ -13106,7 +13106,7 @@ var slider = $.widget( "ui.slider", $.ui.mouse, {
 			}
 		} else {
 			if ( newVal !== this.value() ) {
-				// A slide can be canceled by returning false from the slide callback
+				// A slide can be canceled by returning false from the slide analysis.callback
 				allowed = this._trigger( "slide", event, {
 					handle: this.handles[ index ],
 					value: newVal
@@ -14692,7 +14692,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			delayedTriggers.push(function(event) { this._trigger("receive", event, this._uiHash(this.fromOutside)); });
 		}
 		if((this.fromOutside || this.domPosition.prev !== this.currentItem.prev().not(".ui-sortable-helper")[0] || this.domPosition.parent !== this.currentItem.parent()[0]) && !noPropagation) {
-			delayedTriggers.push(function(event) { this._trigger("update", event, this._uiHash()); }); //Trigger update callback if the DOM position has changed
+			delayedTriggers.push(function(event) { this._trigger("update", event, this._uiHash()); }); //Trigger update analysis.callback if the DOM position has changed
 		}
 
 		// Check if the items Container has Changed and trigger appropriate

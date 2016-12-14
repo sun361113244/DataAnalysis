@@ -61,7 +61,7 @@ describe('Public API method tests', function () {
         dtpElement.remove();
     });
 
-    describe('configuration option name match to public api function', function () {
+    describe('configuration option name match to public analysis.api function', function () {
         Object.getOwnPropertyNames($.fn.datetimepicker.defaults).forEach(function (key) {
             it('has function ' + key + '()', function () {
                 expect(dtp[key]).toBeDefined();

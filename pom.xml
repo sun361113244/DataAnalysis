@@ -14,7 +14,12 @@
     <junit.version>4.11</junit.version>
     <!--  测试版本 End -->
     <javax.servlet.version>3.1.0</javax.servlet.version>
-    <org.springframework.version>4.3.4.RELEASE</org.springframework.version>
+    <!-- spring start -->
+    <org.springframework.version>4.1.0.RELEASE</org.springframework.version>
+    <!-- spring end -->
+    <!-- shiro start -->
+    <org.apache.shiro.version>1.2.3</org.apache.shiro.version>
+    <!-- shiro end-->
     <mysql.connector.java.version>5.1.31</mysql.connector.java.version>
     <postgresql.version>9.4.1211.jre7</postgresql.version>
     <!-- mybatis start -->
@@ -300,7 +305,28 @@
       <artifactId>commons-math3</artifactId>
       <version>3.6.1</version>
     </dependency>
-
+    <!-- shiro jar Start -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-core</artifactId>
+      <version>${org.apache.shiro.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-web</artifactId>
+      <version>${org.apache.shiro.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring</artifactId>
+      <version>${org.apache.shiro.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-ehcache</artifactId>
+      <version>${org.apache.shiro.version}</version>
+    </dependency>
+    <!-- shiro jar End -->
 
   </dependencies>
   <build>

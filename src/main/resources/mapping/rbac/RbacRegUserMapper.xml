@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rbac.mapper.RbacRegUserMapper">
+    <resultMap id="RbacRegUserResultMap" type="rbac.entity.RbacRegUser" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="reg_code" property="reg_code" jdbcType="VARCHAR" />
+        <result column="reg_name" property="reg_name" jdbcType="VARCHAR"/>
+        <result column="reg_pwd" property="reg_pwd" jdbcType="VARCHAR" />
+        <result column="reg_time" property="reg_time" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="RegUser_Column_List" >
+        rbac_reg_user.id,rbac_reg_user.reg_code ,rbac_reg_user.reg_name,rbac_reg_user.reg_pwd,rbac_reg_user.reg_time
+    </sql>
+    <select id="selectAllRegUsers" resultMap="RbacRegUserResultMap">
+        SELECT
+        <include refid="RegUser_Column_List"/>
+        from rbac_reg_user
+    </select>
+    <select id="selectRegUserByID" resultMap="RbacRegUserResultMap" parameterType="integer">
+        SELECT
+        <include refid="RegUser_Column_List"/>
+        FROM rbac_reg_user
+        WHERE id = #{id ,jdbcType=INTEGER}
+    </select>
+    <insert id="insertRegUser" parameterType="rbac.entity.RbacRegUser">
+        INSERT INTO rbac_reg_user(reg_code, reg_name, reg_pwd, reg_time)
+        VALUES ( #{reg_code ,jdbcType=VARCHAR} ,#{reg_name ,jdbcType=VARCHAR},#{reg_pwd ,jdbcType=VARCHAR} ,#{reg_time})
+    </insert>
+    <delete id="deleteRegUserByID" parameterType="integer">
+        DELETE FROM  rbac_reg_user
+        WHERE id = #{id ,jdbcType=INTEGER}
+    </delete>
+</mapper>

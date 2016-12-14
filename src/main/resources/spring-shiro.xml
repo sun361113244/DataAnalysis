@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+     <!--缓存管理器 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>
+    </bean>
+
+    <bean id ="sessionDAO" class = "org.apache.shiro.session.mgt.eis.MemorySessionDAO"></bean>
+
+    <!-- 会话管理器 -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- session的失效时长，单位毫秒 -->
+        <property name="globalSessionTimeout" value="1800000"/>
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true"/>
+        <property name="sessionDAO" ref="sessionDAO"/>
+    </bean>
+
+    <!-- 屏障匹配器 -->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="1"/>
+    </bean>
+
+    <bean id = "userRealm" class="rbac.reamls.UserRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+
+    <!-- 安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="userRealm"/>
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <!-- 过滤器 -->
+    <bean id="forceLogoutFilter" class="rbac.filter.ForceLogoutFilter"/>
+    <bean id="loginCountFilter" class="rbac.filter.LoginCountFilter">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="logOutAfter" value="false"/>
+        <property name="maxSession" value="1"/>
+        <property name="logOutUrl" value="/html/login.html"/>
+    </bean>
+
+    <!-- Shiro的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/html/login.action"/>
+        <property name="successUrl" value="/html/homepage.action"/>
+        <property name="unauthorizedUrl" value="/html/unauthorized.action"/>
+        <property name="filters">
+            <map>
+                <entry key="forceLogout" value-ref="forceLogoutFilter"/>
+                <entry key="loginCount" value-ref="loginCountFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 匿名访问资源 -->
+                /static/** = anon
+                /html/login.html = anon
+                /loginController/Login = anon
+                /ws/** = anon
+                /analysis/api/** = anon
+
+                <!-- 删除session -->
+                /logout = logout
+
+                <!-- 非登录uri -->
+                /loginController/submitRegUserInfo = anon
+
+                <!--  需要认证 -->
+                /** = authc , forceLogout ,loginCount
+            </value>
+        </property>
+    </bean>
+
+    <!-- Shiro生命周期处理器-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+</beans>

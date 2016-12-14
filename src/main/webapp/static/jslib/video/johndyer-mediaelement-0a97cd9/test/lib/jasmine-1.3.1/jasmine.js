@@ -46,7 +46,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
 
 /**
  * By default exceptions thrown in the context of a test are caught by jasmine so that it can run the remaining tests in the suite.
- * Set to false to let the exception bubble up in the browser.
+ * Set to false to let the analysis.exception bubble up in the browser.
  *
  */
 jasmine.CATCH_EXCEPTIONS = true;
@@ -340,13 +340,13 @@ jasmine.Spy.prototype.andReturn = function(value) {
 };
 
 /**
- * For throwing an exception when a spy is called.
+ * For throwing an analysis.exception when a spy is called.
  *
  * @example
- * // defining a spy from scratch: foo() throws an exception w/ message 'ouch'
+ * // defining a spy from scratch: foo() throws an analysis.exception w/ message 'ouch'
  * var foo = jasmine.createSpy('spy on foo').andThrow('baz');
  *
- * // defining a spy on an existing property: foo.bar() throws an exception w/ message 'ouch'
+ * // defining a spy on an existing property: foo.bar() throws an analysis.exception w/ message 'ouch'
  * spyOn(foo, 'bar').andThrow('baz');
  *
  * @param {String} exceptionMsg
@@ -822,7 +822,7 @@ jasmine.Env.prototype.describe = function(description, specDefinitions) {
   }
 
   if (declarationError) {
-    this.it("encountered a declaration exception", function() {
+    this.it("encountered a declaration analysis.exception", function() {
       throw declarationError;
     });
   }
@@ -1485,7 +1485,7 @@ jasmine.Matchers.prototype.toBeCloseTo = function(expected, precision) {
 };
 
 /**
- * Matcher that checks that the expected exception was thrown by the actual.
+ * Matcher that checks that the expected analysis.exception was thrown by the actual.
  *
  * @param {String} [expected]
  */
@@ -1508,9 +1508,9 @@ jasmine.Matchers.prototype.toThrow = function(expected) {
 
   this.message = function() {
     if (exception && (expected === jasmine.undefined || !this.env.equals_(exception.message || exception, expected.message || expected))) {
-      return ["Expected function " + not + "to throw", expected ? expected.message || expected : "an exception", ", but it threw", exception.message || exception].join(' ');
+      return ["Expected function " + not + "to throw", expected ? expected.message || expected : "an analysis.exception", ", but it threw", exception.message || exception].join(' ');
     } else {
-      return "Expected function to throw an exception.";
+      return "Expected function to throw an analysis.exception.";
     }
   };
 

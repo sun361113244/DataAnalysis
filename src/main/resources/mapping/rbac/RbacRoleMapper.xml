@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rbac.mapper.RbacRoleMapper">
+    <resultMap id="RbacRoleResultMap" type="rbac.entity.RbacRole" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Role_Column_List" >
+        rbac_role.id,rbac_role.name,rbac_role.description,rbac_role.create_time,rbac_role.update_time,rbac_role.status
+    </sql>
+    <insert id="insertRole" parameterType="rbac.entity.RbacRole" >
+        INSERT INTO rbac_role(name, description,create_time ,update_time,status)
+        VALUES (#{name ,jdbcType=VARCHAR} , #{description ,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},1)
+    </insert>
+    <select id="selectAllRoles" resultMap="RbacRoleResultMap">
+        SELECT
+        <include refid="Role_Column_List"/>
+        FROM rbac_role
+        WHERE status = 1
+    </select>
+    <select id="selectIsRoleNameExist" parameterType="string" resultType="java.lang.Integer">
+        SELECT count(*)
+        from rbac_role
+        WHERE name = #{name ,jdbcType=VARCHAR}
+        AND status = 1
+    </select>
+    <select id="selectIsRoleNameExistExceptID" parameterType="map" resultType="java.lang.Integer">
+        SELECT count(*)
+        from rbac_role
+        WHERE name = #{name ,jdbcType=VARCHAR}
+        AND id != #{id ,jdbcType=INTEGER}
+        AND status = 1
+    </select>
+    <update id="updateRoleById" parameterType="rbac.entity.RbacRole" >
+        update rbac_role
+        <set >
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime}
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+</mapper>

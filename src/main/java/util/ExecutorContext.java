@@ -1,6 +1,6 @@
 package util;
 
-import job.AnalysisJob;
+import analysis.job.AnalysisJob;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rbac.mapper.RbacRoleUriMapper">
+    <select id="selectUriListByRoleId" resultMap="rbac.mapper.RbacUriMapper.UriResultMap">
+        SELECT
+        <include refid="rbac.mapper.RbacUriMapper.Uri_Column_List"/>
+        FROM rbac_uri,rbac_role ,rbac_role_uri_mapping
+        WHERE rbac_role_uri_mapping.role_id = rbac_role.id
+        AND rbac_role_uri_mapping.uri_id = rbac_uri.id
+        AND rbac_role.id = #{id ,jdbcType=INTEGER}
+    </select>
+    <insert id="insertRoleUri" parameterType="map">
+        INSERT INTO rbac_role_uri_mapping(role_id ,uri_id)
+        VALUE (#{id , jdbcType=INTEGER} ,#{node , jdbcType=INTEGER})
+    </insert>
+    <delete id="deleteRoleUris" parameterType="integer">
+        DELETE FROM rbac_role_uri_mapping
+        WHERE role_id = #{id , jdbcType=INTEGER}
+    </delete>
+</mapper>

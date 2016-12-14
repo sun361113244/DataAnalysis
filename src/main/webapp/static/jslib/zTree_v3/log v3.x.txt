@@ -5,7 +5,7 @@
 
 具体修改内容可参考：
 
-   * [http://www.ztree.me/v3/api.php zTree v3.x API 文档]
+   * [http://www.ztree.me/v3/analysis.api.php zTree v3.x API 文档]
 
    * [http://www.ztree.me/v3/demo.php#_101 zTree v3.x Demo 演示]
 
@@ -172,7 +172,7 @@
 
 *2012.01.10* v3.0
    * 【增加】setting.check.autoCheckTrigger 默认值 false，可以设置联动选中时是否触发事件回调函数
-   * 【增加】setting.callback.beforeEditName 回调函数，以保证用户可以捕获点击编辑按钮的事件
+   * 【增加】setting.analysis.callback.beforeEditName 回调函数，以保证用户可以捕获点击编辑按钮的事件
    * 【增加】treeNode.chkDisabled 属性，显示 checkbox 但是用户无法修改 checkbox 状态，并且该 checkbox 会影响父节点的 checkbox 的半选状态
    * 【增加】setting.check.nocheckInherit 属性，用户设置子节点继承 nocheck 属性，用于批量初始化节点，不适用于已经显示的节点
    * 【增加】setting.edit.drag.autoExpandTrigger 默认值 false，可以设置自动展开、折叠操作时是否触发事件回调函数

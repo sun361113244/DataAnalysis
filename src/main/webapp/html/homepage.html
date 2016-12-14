@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>推荐管理系统 | 主页</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="../static/jslib/jquery-ui/jquery-ui.css"  rel="stylesheet"/>
+    <link href="../static/jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/jslib/fontawesome4.2/css/font-awesome.css" rel="stylesheet">
+    <link href="../static/jslib/animate/animate.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/theme/default.css" rel="stylesheet">
+    <!-- ================== END BASE CSS STYLE ================== -->
+
+    <!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
+    <link href="../static/css/ExBootstrap.css"  rel="stylesheet">
+    <!-- ================== END PAGE LEVEL CSS STYLE ================== -->
+
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="../static/jslib/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../static/jslib/jquery/jquery-migrate-1.1.0.min.js"></script>
+    <script src="../static/jslib/jquery-ui/jquery-ui.js"></script>
+    <script src="../static/jslib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/jslib/holder/holder.js"></script>
+    <script src="../static/jslib/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="../static/jslib/jquery-cookie/jquery.cookie.js"></script>
+    <!--[if lt IE 9]> -->
+    <script src="../static/jslib/crossbrowserjs/html5shiv.js"></script>
+    <script src="../static/jslib/crossbrowserjs/respond.min.js"></script>
+    <script src="../static/jslib/crossbrowserjs/excanvas.min.js"></script>
+    <!-- <![endif] -->
+    <script src = "../static/js/util.js"></script>
+    <script src="../static/js/apps.js"></script>
+    <!-- ================== END BASE JS ================== -->
+
+    <script>
+        $(function(){
+            App.init(3);
+        });
+    </script>
+</head>
+<body>
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade in">
+    <span class="spinner"></span>
+</div>
+<!-- end #page-loader -->
+<!-- begin #page-container -->
+<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+    <!-- begin #header -->
+    <div id="header" class="header navbar navbar-inverse navbar-fixed-top">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <!-- begin mobile sidebar expand / collapse button -->
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand"><span class="navbar-logo"></span>推荐管理系统</a>
+                <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                        </span>
+                </button>
+            </div>
+            <!-- end mobile sidebar expand / collapse button -->
+            <!-- begin header navigation right -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="navbar-form full-width">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="输入关键字"/>
+                            <button type="submit" class="btn btn-search">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </li>
+                <li class="dropdown navbar-user"><a href="javascript;" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="hidden-xs activeUserName">Admin</span> <b class="caret"></b></a>
+                    <ul class="dropdown-menu animated fadeInLeft">
+                        <li class="arrow"></li>
+                        <li><a href="javascript:setUserInfo()">用户设置</a></li>
+                        <li><a href="javascript:changeUserPwd()">更改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="../logout" >注销</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- end header navigation right -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end #header -->
+    <!-- begin #sidebar -->
+    <div id="sidebar" class="sidebar">
+        <!-- begin sidebar scrollbar -->
+        <div data-scrollbar="true" data-height="100%">
+            <!-- begin sidebar user -->
+            <ul class="nav">
+                <li class="nav-profile">
+                    <div class="info activeUserName">
+                        admin
+                        <small>研发工程师</small>
+                    </div>
+                </li>
+            </ul>
+            <!-- end sidebar user -->
+            <!-- begin sidebar nav -->
+            <ul id="menuList" class="nav">
+
+            </ul>
+            <!-- end sidebar nav -->
+        </div>
+        <!-- end sidebar scrollbar -->
+    </div>
+    <div class="sidebar-bg">
+    </div>
+    <!-- end #sidebar -->
+    <!-- begin #content -->
+    <div id="content" class="content">
+        <!-- begin row -->
+        <div class="row">
+
+
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end #content -->
+</div>
+<!-- end page container -->
+<!-- start modal -->
+<div class="modal fade" id="set_UserInfoModal" tabindex="-1" role="dialog" aria-labelledby="set_UserInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- start modal_header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span  aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="set_UserInfoModalLabel">个人信息设置</h4>
+            </div>
+            <!-- end modal_header -->
+            <!-- start modal-body -->
+            <div class="modal-body">
+                <form class="form-horizontal" id="set_UserInfoForm">
+                    <div class="control-group">
+                        <label class="control-label" for="set_UserName">&nbsp;&nbsp;&nbsp;&nbsp;用户名称：</label>
+                        <input type="text" id="set_UserName" name="set_UserName" maxlength="30">
+                    </div>
+                    <div class="control-group">
+                            <label class="control-label" for="set_GivenName">用户中文名：</label>
+                        <input type="text" id="set_GivenName" name="set_GivenName" maxlength="30">
+                    </div>
+                </form>
+            </div>
+            <!-- end modal-body -->
+            <!-- start modal-footer -->
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btnSaveUserInfo" onclick="confirmInputSetUserInfo()">确定</button>
+                <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">取消</button>
+            </div>
+            <!-- end modal-footer -->
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+<!-- start modal -->
+<div class="modal fade" id="set_PwdModal" tabindex="-1" role="dialog" aria-labelledby="set_PwdModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- start modal_header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span  aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="set_PwdModalLabel">修改密码</h4>
+            </div>
+            <!-- end modal_header -->
+            <!-- start modal-body -->
+            <div class="modal-body">
+                <form class="form-horizontal" id="set_PwdForm">
+                    <div class="control-group">
+                        <label class="control-label" for="set_CurUserPasswrod">&nbsp;&nbsp;&nbsp;&nbsp;当前密码：</label>
+                        <input type="text" id="set_CurUserPasswrod" name="set_CurUserPasswrod" maxlength="30">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="set_SetUserPasswrod">&nbsp;&nbsp;&nbsp;&nbsp;设置密码：</label>
+                        <input type="text" id="set_SetUserPasswrod" name="set_SetUserPasswrod" maxlength="30">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="set_SetConfirmUserPasswrod">&nbsp;&nbsp;&nbsp;&nbsp;确认密码：</label>
+                        <input type="text" id="set_SetConfirmUserPasswrod" name="set_SetConfirmUserPasswrod" maxlength="30">
+                    </div>
+                </form>
+            </div>
+            <!-- end modal-body -->
+            <!-- start modal-footer -->
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="confirmInputSetUserPwd()">确定</button>
+                <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">取消</button>
+            </div>
+            <!-- end modal-footer -->
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+</body>
+</html>

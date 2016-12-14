@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rbac.mapper.RbacUserMapper">
+    <resultMap id="UserResultMap" type="rbac.entity.RbacUser">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="INTEGER" />
+        <result column="user_passwrod" property="userPasswrod" jdbcType="VARCHAR" />
+        <result column="given_name" property="givenName" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="login_time" property="loginTime" jdbcType="TIMESTAMP"/>
+        <result column="login_count" property="loginCount" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="User_Column_List">
+        id, user_name, user_passwrod, given_name, status, create_time, update_time, login_time, login_count
+    </sql>
+    <select id="getRbacUserByUserCode" resultMap="UserResultMap">
+        SELECT
+        <include refid="User_Column_List" ></include>
+        from rbac_user
+        where user_name = #{userCode,jdbcType=VARCHAR}
+        and status = 1
+    </select>
+    <select id="selectAllUsers" resultMap="UserResultMap">
+        SELECT
+        <include refid="User_Column_List"/>
+        FROM rbac_user
+        WHERE status = 1 OR status = 3
+    </select>
+    <select id="selectIsUserCodeExist" resultType="java.lang.Integer" parameterType="string">
+        SELECT COUNT(*)
+        FROM rbac_user
+        WHERE user_name = #{name ,jdbcType=VARCHAR}
+        and status = 1
+    </select>
+    <select id="selectIsUserCodeExistExceptId" resultType="java.lang.Integer" parameterType="map">
+        SELECT COUNT(*)
+        FROM rbac_user
+        WHERE user_name = #{name ,jdbcType=VARCHAR}
+        and status = 1
+        and id != #{id ,jdbcType=INTEGER}
+    </select>
+    <select id="isPasswordCorrect" resultType="java.lang.Integer" parameterType="map">
+        SELECT COUNT(*)
+        FROM rbac_user
+        WHERE id = #{userid  ,jdbcType=INTEGER} and user_passwrod = #{curPwd ,jdbcType=VARCHAR}
+    </select>
+    <insert id="insertRabUser" parameterType="rbac.entity.RbacUser">
+        INSERT
+        INTO rbac_user(user_name, user_passwrod, given_name, status, create_time, update_time, login_time, login_count)
+        VALUE(#{userName ,jdbcType=VARCHAR} , #{userPasswrod ,jdbcType=VARCHAR} ,#{givenName,jdbcType=VARCHAR} ,#{status,jdbcType=INTEGER},
+        #{createTime} , #{updateTime} , #{loginTime} ,#{loginCount,jdbcType=INTEGER})
+    </insert>
+    <delete id="deleteUserById" parameterType="integer">
+        delete
+        FROM rbac_user
+        WHERE id = #{id ,jdbcType=INTEGER}
+    </delete>
+    <update id="updateUser" parameterType="rbac.entity.RbacUser">
+        update rbac_user
+        <set >
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPasswrod != null" >
+                user_passwrod = #{userPasswrod,jdbcType=VARCHAR},
+            </if>
+            <if test="givenName != null" >
+                given_name = #{givenName ,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime},
+            </if>
+            <if test="loginTime != null" >
+                login_time = #{loginTime},
+            </if>
+            <if test="loginCount != null" >
+                login_count = #{loginCount ,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime}
+            </if>
+        </set>
+        where id = #{id , jdbcType=INTEGER}
+    </update>
+    <update id="updateUserStatusById" parameterType="map">
+        UPDATE rbac_user
+        SET status = #{status ,jdbcType=TINYINT}
+        where id = #{id , jdbcType=INTEGER}
+    </update>
+    <update id="updateCurrentUserPwd" parameterType="map">
+        UPDATE  rbac_user
+        SET user_passwrod = #{pwd , jdbcType=VARCHAR} , update_time = #{now }
+        where id = #{userid , jdbcType=INTEGER}
+    </update>
+    <update id="updateCurrentUserInfo" parameterType="map">
+        UPDATE  rbac_user
+        SET user_name = #{userName , jdbcType=VARCHAR} ,
+        given_name = #{givenName ,  jdbcType=VARCHAR} , update_time = #{now }
+        where id = #{userid , jdbcType=INTEGER}
+    </update>
+    <update id="updateLoginTime">
+        UPDATE  rbac_user
+        SET login_time = #{now} , login_count = login_count +1
+        where user_name = #{loginName , jdbcType=VARCHAR} and status = 1
+    </update>
+</mapper>

@@ -6,7 +6,7 @@ last verson :  3.5.18
 **Donate to zTree** : http://www.ztree.me/v3/donate.php
 
 
-zTree API : http://www.ztree.me/v3/api.php
+zTree API : http://www.ztree.me/v3/analysis.api.php
 
 
 zTree Demo : http://www.ztree.me/v3/demo.php
@@ -34,7 +34,7 @@ Introduction of zTree (简介)
 (支持任意更换皮肤 / 自定义图标)
 * Support extremely flexible checkbox or radio selection function. 
 (支持极其灵活的 checkbox 或 radio 选择功能)
-* Provide enough incident response callback. 
+* Provide enough incident response analysis.callback.
 (提供多种事件响应回调)
 * Flexible editing (add / delete / change / search) functions, such as drag and drop nodes,you can even drag and drop multiple nodes. 
 (灵活的编辑（增/删/改/查）功能，可随意拖拽节点，还可以多节点拖拽哟)

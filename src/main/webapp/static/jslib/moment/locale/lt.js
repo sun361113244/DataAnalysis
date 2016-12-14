@@ -86,7 +86,7 @@
             sameElse : 'L'
         },
         relativeTime : {
-            future : 'po %s',
+            future : 'analysis.po %s',
             past : 'prieš %s',
             s : translateSeconds,
             m : translateSingular,

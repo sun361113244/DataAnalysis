@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rbac.mapper.RbacLogMapper">
+    <resultMap id="RbacLogResultMap" type="rbac.entity.RbacLog" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="op_userid" property="op_userid" jdbcType="INTEGER" />
+        <result column="op_ip" property="op_ip" jdbcType="VARCHAR"/>
+        <result column="op_uri" property="op_uri" jdbcType="VARCHAR" />
+        <result column="op_excu_time" property="op_excu_time" jdbcType="TIMESTAMP" />
+        <result column="op_params" property="op_params" jdbcType="VARCHAR" />
+        <result column="op_res" property="op_res" jdbcType="VARCHAR" />
+        <result column="op_exception" property="op_exception" jdbcType="VARCHAR" />
+        <result column="op_consume_time" property="op_consume_time" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="log_Column_List" >
+        rbac_log.id , rbac_log.op_userid,rbac_log.op_ip,rbac_log.op_uri,rbac_log.op_excu_time,rbac_log.op_params,rbac_log.op_res,rbac_log.op_exception,rbac_log.op_consume_time
+    </sql>
+    <select id="selectLogList" resultType="rbac.entity.RbacLog">
+        SELECT
+        <include refid="rbac.mapper.RbacLogMapper.log_Column_List"/>
+        FROM rbac_log
+    </select>
+    <insert id="insertLog" parameterType="rbac.entity.RbacLog">
+        INSERT INTO rbac_log(op_userid,op_ip,op_uri,op_excu_time,op_params,op_res,op_exception,op_consume_time)
+        VALUES (#{op_userid ,jdbcType=INTEGER} , #{op_ip ,jdbcType=VARCHAR} ,#{op_uri ,jdbcType=VARCHAR},#{op_excu_time },
+        #{op_params ,jdbcType=VARCHAR},#{op_res ,jdbcType=VARCHAR},#{op_exception ,jdbcType=VARCHAR},#{op_consume_time ,jdbcType=INTEGER})
+    </insert>
+</mapper>

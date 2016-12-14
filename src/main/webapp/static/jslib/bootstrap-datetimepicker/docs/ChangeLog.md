@@ -112,9 +112,9 @@ Bug squashing
 
 * added a second way to define options as data attributes. Instead of adding distinct `data-date-*` config options you can now also pass a `data-date-options` attribute containing an object just the same as the options object that `element.datetimepicker` constructor call takes
 
-* also added a `options()` public api function to get/set that takes an option object and applies it to the component in one call
+* also added a `options()` public analysis.api function to get/set that takes an option object and applies it to the component in one call
 
-* Implemented [#130](https://github.com/Eonasdan/bootstrap-datetimepicker/issues/130) by introducing a boolean `options.calendarWeeks` and `calendarWeeks()` api function
+* Implemented [#130](https://github.com/Eonasdan/bootstrap-datetimepicker/issues/130) by introducing a boolean `options.calendarWeeks` and `calendarWeeks()` analysis.api function
 
 * Implemented [#328](https://github.com/Eonasdan/bootstrap-datetimepicker/issues/328), [#426](https://github.com/Eonasdan/bootstrap-datetimepicker/issues/426)
 

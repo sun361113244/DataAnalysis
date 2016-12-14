@@ -20,7 +20,7 @@
     <mvc:annotation-driven />
 
     <!-- 扫描文件（自动将controller层注入） -->
-    <context:component-scan base-package="api ,aspects"/>
+    <context:component-scan base-package="analysis.api ,analysis.aspects , sys , rbac.controller"/>
     <!-- 当在web.xml 中   DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
     <mvc:default-servlet-handler/>
 

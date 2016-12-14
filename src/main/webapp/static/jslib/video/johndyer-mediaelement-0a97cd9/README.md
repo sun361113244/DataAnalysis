@@ -65,7 +65,7 @@ In very rare cases, you might have an non-HTML5 browser with Flash turned on and
 ### 3. Startup
 
 #### Automatic start
-You can avoid running any startup scripts by added `class="mejs-player"` to the `<video>` or `<audio>` tag. Options can be added using the `data-mejsoptions` attribute
+You can avoid running any analysis.startup scripts by added `class="mejs-player"` to the `<video>` or `<audio>` tag. Options can be added using the `data-mejsoptions` attribute
 ```html	
 <video src="myvideo.mp4" width="320" height="240" 
 		class="mejs-player" 

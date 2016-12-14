@@ -89,7 +89,7 @@ var
 	rmsPrefix = /^-ms-/,
 	rdashAlpha = /-([\da-z])/gi,
 
-	// Used by jQuery.camelCase as callback to replace()
+	// Used by jQuery.camelCase as analysis.callback to replace()
 	fcamelCase = function( all, letter ) {
 		return letter.toUpperCase();
 	},
@@ -263,7 +263,7 @@ jQuery.fn = jQuery.prototype = {
 		return ret;
 	},
 
-	// Execute a callback for every element in the matched set.
+	// Execute a analysis.callback for every element in the matched set.
 	// (You can seed the arguments with an array of args, but this is
 	// only used internally.)
 	each: function( callback, args ) {
@@ -271,7 +271,7 @@ jQuery.fn = jQuery.prototype = {
 	},
 
 	ready: function( fn ) {
-		// Add the callback
+		// Add the analysis.callback
 		jQuery.ready.promise().done( fn );
 
 		return this;
@@ -896,7 +896,7 @@ jQuery.ready.promise = function( obj ) {
 
 		// Standards-based browsers support DOMContentLoaded
 		} else if ( document.addEventListener ) {
-			// Use the handy event callback
+			// Use the handy event analysis.callback
 			document.addEventListener( "DOMContentLoaded", completed, false );
 
 			// A fallback to window.onload, that will always work
@@ -980,25 +980,25 @@ function createOptions( options ) {
 }
 
 /*
- * Create a callback list using the following parameters:
+ * Create a analysis.callback list using the following parameters:
  *
  *	options: an optional list of space-separated options that will change how
- *			the callback list behaves or a more traditional option object
+ *			the analysis.callback list behaves or a more traditional option object
  *
- * By default a callback list will act like an event callback list and can be
+ * By default a analysis.callback list will act like an event analysis.callback list and can be
  * "fired" multiple times.
  *
  * Possible options:
  *
- *	once:			will ensure the callback list can only be fired once (like a Deferred)
+ *	once:			will ensure the analysis.callback list can only be fired once (like a Deferred)
  *
- *	memory:			will keep track of previous values and will call any callback added
+ *	memory:			will keep track of previous values and will call any analysis.callback added
  *					after the list has been fired right away with the latest "memorized"
  *					values (like a Deferred)
  *
- *	unique:			will ensure a callback can only be added once (no duplicate in the list)
+ *	unique:			will ensure a analysis.callback can only be added once (no duplicate in the list)
  *
- *	stopOnFalse:	interrupt callings when a callback returns false
+ *	stopOnFalse:	interrupt callings when a analysis.callback returns false
  *
  */
 jQuery.Callbacks = function( options ) {
@@ -1017,11 +1017,11 @@ jQuery.Callbacks = function( options ) {
 		fired,
 		// End of the loop when firing
 		firingLength,
-		// Index of currently firing callback (modified by remove if needed)
+		// Index of currently firing analysis.callback (modified by remove if needed)
 		firingIndex,
-		// First callback to fire (used internally by add and fireWith)
+		// First analysis.callback to fire (used internally by add and fireWith)
 		firingStart,
-		// Actual callback list
+		// Actual analysis.callback list
 		list = [],
 		// Stack of fire calls for repeatable lists
 		stack = !options.once && [],
@@ -1054,7 +1054,7 @@ jQuery.Callbacks = function( options ) {
 		},
 		// Actual Callbacks object
 		self = {
-			// Add a callback or a collection of callbacks to the list
+			// Add a analysis.callback or a collection of callbacks to the list
 			add: function() {
 				if ( list ) {
 					// First, we save the current length
@@ -1085,7 +1085,7 @@ jQuery.Callbacks = function( options ) {
 				}
 				return this;
 			},
-			// Remove a callback from the list
+			// Remove a analysis.callback from the list
 			remove: function() {
 				if ( list ) {
 					jQuery.each( arguments, function( _, arg ) {
@@ -1106,7 +1106,7 @@ jQuery.Callbacks = function( options ) {
 				}
 				return this;
 			},
-			// Check if a given callback is in the list.
+			// Check if a given analysis.callback is in the list.
 			// If no argument is given, return whether or not list has callbacks attached.
 			has: function( fn ) {
 				return fn ? jQuery.inArray( fn, list ) > -1 : !!( list && list.length );
@@ -2766,7 +2766,7 @@ jQuery.event = {
 			// If event changes its type, use the special event handlers for the changed type
 			special = jQuery.event.special[ type ] || {};
 
-			// If selector defined, determine special event api type, otherwise given type
+			// If selector defined, determine special event analysis.api type, otherwise given type
 			type = ( selector ? special.delegateType : special.bindType ) || type;
 
 			// Update special based on newly reset type
@@ -4237,7 +4237,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// on a disconnected node (IE 9)
 			support.disconnectedMatch = matches.call( div, "div" );
 
-			// This should fail with an exception
+			// This should fail with an analysis.exception
 			// Gecko does not error, returns false instead
 			matches.call( div, "[s!='']:x" );
 			rbuggyMatches.push( "!=", pseudos );
@@ -6066,7 +6066,7 @@ jQuery.fn.extend({
 
 					elem = 0;
 
-				// If using innerHTML throws an exception, use the fallback method
+				// If using innerHTML throws an analysis.exception, use the fallback method
 				} catch(e) {}
 			}
 
@@ -7447,7 +7447,7 @@ var
 	// Avoid comment-prolog char sequence (#10098); must appease lint and evade compression
 	allTypes = "*/".concat("*");
 
-// #8138, IE may throw an exception when accessing
+// #8138, IE may throw an analysis.exception when accessing
 // a field from window.location if document.domain has been set
 try {
 	ajaxLocation = location.href;
@@ -7555,7 +7555,7 @@ jQuery.fn.load = function( url, params, callback ) {
 	// If it's a function
 	if ( jQuery.isFunction( params ) ) {
 
-		// We assume that it's the callback
+		// We assume that it's the analysis.callback
 		callback = params;
 		params = undefined;
 
@@ -7575,7 +7575,7 @@ jQuery.fn.load = function( url, params, callback ) {
 			data: params
 		}).done(function( responseText ) {
 
-			// Save response for use in complete callback
+			// Save response for use in complete analysis.callback
 			response = arguments;
 
 			self.html( selector ?
@@ -7809,7 +7809,7 @@ jQuery.extend({
 					if ( map ) {
 						if ( state < 2 ) {
 							for ( code in map ) {
-								// Lazy-add the new callback in a way that preserves old ones
+								// Lazy-add the new analysis.callback in a way that preserves old ones
 								statusCode[ code ] = [ statusCode[ code ], map[ code ] ];
 							}
 						} else {
@@ -7977,7 +7977,7 @@ jQuery.extend({
 				state = 1;
 				transport.send( requestHeaders, done );
 			} catch ( e ) {
-				// Propagate exception as error if not done
+				// Propagate analysis.exception as error if not done
 				if ( state < 2 ) {
 					done( -1, e );
 				// Simply rethrow otherwise
@@ -8369,12 +8369,12 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 	// Handle iff the expected data type is "jsonp" or we have a parameter to set
 	if ( jsonProp || s.dataTypes[ 0 ] === "jsonp" ) {
 
-		// Get callback name, remembering preexisting value associated with it
+		// Get analysis.callback name, remembering preexisting value associated with it
 		callbackName = s.jsonpCallback = jQuery.isFunction( s.jsonpCallback ) ?
 			s.jsonpCallback() :
 			s.jsonpCallback;
 
-		// Insert callback into url or form data
+		// Insert analysis.callback into url or form data
 		if ( jsonProp ) {
 			s[ jsonProp ] = s[ jsonProp ].replace( rjsonp, "$1" + callbackName );
 		} else if ( s.jsonp !== false ) {
@@ -8392,7 +8392,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 		// force json dataType
 		s.dataTypes[ 0 ] = "json";
 
-		// Install callback
+		// Install analysis.callback
 		overwritten = window[ callbackName ];
 		window[ callbackName ] = function() {
 			responseContainer = arguments;
@@ -8408,7 +8408,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 				// make sure that re-using the options doesn't screw things around
 				s.jsonpCallback = originalSettings.jsonpCallback;
 
-				// save the callback name for future use
+				// save the analysis.callback name for future use
 				oldCallbacks.push( callbackName );
 			}
 
@@ -8521,7 +8521,7 @@ if ( xhrSupported ) {
 					} catch( err ) {}
 
 					// Do send the request
-					// This may raise an exception which is actually
+					// This may raise an analysis.exception which is actually
 					// handled in jQuery.ajax (so no try/catch here)
 					xhr.send( ( s.hasContent && s.data ) || null );
 
@@ -8559,13 +8559,13 @@ if ( xhrSupported ) {
 									status = xhr.status;
 									responseHeaders = xhr.getAllResponseHeaders();
 
-									// When requesting binary data, IE6-9 will throw an exception
+									// When requesting binary data, IE6-9 will throw an analysis.exception
 									// on any attempt to access responseText (#11426)
 									if ( typeof xhr.responseText === "string" ) {
 										responses.text = xhr.responseText;
 									}
 
-									// Firefox throws an exception when accessing
+									// Firefox throws an analysis.exception when accessing
 									// statusText for faulty cross-domain requests
 									try {
 										statusText = xhr.statusText;
@@ -8600,11 +8600,11 @@ if ( xhrSupported ) {
 					};
 
 					if ( !s.async ) {
-						// if we're in sync mode we fire the callback
+						// if we're in sync mode we fire the analysis.callback
 						callback();
 					} else if ( xhr.readyState === 4 ) {
 						// (IE6 & IE7) if it's in cache and has been
-						// retrieved directly we need to fire the callback
+						// retrieved directly we need to fire the analysis.callback
 						setTimeout( callback );
 					} else {
 						handle = ++xhrId;

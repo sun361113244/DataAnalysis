@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>推荐管理系统 | 登录界面</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="../static/jslib/jquery-ui/jquery-ui.css"  rel="stylesheet"/>
+    <link href="../static/jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/jslib/fontawesome4.2/css/font-awesome.css" rel="stylesheet">
+    <link href="../static/jslib/animate/animate.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/theme/default.css" rel="stylesheet">
+    <!-- ================== END BASE CSS STYLE ================== -->
+
+    <!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
+    <link href="../static/css/ExBootstrap.css" rel="stylesheet"/>
+    <!-- ================== END PAGE LEVEL CSS STYLE ================== -->
+
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="../static/jslib/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../static/jslib/jquery/jquery-migrate-1.1.0.min.js"></script>
+    <script src="../static/jslib/jquery-ui/jquery-ui.js"></script>
+    <script src="../static/jslib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/jslib/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="../static/jslib/jquery-cookie/jquery.cookie.js"></script>
+    <!--[if lt IE 9]> -->
+    <script src="../static/jslib/crossbrowserjs/html5shiv.js"></script>
+    <script src="../static/jslib/crossbrowserjs/respond.min.js"></script>
+    <script src="../static/jslib/crossbrowserjs/excanvas.min.js"></script>
+    <!-- <![endif] -->
+    <script src = "../static/js/util.js"></script>
+    <script src="../static/js/apps.js"></script>
+    <!-- ================== END BASE JS ================== -->
+
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src = "../static/js/login.js"></script>
+    <!-- ================== END PAGE LEVEL JS ================== -->
+    <script>
+        $(document).ready(function() {
+            LoginV2.init();
+            $('#loginName').focus();
+        });
+        function showRegistModal()
+        {
+            $('#registerModal').modal('show');
+        }
+        function submitRegInfo()
+        {
+            if($.trim($('#reg_user_name').val()) == '')
+            {
+                alert('用户姓名不能为空！');
+                return ;
+            }
+            if($.trim($('#reg_user_code').val()) == '')
+            {
+                alert('用户名不能为空！');
+                return ;
+            }
+            if($.trim($('#reg_user_pwd').val()) == '')
+            {
+                alert('密码不能为空！');
+                return ;
+            }
+            if($.trim($('#reg_user_confirmpwd').val()) == '')
+            {
+                alert('确认密码不能为空！');
+                return ;
+            }
+            var userName = $.trim($('#reg_user_name').val());
+            var userCode = $.trim($('#reg_user_code').val());
+            var pwd = $.trim($('#reg_user_pwd').val());
+            var confirmPwd = $.trim($('#reg_user_confirmpwd').val());
+            if( pwd != confirmPwd)
+            {
+                alert('两次密码不同！');
+                return ;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: getContextPath() + "/loginController/submitRegUserInfo",
+                data: {
+                    userName : userName ,
+                    userCode : userCode ,
+                    pwd : pwd ,
+                    confirmPwd : confirmPwd
+                },
+                success: function (data) {
+                    switch (data.result)
+                    {
+                        case RES_UNAUTHORIZED:
+                            alert('无权限！');
+                            break;
+                        case RES_SUCCESS:
+                            alert('提交信息成功，等待审核！');
+                            $('#registerModal').modal('hide');
+                            break;
+                        case -1:
+                            alert('sql失败！');
+                            break;
+                        case -2:
+                            alert('两次密码不同！');
+                            break;
+                        default :
+                            alert('异常错误！');
+                            break;
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade in"><span class="spinner"></span></div>
+<!-- end #page-loader -->
+
+<div class="login-cover">
+    <div class="login-cover-image"><img src="../static/img/login-bg/bg-4.jpg" data-id="login-cover-image" alt="" /></div>
+    <div class="login-cover-bg"></div>
+</div>
+<!-- begin #page-container -->
+<div id="page-container" class="fade">
+    <!-- begin login -->
+    <div class="login login-v2" data-pageload-addclass="animated flipInX">
+        <!-- begin brand -->
+        <div class="login-header">
+            <div class="brand">
+                <span class="logo"></span> 推荐管理系统
+                <small>茶语推荐管理系统</small>
+            </div>
+        </div>
+        <!-- end brand -->
+        <div class="login-content">
+            <form action="../loginController/Login" method="POST" class="margin-bottom-0">
+                <div class="form-group m-b-10">
+                    <input id="loginName" name="loginName" type="text" class="form-control input-lg" placeholder="请输入用户名" maxlength="30" value="" />
+                </div>
+                <div class="form-group m-b-10">
+                    <input id="loginPwd" name="loginPwd" type="password" class="form-control input-lg" placeholder="请输入密码" maxlength="30" value="" />
+                </div>
+                <div class="checkbox m-b-10" >
+                    <div id="resLogin" style="color: red"></div>
+                </div>
+                <div class="checkbox m-b-10">
+                    <label>
+                        <input type="checkbox" /> 记住我
+                    </label>
+                </div>
+                <div class="login-buttons">
+                    <button type="submit" class="btn btn-success btn-block btn-lg">登录</button>
+                    <button type="button" class="btn btn-success btn-block btn-lg" onclick="showRegistModal()">注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end login -->
+
+    <ul class="login-bg-list">
+        <li><a href="#" data-click="change-bg"><img src="../static/img/login-bg/bg-1.jpg" alt="" /></a></li>
+        <li><a href="#" data-click="change-bg"><img src="../static/img/login-bg/bg-2.jpg" alt="" /></a></li>
+        <li><a href="#" data-click="change-bg"><img src="../static/img/login-bg/bg-3.jpg" alt="" /></a></li>
+        <li class="active"><a href="#" data-click="change-bg"><img src="../static/img/login-bg/bg-4.jpg" alt="" /></a></li>
+        <li><a href="#" data-click="change-bg"><img src="../static/img/login-bg/bg-5.jpg" alt="" /></a></li>
+        <li><a href="#" data-click="change-bg"><img src="../static/img/login-bg/bg-6.jpg" alt="" /></a></li>
+    </ul>
+</div>
+<!-- end page container -->
+<!-- begin modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">用户注册</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-bordered" data-parsley-validate="true">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4">用户姓名* :</label>
+                        <div class="col-md-6 col-sm-6">
+                            <input class="form-control" type="text" id="reg_user_name"  />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4">用户名* :</label>
+                        <div class="col-md-6 col-sm-6">
+                            <input class="form-control" type="text" id="reg_user_code" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4">密码* :</label>
+                        <div class="col-md-6 col-sm-6">
+                            <input class="form-control" type="text" id="reg_user_pwd"  />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4">确认密码* :</label>
+                        <div class="col-md-6 col-sm-6">
+                            <input class="form-control" type="text" id="reg_user_confirmpwd" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="submitRegInfo()">提交申请</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+</body>
+</html>

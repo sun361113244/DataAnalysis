@@ -1,7 +1,7 @@
 package util;
 
 import com.alibaba.fastjson.JSON;
-import entity.TbColumn;
+import analysis.entity.TbColumn;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;

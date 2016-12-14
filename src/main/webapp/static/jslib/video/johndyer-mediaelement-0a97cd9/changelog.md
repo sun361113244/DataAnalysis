@@ -31,7 +31,7 @@
 * Insert the accessible player title span and container div separately (https://github.com/johndyer/mediaelement/pull/1385) [bradyvercher]
 * Fixes for YouTube on iOS and Android (https://github.com/johndyer/mediaelement/pull/1383/files) [ OwenEdwards ]
 Fix startvolume parsing in Silverlight fallback (https://github.com/johndyer/mediaelement/pull/1378) [fixedmachine ]
-* Add configurable initVars for JavaScript init and event callback functions (https://github.com/johndyer/mediaelement/pull/1362) []
+* Add configurable initVars for JavaScript init and event analysis.callback functions (https://github.com/johndyer/mediaelement/pull/1362) []
 * Flash no longer sends timeupdate events before it starts playing
 
 *2.16.2 (2014/11/15)*
@@ -525,7 +525,7 @@ Fixes and updates
 
 * fix errors when the progress bar isn't present
 * buttons are now actual `<button>` tags which allows tabbed controls (for better accessibility and possible ARIA support)
-* fix problems with low volume in Flash on startup (startVolume was sometimes 0!)
+* fix problems with low volume in Flash on analysis.startup (startVolume was sometimes 0!)
 * updated a few places to use jQuery 1.6's new prop/attr methods
 * updated skins to account for new `<button>` (still need highlighted style)
 
@@ -730,7 +730,7 @@ Fixes and updates
 *1.0.3 (2010/09/24)*
 
 * changes in poster handling
-* fix IE9 startup bug (its 'play' event fires wrongly it seems)
+* fix IE9 analysis.startup bug (its 'play' event fires wrongly it seems)
 * fixed Flock, Opera sizing bugs
 * fixed audio ended bug in special cases under Flash
 * added default height/width when they are not specified in attributes

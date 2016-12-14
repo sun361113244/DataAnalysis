@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rbac.mapper.RbacUserRoleMapper">
+
+    <select id="selectRoleListByUserId" resultMap="rbac.mapper.RbacRoleMapper.RbacRoleResultMap" parameterType="integer">
+        SELECT
+        <include refid="rbac.mapper.RbacRoleMapper.Role_Column_List"/>
+        FROM rbac_role_user_mapping,rbac_user,rbac_role
+        WHERE rbac_role_user_mapping.role_id = rbac_role.id
+        AND rbac_role_user_mapping.user_id = rbac_user.id
+        AND rbac_role.status = 1
+        AND rbac_user.id = #{userid ,jdbcType=INTEGER}
+    </select>
+    <insert id="insertUserRoles" parameterType="map">
+        INSERT INTO rbac_role_user_mapping(id ,role_id ,user_id ,create_time)
+        VALUE(NULL  , #{ node,jdbcType=INTEGER} , #{id , jdbcType=INTEGER} , null)
+    </insert>
+    <delete id="deleteByUserId" parameterType="map">
+        DELETE  from rbac_role_user_mapping
+        WHERE user_id = #{id , jdbcType=INTEGER }
+    </delete>
+</mapper>

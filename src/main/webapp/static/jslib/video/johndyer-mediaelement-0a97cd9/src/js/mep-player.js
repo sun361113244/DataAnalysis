@@ -598,7 +598,7 @@
 
 					} else {
 
-						// create callback here since it needs access to current
+						// create analysis.callback here since it needs access to current
 						// MediaElement object
 						t.clickToPlayPauseCallback = function() {
 							//console.log('media clicked', t.media, t.media.paused);
@@ -1258,7 +1258,7 @@
 				t.media.remove();
 			}
 
-			// Remove the player from the mejs.players object so that pauseOtherPlayers doesn't blow up when trying to pause a non existance flash api.
+			// Remove the player from the mejs.players object so that pauseOtherPlayers doesn't blow up when trying to pause a non existance flash analysis.api.
 			delete mejs.players[t.id];
 
 			if (typeof t.container == 'object') {

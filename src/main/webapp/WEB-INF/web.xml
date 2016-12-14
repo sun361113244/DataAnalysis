@@ -7,10 +7,26 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring.xml,
-            classpath:spring-mybatis.xml,
+            classpath:spring-shiro.xml,
             classpath:spring-quartz.xml
         </param-value>
     </context-param>
+    <!-- shiro过虑器，DelegatingFilterProxy通过代理模式将spring容器中的bean和filter关联起来 -->
+    <filter>
+        <filter-name>ShiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <!-- 设置true由servlet容器控制filter的生命周期 -->
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- 设置spring容器filter的bean id，如果不设置则找与filter-name一致的bean-->
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>shiroFilter</param-value>
+        </init-param>
+    </filter>
+    <!-- shiro filter end -->
     <!-- 字符过滤器 start -->
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -24,6 +40,10 @@
     </filter>
     <!-- 字符过滤器 end -->
 
+    <filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>

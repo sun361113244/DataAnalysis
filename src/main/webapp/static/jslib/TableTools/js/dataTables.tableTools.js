@@ -2472,7 +2472,7 @@ TableTools.prototype = {
 		window.scrollTo( 0, 0 );
 
 		/* Bind a key event listener to the document for the escape key -
-		 * it is removed in the callback
+		 * it is removed in the analysis.callback
 		 */
 		$(document).bind( "keydown.DTTT", function(e) {
 			/* Only interested in the escape key */
@@ -2689,7 +2689,7 @@ TableTools._aInstances = [];
 
 
 /**
- * Store of all listeners and their callback functions
+ * Store of all listeners and their analysis.callback functions
  *  @property _aListeners
  *  @type	 Array
  *  @default  []
@@ -3018,7 +3018,7 @@ TableTools.BUTTONS = {
 	} )
 };
 /*
- *  on* callback parameters:
+ *  on* analysis.callback parameters:
  *     1. node - button element
  *     2. object - configuration object for this button
  *     3. object - ZeroClipboard reference (flash button only)

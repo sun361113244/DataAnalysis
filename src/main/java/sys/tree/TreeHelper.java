@@ -1,6 +1,6 @@
 package sys.tree;
 
-import sys.entity.TreeNodeStruc;
+import rbac.entity.TreeNodeStruc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +33,7 @@ public class TreeHelper
     }
 
     /**
-     * generate a tree from the given treeNode or entity list
+     * generate a tree from the given treeNode or analysis.entity list
      */
     public void generateTree()
     {

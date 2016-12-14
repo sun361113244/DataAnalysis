@@ -491,7 +491,7 @@ package
 			if(isUrl) {
 				illegals = "\" { } \\ < >";
 			}
-			if(Boolean(s)) { // Otherwise exception if parameter null.
+			if(Boolean(s)) { // Otherwise analysis.exception if parameter null.
 				for each (var illegal:String in illegals.split(' ')) {
 					if(s.indexOf(illegal) >= 0) {
 						return true; // Illegal char found

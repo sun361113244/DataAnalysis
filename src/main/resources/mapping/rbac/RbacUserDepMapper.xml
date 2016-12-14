@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rbac.mapper.RbacUserDepMapper">
+    <select id="selectDepListByUserId" resultMap="rbac.mapper.RbacDepMapper.RbacDepResultMap" parameterType="integer">
+        SELECT
+        <include refid="rbac.mapper.RbacDepMapper.Dep_Column_List"/>
+        FROM
+        rbac_dep,rbac_user,rbac_user_dep_mapping
+        WHERE rbac_user_dep_mapping.dep_id = rbac_dep.id
+        AND rbac_user_dep_mapping.user_id = rbac_user.id
+        AND rbac_user.id = #{id, jdbcType=INTEGER }
+        and rbac_dep.status = 1
+    </select>
+    <insert id="insertUserDep" parameterType="map">
+        INSERT INTO rbac_user_dep_mapping(id ,user_id ,dep_id ,create_time)
+        VALUE(NULL  , #{id ,jdbcType=INTEGER} , #{stationId , jdbcType=INTEGER} , null)
+    </insert>
+    <delete id="deleteByUserId" parameterType="integer">
+        DELETE  from rbac_user_dep_mapping
+        WHERE user_id = #{id , jdbcType=INTEGER }
+    </delete>
+</mapper>

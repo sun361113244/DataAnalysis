@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <bean id="rbacDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close" p:maxActive="20">
+        <property name="driverClassName" value="${rbac_jdbc_driverClassName}"/>
+        <property name="url" value="${rbac_jdbc_url}"/>
+        <property name="username" value="${rbac_jdbc_username}"/>
+        <property name="password" value="${rbac_jdbc_password}"/>
+        <!-- 连接池最大使用连接数 -->
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="1"/>
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000"/>
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="3"/>
+        <!-- 自动清除无用连接 -->
+        <property name="removeAbandoned" value="true"/>
+        <!-- 清除无用连接的等待时间 -->
+        <property name="removeAbandonedTimeout" value="180"/>
+        <!-- 连接属性 -->
+        <property name="connectionProperties" value="clientEncoding=UTF-8"/>
+        <!-- 监控过滤器 -->
+        <!--<property name="filters" value="stat,wall"/>-->
+    </bean>
+
+    <!-- mybatis文件配置，扫描所有mapper文件 -->
+    <bean id="rbacSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="rbacDataSource"/>
+        <property name="mapperLocations" value="classpath:mapping/rbac/**/*.xml "/>
+    </bean>
+    <!-- configLocation为mybatis属性 mapperLocations为所有mapper -->
+
+    <!-- spring与mybatis整合配置，扫描所有Mapper -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="rbac.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="rbacSqlSessionFactory"/>
+    </bean>
+
+    <!-- 事务管理器 -->
+    <bean id="rbacTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="rbacDataSource" />
+    </bean>
+
+    <!-- 事务注解驱动，标注@Transactional的类和方法将具有事务性 -->
+    <tx:annotation-driven transaction-manager="rbacTxManager" proxy-target-class="true"/>
+</beans>

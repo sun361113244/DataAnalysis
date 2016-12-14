@@ -1,15 +1,15 @@
-import entity.AnalysisLog;
+import analysis.entity.AnalysisLog;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import service.LogService;
+import analysis.service.LogService;
 import util.SpringContextHolder;
 
 import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring.xml" , "classpath:spring-mybatis.xml"})
+@ContextConfiguration(locations = {"classpath:spring.xml" , "classpath:spring-mybatis-rbac.xml"})
 public class testMybatis
 {
     @Test

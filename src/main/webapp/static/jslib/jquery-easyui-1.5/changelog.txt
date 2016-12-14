@@ -227,7 +227,7 @@ Version 1.3.3
  * treegrid: Enable treegrid to parse data from <tbody> element.
  * combo: Add 'selectOnNavigation' and 'readonly' options.
  * combobox: Add 'loadFilter' option to allow users to change data format before loading into combobox.
- * tree: Add 'onBeforeDrop' callback event.
+ * tree: Add 'onBeforeDrop' analysis.callback event.
  * validatebox: Dependent on tooltip plugin now, add 'deltaX' property.
  * numberbox: The 'filter' options can be used to determine if the key pressed was accepted.
  * linkbutton: The group button is available.
@@ -284,7 +284,7 @@ Version 1.3.1
  * messager: When show a message window, the user can define the window position by applying 'style' property.
  * window: Prevent script on window body from running twice.
  * window: Add 'hcenter','vcenter' and 'center' methods.
- * tree: Add 'onBeforeCheck' callback event.
+ * tree: Add 'onBeforeCheck' analysis.callback event.
  * tree: Extend the 'getChecked' method to allow users to get 'checked','unchecked' or 'indeterminate' nodes.
  * treegrid: Add 'update' method to update a specified node.
  * treegrid: Add 'insert' method to insert a new node.
@@ -330,12 +330,12 @@ Version 1.2.6
  * tree: Add 'lines' option, true to display tree lines. 
  * tree: Add 'loadFilter' option that allow users to change data format before loading into the tree.
  * tree: Add 'loader' option that allow users to define how to load data from remote server.
- * treegrid: Add 'onClickCell' and 'onDblClickCell' callback function options.
+ * treegrid: Add 'onClickCell' and 'onDblClickCell' analysis.callback function options.
  * datagrid: Add 'autoRowHeight' property that allow users to determine if set the row height based on the contents of that row.
  * datagrid: Improve performance to load large data set.
  * datagrid: Add 'loader' option that allow users to define how to load data from remote server.
  * treegrid: Add 'loader' option that allow users to define how to load data from remote server.
- * combobox: Add 'onBeforeLoad' callback event function.
+ * combobox: Add 'onBeforeLoad' analysis.callback event function.
  * combobox: Add 'loader' option that allow users to define how to load data from remote server.
  * Add support for other loading mode such as dwr,xml,etc.
 * New Plugins
@@ -388,7 +388,7 @@ Version 1.2.3
  * treegrid: Support root nodes pagination and editable features.
  * datagrid: Add 'getFooterRows','reloadFooter','insertRow' methods and improve editing performance.
  * datagrid: Add 'loadFilter' option that allow users to change original source data to standard data format.
- * draggable: Add 'onBeforeDrag' callback event function.
+ * draggable: Add 'onBeforeDrag' analysis.callback event function.
  * validatebox: Add 'remote' validation type.
  * combobox: Add 'method' option.
 * New Plugins
@@ -419,16 +419,16 @@ Version 1.2.1
  * tree: The checkbox is setted incorrectly when removing a node. fixed.
  * dialog: The dialog layout incorrectly when 'closed' property is setted to true. fixed.
 * Improvement
- * parser: Add onComplete callback function that can indicate whether the parse action is complete.
- * menu: Add onClick callback function and some other methods.
+ * parser: Add onComplete analysis.callback function that can indicate whether the parse action is complete.
+ * menu: Add onClick analysis.callback function and some other methods.
  * tree: Add some useful methods.
  * tree: Drag and Drop feature is supported now.
- * tree: Add onContextMenu callback function.
- * tabs: Add onContextMenu callback function.
+ * tree: Add onContextMenu analysis.callback function.
+ * tabs: Add onContextMenu analysis.callback function.
  * tabs: Add 'tools' property that can create buttons on right bar.
- * datagrid: Add onHeaderContextMenu and onRowContextMenu callback functions.
+ * datagrid: Add onHeaderContextMenu and onRowContextMenu analysis.callback functions.
  * datagrid: Custom view is supported.
- * treegrid: Add onContextMenu callback function and append,remove methods.
+ * treegrid: Add onContextMenu analysis.callback function and append,remove methods.
   
 Version 1.2
 -------------
@@ -453,7 +453,7 @@ Version 1.1.2
 * Improvement
  * datagrid: Add validateRow method, remember the current editing row status when do editing action.
  * datagrid: Add the ability to create merged cells.
- * form: Add callback functions when loading data.
+ * form: Add analysis.callback functions when loading data.
  * panel,window,dialog: Add maximize,minimize,restore,collapse,expand methods.
  * panel,tabs,accordion: The lazy loading feature is supported.
  * tabs: Add getSelected,update,getTab methods.

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="../../static/jslib/jquery-ui/jquery-ui.css"  rel="stylesheet"/>
+    <link href="../../static/jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../static/jslib/fontawesome4.2/css/font-awesome.css" rel="stylesheet">
+    <link href="../../static/jslib/animate/animate.css" rel="stylesheet">
+    <link href="../../static/css/style.css" rel="stylesheet">
+    <link href="../../static/css/theme/default.css" rel="stylesheet">
+    <!-- ================== END BASE CSS STYLE ================== -->
+
+    <!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
+    <link href="../../static/jslib/dataTables-1.10.7/css/jquery.dataTables.min.css" rel="stylesheet"/>
+    <link href="../../static/css/ExBootstrap.css" rel="stylesheet"/>
+    <!-- ================== END PAGE LEVEL CSS STYLE ================== -->
+
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="../../static/jslib/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../../static/jslib/jquery/jquery-migrate-1.1.0.min.js"></script>
+    <script src="../../static/jslib/jquery-ui/jquery-ui.js"></script>
+    <script src="../../static/jslib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/jslib/holder/holder.js"></script>
+    <script src="../../static/jslib/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="../../static/jslib/jquery-cookie/jquery.cookie.js"></script>
+    <!--[if lt IE 9]> -->
+    <script src="../../static/jslib/crossbrowserjs/html5shiv.js"></script>
+    <script src="../../static/jslib/crossbrowserjs/respond.min.js"></script>
+    <script src="../../static/jslib/crossbrowserjs/excanvas.min.js"></script>
+    <!-- <![endif] -->
+    <script src = "../../static/js/util.js"></script>
+    <script src="../../static/js/apps.js"></script>
+    <!-- ================== END BASE JS ================== -->
+
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script  src="../../static/jslib/dataTables-1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="../../static/js/ExDatatables.js"></script>
+    <!-- ================== END PAGE LEVEL JS ================== -->
+    <script>
+        var table_uri;
+        $(function(){
+            table_uri = initUriTable();
+            App.init(1);
+        });
+        /**
+         * 表格初始化
+         * @returns {*|jQuery}
+         */
+        function initUriTable() {
+            var table = $("#tb_uri").dataTable({
+                "deferRender": true,                //延迟渲染
+                "info": true,                        //是否显示左下信息
+                "processing": true,                 // 是否显示处理状态
+                "retrieve": true,
+                "scrollY": DATATABLEHEIGHT,                 // 垂直滚动
+                "ajax": {
+                    "url": getContextPath() + "/uriController/selectAllUris",
+//                    "url": "../../static/json/stations.json",
+                    "type": "POST",
+                    "async": true
+                },
+                "language": {
+                    "emptyTable": "无数据可显示",
+                    "info": "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
+                    "infoEmpty": "记录数为0",
+                    "infoFiltered": "(全部记录数 _MAX_ 条)",
+                    "loadingRecords": "正在加载数据，请稍后....",
+                    "processing": "数据处理中，请稍后......",
+                    "search": "查询",
+                    "lengthMenu": "每页显示 _MENU_ 条记录",
+                    "zeroRecords": "没有检索到数据",
+                    "paginate": {
+                        "first": "首页",
+                        "last": "尾页",
+                        "next": "下页",
+                        "previous": "上页"
+                    }
+                },
+                "columnDefs": [
+                    {
+                        "defaultContent": "",
+                        "targets": "_all"
+                    }
+                ],
+                "columns": [
+                    {
+                        "data": "id",
+                        "title": "ID",
+                        "orderable": false
+                    },
+                    {
+                        "data": "parentId",
+                        "title": "父ID",
+                        "orderable": false
+                    },
+                    {
+                        "data": "name",
+                        "title": "资源名称",
+                        "orderable": false
+                    },
+                    {
+                        "data": "permission",
+                        "title": "权限",
+                        "orderable": false
+                    },
+                    {
+                        "data": "uri",
+                        "title": "uri",
+                        "orderable": false
+                    },
+                    {
+                        "data": "iconcls",
+                        "title": "图标",
+                        "orderable": false
+                    },
+                    {
+                        "data": "treeCode",
+                        "title": "树列表",
+                        "orderable": false
+                    },
+                    {
+                        "data": "showType",
+                        "title": "资源类型",
+                        "orderable": false,
+                        "render": function (data, type, row) {
+                            switch(data)
+                            {
+                                case 0:
+                                    return '菜单';
+                                case 2:
+                                    return '功能';
+                                default:
+                                    return '未知';
+                            }
+                        }
+                    },
+                    {
+                        "data": "createTime",
+                        "title": "创建时间",
+                        "width": "150px",
+                        "orderable": false,
+                        "render": function (data, type, row) {
+                            var date = new Date(data);
+                            return date.toLocaleString();
+                        }
+                    },
+                    {
+                        "data": "updateTime",
+                        "title": "修改时间",
+                        "width": "150px",
+                        "orderable": false,
+                        "render": function (data, type, row) {
+                            var date = new Date(data);
+                            return date.toLocaleString();
+                        }
+                    }
+                ]
+            });
+
+            // 单行选中变色
+            $('#tb_uri tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table_uri.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+            // 双击弹出modual
+            $('#tb_uri tbody').on('dblclick', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table_uri.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+            return table;
+        }
+        function addUri() {
+            $('#uriFlag').attr("value", "add");
+
+            $('#uriId').val("");
+            $('#parentId').val("0");
+            $('#uriName').val("");
+            $('#uriPermission').val("");
+            $('#uriLoc').val("#");
+            $('#iconCls').val("#");
+            $('#showType').val(0);
+
+            $('#uriModal').modal('show');
+        }
+        function editUri() {
+            $('#uriFlag').attr("value", "edit");
+
+            var selectedItem = $('#tb_uri').DataTable().row('.selected').data();
+            if(selectedItem == null)
+            {
+                alert("未选中记录！");
+                return;
+            }
+            $('#uriId').attr("value", selectedItem.id);
+            $('#parentId').val(selectedItem.parentId);
+            $('#uriName').val(selectedItem.name);
+            $('#uriPermission').val(selectedItem.permission);
+            $('#uriLoc').val(selectedItem.uri);
+            $('#iconCls').val(selectedItem.iconcls);
+            $('#showType').val(selectedItem.showType);
+            $('#uriModal').modal('show');
+        }
+        function delUri() {
+            var selectedItem = $('#tb_uri').DataTable().row('.selected').data();
+            if(selectedItem == null)
+            {
+                alert("未选中记录！");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: getContextPath() + "/uriController/deleteUri",
+                data: {
+                    id : selectedItem.id
+                },
+                success: function (data) {
+                    switch (data.result)
+                    {
+                        case RES_SUCCESS:
+                            alert('删除成功！');
+                            break;
+                        case RES_UNAUTHORIZED:
+                            alert('无权限！');
+                            break;
+                        case -1:
+                            alert('删除失败！');
+                            break;
+                        default :
+                            alert('删除失败,未知异常！');
+                            break;
+                    }
+                    table_uri.api().ajax.reload();
+                }
+            });
+        }
+        function confirmInputUri()
+        {
+            if($.trim($('#parentId').val()) == '')
+            {
+                alert('父ID不能为空！');
+                return ;
+            }
+            if($.trim($('#uriName').val()) == '')
+            {
+                alert('资源名称不能为空！');
+                return ;
+            }
+            if($.trim($('#uriPermission').val()) == '')
+            {
+                alert('权限不能为空！');
+                return ;
+            }
+            if($.trim($('#uriLoc').val()) == '')
+            {
+                alert('uri地址不能为空！');
+                return ;
+            }
+            if($.trim($('#iconCls').val()) == '')
+            {
+                alert('图标不能为空！');
+                return ;
+            }
+            var oper = $('#uriFlag').attr("value");
+            var url;
+            switch (oper) {
+                case "add":
+                    url = getContextPath() + "/uriController/addUri";
+                    break;
+                case "edit":
+                    url = getContextPath() + "/uriController/editUri";
+                    break;
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    id : $('#uriId').val(),
+                    parentId : $('#parentId').val(),
+                    uriName : $('#uriName').val(),
+                    uriPermission : $('#uriPermission').val(),
+                    uriLoc : $('#uriLoc').val(),
+                    iconCls : $('#iconCls').val(),
+                    showType : $('#showType').val()
+                },
+                success: function (data) {
+                    switch (data.result)
+                    {
+                        case RES_SUCCESS:
+                            alert('修改成功！');
+                            $('#uriModal').modal('hide');
+                            table_uri.api().ajax.reload();
+                            break;
+                        case RES_UNAUTHORIZED:
+                            alert('无权限！');
+                            break;
+                        case -1:
+                            alert('sql语句错误！');
+                            break;
+                        case -2:
+                            alert('用户名称已存在！');
+                            break;
+                        default :
+                            alert('未知错误！');
+                            break;
+                    }
+                }
+            });
+        }
+    </script>
+    <title></title>
+</head>
+<body>
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade in">
+    <span class="spinner"></span>
+</div>
+<!-- end #page-loader -->
+<!-- begin #page-container -->
+<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+    <!-- begin #header -->
+    <div id="header" class="header navbar navbar-inverse navbar-fixed-top">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <!-- begin mobile sidebar expand / collapse button -->
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand"><span class="navbar-logo"></span>推荐管理系统</a>
+                <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                        </span>
+                </button>
+            </div>
+            <!-- end mobile sidebar expand / collapse button -->
+            <!-- begin header navigation right -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="navbar-form full-width">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="输入关键字"/>
+                            <button type="submit" class="btn btn-search">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </li>
+                <li class="dropdown navbar-user"><a href="javascript;" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="hidden-xs activeUserName">Admin</span> <b class="caret"></b></a>
+                    <ul class="dropdown-menu animated fadeInLeft">
+                        <li class="arrow"></li>
+                        <li><a href="javascript:setUserInfo()">用户设置</a></li>
+                        <li><a href="javascript:changeUserPwd()">更改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="../../logout" >注销</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- end header navigation right -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end #header -->
+    <!-- begin #sidebar -->
+    <div id="sidebar" class="sidebar">
+        <!-- begin sidebar scrollbar -->
+        <div data-scrollbar="true" data-height="100%">
+            <!-- begin sidebar user -->
+            <ul class="nav">
+                <li class="nav-profile">
+                    <div class="info activeUserName">
+                        admin
+                        <small>研发工程师</small>
+                    </div>
+                </li>
+            </ul>
+            <!-- end sidebar user -->
+            <!-- begin sidebar nav -->
+            <ul id="menuList" class="nav">
+
+            </ul>
+            <!-- end sidebar nav -->
+        </div>
+        <!-- end sidebar scrollbar -->
+    </div>
+    <div class="sidebar-bg">
+    </div>
+    <!-- end #sidebar -->
+    <!-- begin #content -->
+    <div id="content" class="content">
+        <!-- begin row -->
+        <div class="row">
+            <!-- begin col-12 -->
+            <div class="col-md-12">
+                <!-- begin panel -->
+                <div class="panel panel-inverse">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">资源信息</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div style="margin-bottom: 20px">
+                            <button type="button" class="btn btn-primary" style="margin-left: 20px" onclick="addUri()">添&nbsp;&nbsp;加</button>
+                            <button type="button" class="btn btn-success" style="margin-left: 20px" onclick="editUri()">修&nbsp;&nbsp;改</button>
+                            <button type="button" class="btn btn-danger" style="margin-left: 20px" onclick="delUri()">删&nbsp;&nbsp;除</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="tb_uri" cellpadding="0" cellspacing="0" class = "display">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- end panel -->
+            </div>
+            <!-- end col-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end #content -->
+</div>
+<!-- end page container -->
+<!-- start modal -->
+<div class="modal fade" id="uriModal" tabindex="-1" role="dialog" aria-labelledby="uriModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- start modal_header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uriModalLabel">资源信息</h4>
+            </div>
+            <!-- end modal_header -->
+            <!-- start modal-body -->
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form class="form-horizontal" action="/" method="POST">
+                        <fieldset>
+                            <input type="hidden" id="uriFlag" name="uriFlag">
+                            <input type="hidden" id="uriId" name="uriId">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="parentId">父ID：</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" id="parentId" name="parentId" maxlength="30">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="uriName">资源名称：</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" id="uriName" name="uriName" maxlength="30">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="uriPermission">权限：</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" id="uriPermission" name="uriPermission" maxlength="50">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="uriLoc">uri地址：</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" id="uriLoc" name="uriLoc" maxlength="50">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="iconCls">图标：</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" id="iconCls" name="iconCls" maxlength="30">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">显示类型：</label>
+                                <div class="col-md-8">
+                                    <select id = "showType" class="form-control">
+                                        <option value="0">菜单</option>
+                                        <option value="2">功能</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <!-- end modal-body -->
+            <!-- start modal-footer -->
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btnSave" onclick="confirmInputUri()">确定</button>
+                <button class="btn btn-danger" data-dismiss="modal"
+                        aria-hidden="true">取消
+                </button>
+            </div>
+            <!-- end modal-footer -->
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+<!-- start modal -->
+<div class="modal fade" id="set_UserInfoModal" tabindex="-1" role="dialog" aria-labelledby="set_UserInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- start modal_header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span  aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="set_UserInfoModalLabel">个人信息设置</h4>
+            </div>
+            <!-- end modal_header -->
+            <!-- start modal-body -->
+            <div class="modal-body">
+                <form class="form-horizontal" id="set_UserInfoForm">
+                    <div class="control-group">
+                        <label class="control-label" for="set_UserName">&nbsp;&nbsp;&nbsp;&nbsp;用户名称：</label>
+                        <input type="text" id="set_UserName" name="set_UserName" maxlength="30">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="set_GivenName">用户中文名：</label>
+                        <input type="text" id="set_GivenName" name="set_GivenName" maxlength="30">
+                    </div>
+                </form>
+            </div>
+            <!-- end modal-body -->
+            <!-- start modal-footer -->
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btnSaveUserInfo" onclick="confirmInputSetUserInfo()">确定</button>
+                <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">取消</button>
+            </div>
+            <!-- end modal-footer -->
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+<!-- start modal -->
+<div class="modal fade" id="set_PwdModal" tabindex="-1" role="dialog" aria-labelledby="set_PwdModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- start modal_header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span  aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="set_PwdModalLabel">修改密码</h4>
+            </div>
+            <!-- end modal_header -->
+            <!-- start modal-body -->
+            <div class="modal-body">
+                <form class="form-horizontal" id="set_PwdForm">
+                    <div class="control-group">
+                        <label class="control-label" for="set_CurUserPasswrod">&nbsp;&nbsp;&nbsp;&nbsp;当前密码：</label>
+                        <input type="text" id="set_CurUserPasswrod" name="set_CurUserPasswrod" maxlength="30">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="set_SetUserPasswrod">&nbsp;&nbsp;&nbsp;&nbsp;设置密码：</label>
+                        <input type="text" id="set_SetUserPasswrod" name="set_SetUserPasswrod" maxlength="30">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="set_SetConfirmUserPasswrod">&nbsp;&nbsp;&nbsp;&nbsp;确认密码：</label>
+                        <input type="text" id="set_SetConfirmUserPasswrod" name="set_SetConfirmUserPasswrod" maxlength="30">
+                    </div>
+                </form>
+            </div>
+            <!-- end modal-body -->
+            <!-- start modal-footer -->
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="confirmInputSetUserPwd()">确定</button>
+                <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">取消</button>
+            </div>
+            <!-- end modal-footer -->
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+</body>
+</html>

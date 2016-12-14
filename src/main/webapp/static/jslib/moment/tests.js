@@ -5041,7 +5041,7 @@
     });
 
     test('format week', function (assert) {
-        var expected = 'neděle ne ne_pondělí po po_úterý út út_středa st st_čtvrtek čt čt_pátek pá pá_sobota so so'.split('_'), i;
+        var expected = 'neděle ne ne_pondělí analysis.po po_úterý út út_středa st st_čtvrtek čt čt_pátek pá pá_sobota so so'.split('_'), i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format('dddd ddd dd'), expected[i], expected[i]);
         }
@@ -10973,7 +10973,7 @@
     localeModule('eu');
 
     test('parse', function (assert) {
-        var tests = 'urtarrila urt._otsaila ots._martxoa mar._apirila api._maiatza mai._ekaina eka._uztaila uzt._abuztua abu._iraila ira._urria urr._azaroa aza._abendua abe.'.split('_'), i;
+        var tests = 'urtarrila urt._otsaila ots._martxoa mar._apirila analysis.api._maiatza mai._ekaina eka._uztaila uzt._abuztua abu._iraila ira._urria urr._azaroa aza._abendua abe.'.split('_'), i;
         function equalTest(input, mmm, i) {
             assert.equal(moment(input, mmm).month(), i, input + ' should be month ' + (i + 1));
         }
@@ -11061,7 +11061,7 @@
     });
 
     test('format month', function (assert) {
-        var expected = 'urtarrila urt._otsaila ots._martxoa mar._apirila api._maiatza mai._ekaina eka._uztaila uzt._abuztua abu._iraila ira._urria urr._azaroa aza._abendua abe.'.split('_'), i;
+        var expected = 'urtarrila urt._otsaila ots._martxoa mar._apirila analysis.api._maiatza mai._ekaina eka._uztaila uzt._abuztua abu._iraila ira._urria urr._azaroa aza._abendua abe.'.split('_'), i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format('MMMM MMM'), expected[i], expected[i]);
         }
@@ -20401,7 +20401,7 @@
     });
 
     test('suffix', function (assert) {
-        assert.equal(moment(30000).from(0), 'po kelių sekundžių',  'prefix');
+        assert.equal(moment(30000).from(0), 'analysis.po kelių sekundžių',  'prefix');
         assert.equal(moment(0).from(30000), 'prieš kelias sekundes', 'suffix');
     });
 
@@ -20410,8 +20410,8 @@
     });
 
     test('fromNow', function (assert) {
-        assert.equal(moment().add({s: 30}).fromNow(), 'po kelių sekundžių', 'in seconds');
-        assert.equal(moment().add({d: 5}).fromNow(), 'po 5 dienų', 'in 5 days');
+        assert.equal(moment().add({s: 30}).fromNow(), 'analysis.po kelių sekundžių', 'in seconds');
+        assert.equal(moment().add({d: 5}).fromNow(), 'analysis.po 5 dienų', 'in 5 days');
     });
 
     test('calendar day', function (assert) {
@@ -27941,7 +27941,7 @@
     });
 
     test('format week', function (assert) {
-        var expected = 'nedeľa ne ne_pondelok po po_utorok ut ut_streda st st_štvrtok št št_piatok pi pi_sobota so so'.split('_'), i;
+        var expected = 'nedeľa ne ne_pondelok analysis.po po_utorok ut ut_streda st st_štvrtok št št_piatok pi pi_sobota so so'.split('_'), i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format('dddd ddd dd'), expected[i], expected[i]);
         }
@@ -42248,7 +42248,7 @@
         assert.equal(moment().locale('dude').localeData()._week.dow, 3);
     });
 
-    test('month name callback function', function (assert) {
+    test('month name analysis.callback function', function (assert) {
         function fakeReplace(m, format) {
             if (/test/.test(format)) {
                 return 'test';

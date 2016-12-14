@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rbac.mapper.RbacDepMapper">
+    <resultMap id="RbacDepResultMap" type="rbac.entity.RbacDep" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="parent_id" property="parent_id" jdbcType="INTEGER" />
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Dep_Column_List" >
+        rbac_dep.id,rbac_dep.parent_id ,rbac_dep.name,rbac_dep.code,rbac_dep.create_time,rbac_dep.update_time,rbac_dep.status
+    </sql>
+    <select id="selectIsDepCodeExist" resultType="java.lang.Integer" parameterType="string">
+        SELECT count(*)
+        FROM  rbac_dep
+        WHERE status = 1 AND code = #{code,jdbcType=VARCHAR}
+    </select>
+    <select id="selectIsDepNameExist" resultType="java.lang.Integer" parameterType="string">
+        SELECT count(*)
+        FROM  rbac_dep
+        WHERE status = 1 AND name = #{name,jdbcType=VARCHAR}
+    </select>
+    <select id="selectIsDepCodeExistExceptID" resultType="java.lang.Integer" parameterType="map">
+        SELECT count(*)
+        FROM  rbac_dep
+        WHERE status = 1 AND code = #{code,jdbcType=VARCHAR} AND id != #{id ,jdbcType=INTEGER}
+    </select>
+    <select id="selectIsDepNameExistExceptID" resultType="java.lang.Integer" parameterType="map">
+        SELECT count(*)
+        FROM  rbac_dep
+        WHERE status = 1 AND name = #{name,jdbcType=VARCHAR} AND id != #{id ,jdbcType=INTEGER}
+    </select>
+    <select id="selectDepList" resultMap="rbac.mapper.RbacDepMapper.RbacDepResultMap">
+        SELECT
+        <include refid="rbac.mapper.RbacDepMapper.Dep_Column_List"/>
+        FROM rbac_dep
+        WHERE rbac_dep.status = 1
+    </select>
+    <insert id="insertDep" parameterType="rbac.entity.RbacDep">
+        insert into rbac_dep (parent_id ,code, name, create_time,
+        update_time, status)
+        values ( #{parent_id ,jdbcType=INTEGER} ,#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 1)
+    </insert>
+    <update id="updateDep" parameterType="rbac.entity.RbacDep">
+        update rbac_dep
+        <set >
+            <if test="parent_id != null" >
+                parent_id = #{parent_id,jdbcType=INTEGER},
+            </if>
+            <if test="code != null" >
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime}
+            </if>
+        </set>
+        where id = #{id , jdbcType=INTEGER}
+    </update>
+</mapper>

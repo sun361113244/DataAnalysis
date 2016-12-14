@@ -66,7 +66,7 @@
           operate(self, true, options);
         }
 
-        // Fire method's callback
+        // Fire method's analysis.callback
         if ($.isFunction(fire)) {
           fire();
         }

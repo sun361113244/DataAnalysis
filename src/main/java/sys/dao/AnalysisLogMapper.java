@@ -1,6 +1,6 @@
 package sys.dao;
 
-import entity.AnalysisLog;
+import analysis.entity.AnalysisLog;
 
 public interface AnalysisLogMapper
 {

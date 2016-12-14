@@ -157,7 +157,7 @@ License:  MIT
 
 
   // Date.now() is supported everywhere except IE8. For IE8 we use the Date.now polyfill
-  //   github.com/Financial-Times/polyfill-service/blob/master/polyfills/Date.now/polyfill.js
+  //   github.com/Financial-Times/polyfill-analysis.service/blob/master/polyfills/Date.now/polyfill.js
   // as Safari 6 doesn't have support for NavigationTiming, we use a Date.now() timestamp for relative values
 
   // if you want values similar to what you'd get with real perf.now, place this towards the head of the page
@@ -1545,7 +1545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	 * Holder-specific resize/orientation change callback, debounced to prevent excessive execution
+	 * Holder-specific resize/orientation change analysis.callback, debounced to prevent excessive execution
 	 */
 	function resizeEvent() {
 	    debounce(function() {
@@ -1673,7 +1673,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param {String} str
 	 * @return {Object}
-	 * @api public
+	 * @analysis.api public
 	 */
 
 	exports.parse = function(str){
@@ -1732,7 +1732,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param {Object} obj
 	 * @return {String}
-	 * @api public
+	 * @analysis.api public
 	 */
 
 	exports.stringify = function(obj){
@@ -1858,7 +1858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    
 	    // Standards-based browsers support DOMContentLoaded
 	    } else if ( w3c ) {
-	        // Use the handy event callback
+	        // Use the handy event analysis.callback
 	        doc[ADDEVENTLISTENER]( DOMCONTENTLOADED, completed, FALSE );
 	    
 	        // A fallback to window.onload, that will always work
@@ -2189,7 +2189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        svg.appendChild(defs);
 	    }
 
-	    //IE throws an exception if this is set and Chrome requires it to be set
+	    //IE throws an analysis.exception if this is set and Chrome requires it to be set
 	    if (svg.webkitMatchesSelector) {
 	        svg.setAttribute('xmlns', SVG_NS);
 	    }
@@ -2494,7 +2494,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param {Mixed} val
 	 * @return {String}
-	 * @api public
+	 * @analysis.api public
 	 */
 
 	module.exports = function(val){

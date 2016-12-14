@@ -19,7 +19,7 @@ The component uses on `jQuery`, `moment.js` and `bootstrap` libraries.
 
 * `viewDate` - Holds the currently selected value that the user has selected through the widget. This is not the model value this is the view value. Changing this usually requires a subsequent call to `update()` function
 
-* `unset` - A `boolean` variable that holds wheather the components model value is set or not. Model's value starts as `unset = true` and if is either set by the user or programmatically through the api to a valid value then it is set to `false`. If subsequent events lead to an invalid value then this variable is set to `true` again. Setting this variable usually takes place in the `setValue()` function.
+* `unset` - A `boolean` variable that holds wheather the components model value is set or not. Model's value starts as `unset = true` and if is either set by the user or programmatically through the analysis.api to a valid value then it is set to `false`. If subsequent events lead to an invalid value then this variable is set to `true` again. Setting this variable usually takes place in the `setValue()` function.
 
 * `input` - Hold the DOM input element this instance is attached to
 
@@ -39,11 +39,11 @@ The component uses on `jQuery`, `moment.js` and `bootstrap` libraries.
 
 * `datePickerModes` - An array of objects with configuration parameters for the different views of the DatePicker subcomponent
 
-* `viewModes` - An array of strings containing all the possible strings that `options.viewMode` can take through `viewMode()` public api function
+* `viewModes` - An array of strings containing all the possible strings that `options.viewMode` can take through `viewMode()` public analysis.api function
 
-* `directionModes` - An array of strings containing all the possible strings that `options.direction` can take through `direction()` public api function
+* `directionModes` - An array of strings containing all the possible strings that `options.direction` can take through `direction()` public analysis.api function
 
-* `orientationModes` - An array of strings containing all the possible strings that `options.orientation` can take through `orientation()` public api function
+* `orientationModes` - An array of strings containing all the possible strings that `options.orientation` can take through `orientation()` public analysis.api function
 
 ### Private functions
 
