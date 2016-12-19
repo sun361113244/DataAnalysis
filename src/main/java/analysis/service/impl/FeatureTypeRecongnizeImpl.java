@@ -36,7 +36,6 @@ public class FeatureTypeRecongnizeImpl
                 } , Encoders.STRING()
         );
 
-        System.out.println(colDt.count());
 //        if(colDt.)
 //        colDt.fi
 

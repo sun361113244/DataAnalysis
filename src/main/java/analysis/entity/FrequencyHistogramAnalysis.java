@@ -4,9 +4,21 @@ import java.util.List;
 
 public class FrequencyHistogramAnalysis
 {
+    private TbColumn tbColumn;
+
     private List<FrequencyUnit> frequencyUnits;
 
     private List<FrequencyUnit> cdfs;
+
+    public TbColumn getTbColumn()
+    {
+        return tbColumn;
+    }
+
+    public void setTbColumn(TbColumn tbColumn)
+    {
+        this.tbColumn = tbColumn;
+    }
 
     public List<FrequencyUnit> getFrequencyUnits()
     {

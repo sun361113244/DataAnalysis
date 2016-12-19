@@ -23,9 +23,11 @@ public class DescriptiveStatisticVo implements Serializable
     private String kurtosis;
     private String median;
     private List<GroupRatioVo> groupRatios;
-    private List<String> exceptionVals;
+    private FrequencyHistogramAnalysisVo frequencyHistogramAnalysis;
+    private FrequencyHistogramAnalysisEchartsVo frequencyHistogramAnalysisEchartsVo;
+    private KDEAnalysisEchartsVo kdeAnalysisEchartsVo;
+    private List<ExceptionValueVo> exceptionVals;
     private String msg;
-    private boolean show;
 
     public DescriptiveStatisticVo(DescriptiveStatistic descriptiveStatistic)
     {
@@ -45,42 +47,63 @@ public class DescriptiveStatisticVo implements Serializable
 
         if(descriptiveStatistic.getGroupRatios() != null)
             this.groupRatios = GroupRatioVo.toVolist(descriptiveStatistic.getGroupRatios());
-        if(descriptiveStatistic.getExceptionVals() != null)
+
+        if(descriptiveStatistic.getFrequencyHistogramAnalysis() != null)
+            this.frequencyHistogramAnalysis = new FrequencyHistogramAnalysisVo(descriptiveStatistic.getFrequencyHistogramAnalysis());
+
+        if(descriptiveStatistic.getFrequencyHistogramAnalysis() != null)
+            this.frequencyHistogramAnalysisEchartsVo = new FrequencyHistogramAnalysisEchartsVo(descriptiveStatistic.getFrequencyHistogramAnalysis());
+
+        if(descriptiveStatistic.getKdeAnalysis() != null)
+            this.kdeAnalysisEchartsVo = new KDEAnalysisEchartsVo(descriptiveStatistic.getKdeAnalysis());
+
+        if(descriptiveStatistic.getExceptionValues() != null)
         {
             this.exceptionVals = new ArrayList<>();
-            for(Double val : descriptiveStatistic.getExceptionVals())
+            for(ExceptionValue val : descriptiveStatistic.getExceptionValues())
             {
-                this.exceptionVals.add(String.format("%.2f", val == 0 ? 0 : val));
+                ExceptionValueVo exceptionValueVo = new ExceptionValueVo();
+                exceptionValueVo.setVal(String.format("%.2f", val.getValue() == 0 ? 0 : val.getValue()));
+                exceptionValueVo.setExceptionStat(val.getExceptionStat());
+
+                this.exceptionVals.add(exceptionValueVo);
             }
         }
 
-        if(descriptiveStatistic.getTbCol().getFeatureType() == FeatureType.CATEGORY)
-        {
-            this.show = true;
-        }
         if(descriptiveStatistic.getTbCol().getFeatureType() == FeatureType.CONTINUOUS)
         {
-            this.show = true;
-
-            this.msg = String.format("范围是:%s ~ %s." , this.min , this.max );
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.format("范围是:%s ~ %s." , this.min , this.max ));
             if(descriptiveStatistic.getSkewness() >= -2 * Math.sqrt((double)6/descriptiveStatistic.getN()) &&
                     descriptiveStatistic.getSkewness() <= -2 * Math.sqrt((double)6/descriptiveStatistic.getN()) &&
                     descriptiveStatistic.getKurtosis() >= -2 * Math.sqrt((double)24/descriptiveStatistic.getN()) &&
                     descriptiveStatistic.getKurtosis() <= -2 * Math.sqrt((double)24/descriptiveStatistic.getN()))
             {
-                this.msg += String.format("数据符合均值%s ,方差%s正态分布 ." ,this.getMean() , this.variance );
+                sb.append(String.format("数据符合均值%s ,方差%s正态分布 ." ,this.getMean() , this.variance ));
             }
             if(descriptiveStatistic.getSkewness() < -1 * Math.sqrt((double)6/descriptiveStatistic.getN()))
-                this.msg += String.format("大多数值在高处.中位数是%s." ,this.getMedian() );
+                sb.append(String.format("大多数值在高处.中位数是%s." ,this.getMedian() ));
             if(descriptiveStatistic.getSkewness() > 1 * Math.sqrt((double)6/descriptiveStatistic.getN()))
-                this.msg += String.format("大多数值在低处.中位数是%s." ,this.getMedian() );
+                sb.append(String.format("大多数值在低处.中位数是%s." ,this.getMedian() ));
             if(this.exceptionVals!= null && this.exceptionVals.size() != 0)
             {
-                this.msg += "异常值:";
+                sb.append("低位异常值:");
                 for(int i = 0; i < this.exceptionVals.size(); i++)
-                    this.msg += this.exceptionVals.get(i) + ",";
-                this.msg = this.msg.substring(0 , this.msg.length() - 1);
+                {
+                    if(this.exceptionVals.get(i).getExceptionStat() < 0)
+                        sb.append(this.exceptionVals.get(i).getVal() + ",");
+                }
+                sb.deleteCharAt(sb.length() - 1);
+                sb.append(" 高位异常值:");
+                for(int i = 0; i < this.exceptionVals.size(); i++)
+                {
+                    if(this.exceptionVals.get(i).getExceptionStat() > 0)
+                        sb.append(this.exceptionVals.get(i).getVal() + ",");
+                }
+                sb.deleteCharAt(sb.length() - 1);
             }
+
+            this.msg = sb.toString();
         }
     }
 
@@ -248,14 +271,34 @@ public class DescriptiveStatisticVo implements Serializable
         this.skewness = skewness;
     }
 
-    public List<String> getExceptionVals()
+    public FrequencyHistogramAnalysisVo getFrequencyHistogramAnalysis()
     {
-        return exceptionVals;
+        return frequencyHistogramAnalysis;
     }
 
-    public void setExceptionVals(List<String> exceptionVals)
+    public void setFrequencyHistogramAnalysis(FrequencyHistogramAnalysisVo frequencyHistogramAnalysis)
     {
-        this.exceptionVals = exceptionVals;
+        this.frequencyHistogramAnalysis = frequencyHistogramAnalysis;
+    }
+
+    public FrequencyHistogramAnalysisEchartsVo getFrequencyHistogramAnalysisEchartsVo()
+    {
+        return frequencyHistogramAnalysisEchartsVo;
+    }
+
+    public void setFrequencyHistogramAnalysisEchartsVo(FrequencyHistogramAnalysisEchartsVo frequencyHistogramAnalysisEchartsVo)
+    {
+        this.frequencyHistogramAnalysisEchartsVo = frequencyHistogramAnalysisEchartsVo;
+    }
+
+    public KDEAnalysisEchartsVo getKdeAnalysisEchartsVo()
+    {
+        return kdeAnalysisEchartsVo;
+    }
+
+    public void setKdeAnalysisEchartsVo(KDEAnalysisEchartsVo kdeAnalysisEchartsVo)
+    {
+        this.kdeAnalysisEchartsVo = kdeAnalysisEchartsVo;
     }
 
     public String getMsg()
@@ -266,15 +309,5 @@ public class DescriptiveStatisticVo implements Serializable
     public void setMsg(String msg)
     {
         this.msg = msg;
-    }
-
-    public boolean isShow()
-    {
-        return show;
-    }
-
-    public void setShow(boolean show)
-    {
-        this.show = show;
     }
 }

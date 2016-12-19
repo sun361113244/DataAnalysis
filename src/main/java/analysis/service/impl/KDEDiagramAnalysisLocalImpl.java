@@ -46,6 +46,7 @@ public class KDEDiagramAnalysisLocalImpl implements ContinuousFeatureAnalysisSer
         }
 
         Collections.sort(xyPoints);
+        kdeAnalysis.setTbColumn(tbColumns.get(i).clone());
         kdeAnalysis.setXyPoints(xyPoints);
         descriptiveStatistic.setKdeAnalysis(kdeAnalysis);
     }

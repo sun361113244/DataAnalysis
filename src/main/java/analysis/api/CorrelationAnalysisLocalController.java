@@ -21,8 +21,6 @@ public class CorrelationAnalysisLocalController
     @Resource
     private ExecutorContext executorContext;
 
-    private double r2_upper = Config.GFI;
-
     @RequestMapping("/summary")
     public ModelAndView summary(AnalysisFilter analysisFilter) throws Exception
     {
@@ -31,12 +29,12 @@ public class CorrelationAnalysisLocalController
         CorrelationAnalysisLocalJob job = new CorrelationAnalysisLocalJob(analysisFilter);
         Future<Map<String , Object>> correlationAnalysis = executorContext.submit(job);
 
-        Map<String , Object> furureRes = correlationAnalysis.get(Config.ANALYSE_TIMEOUT, TimeUnit.SECONDS);
+        Map<String , Object> futureRes = correlationAnalysis.get(Config.ANALYSE_TIMEOUT, TimeUnit.SECONDS);
 
         List<CorrelationAnalysisVo> correlationAnalysisesVos =
-                CorrelationAnalysisVo.toVoList((List<CorrelationAnalysis>)furureRes.get("correlationAnalysises"));
+                CorrelationAnalysisVo.toVoList((List<CorrelationAnalysis>)futureRes.get("correlationAnalysises"));
         List<DescriptiveStatisticVo> descriptiveStatisticVos =
-                DescriptiveStatisticVo.toVoList((List<DescriptiveStatistic>)furureRes.get("descriptiveStatistics"));
+                DescriptiveStatisticVo.toVoList((List<DescriptiveStatistic>)futureRes.get("descriptiveStatistics"));
 
         mav.addObject("descriptiveAnalysis_summary" , descriptiveStatisticVos);
         mav.addObject("correlationAnalysis_summary" , correlationAnalysisesVos);

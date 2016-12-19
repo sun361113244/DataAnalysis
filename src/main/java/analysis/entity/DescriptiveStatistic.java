@@ -5,42 +5,24 @@ import java.util.List;
 public class DescriptiveStatistic
 {
     private TbColumn tbCol;
-
     private double min;
-
     private double max;
-
     private double mean;
-
     private double geometricMean;
-
     private long n;
-
     private double sum;
-
     private double sumOfSquares;
-
     private double standardDeviation;
-
     private double variance;
-
     private double skewness;
-
     private double kurtosis;
-
     private double quarter1;
-
     private double median;
-
     private double quarter3;
-
     private List<GroupRatio> groupRatios;
-
     private FrequencyHistogramAnalysis frequencyHistogramAnalysis;
-
     private KDEAnalysis kdeAnalysis;
-
-    private List<Double> exceptionVals;
+    private List<ExceptionValue> exceptionValues;
 
     public TbColumn getTbCol()
     {
@@ -222,13 +204,13 @@ public class DescriptiveStatistic
         this.kdeAnalysis = kdeAnalysis;
     }
 
-    public List<Double> getExceptionVals()
+    public List<ExceptionValue> getExceptionValues()
     {
-        return exceptionVals;
+        return exceptionValues;
     }
 
-    public void setExceptionVals(List<Double> exceptionVals)
+    public void setExceptionValues(List<ExceptionValue> exceptionValues)
     {
-        this.exceptionVals = exceptionVals;
+        this.exceptionValues = exceptionValues;
     }
 }

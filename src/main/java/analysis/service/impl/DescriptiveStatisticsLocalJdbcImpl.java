@@ -109,43 +109,23 @@ public class DescriptiveStatisticsLocalJdbcImpl implements DescriptiveStatistics
 
         continuousFeatureAnalysisServiceList.get(0).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns,analysisFilter , i);
 
-        if(analysisFilter.getShowFrequencyHistogramStat() != 0 && Math.abs(descriptiveStatistic.getMax() - descriptiveStatistic.getMin()) / (3.5 * descriptiveStatistic.getStandardDeviation() / Math.sqrt(descriptiveStatistic.getN())) > 5 )
+        if(analysisFilter.getShowFrequencyHistogramStat() != 0 &&
+                descriptiveStatistic.getN() >= 10 &&
+                Math.abs(descriptiveStatistic.getMax() - descriptiveStatistic.getMin()) / (3.5 * descriptiveStatistic.getStandardDeviation() / Math.sqrt(descriptiveStatistic.getN())) > 5 )
         {
-            if(analysisFilter.getShowFrequencyHistogramStat() == 1)
+            if((analysisFilter.getShowFrequencyHistogramStat() & 1) > 0)
                 continuousFeatureAnalysisServiceList.get(1).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns ,analysisFilter , i);
-            if(analysisFilter.getShowFrequencyHistogramStat() == 2)
+            if((analysisFilter.getShowFrequencyHistogramStat() & 2) > 0)
                 continuousFeatureAnalysisServiceList.get(2).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns ,analysisFilter , i);
-
-//            selectColumnExceptionValue(descriptiveStatistic ,rows , tbColumns , i);
-        }
-        if(analysisFilter.getShowKDEStat() != 0 && descriptiveStatistic.getN() >= 10)
-        {
-            if(analysisFilter.getShowKDEStat() == 1)
+            if((analysisFilter.getShowFrequencyHistogramStat() & 4) > 0)
                 continuousFeatureAnalysisServiceList.get(3).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns , analysisFilter , i);
-            if(analysisFilter.getShowKDEStat() == 2)
+            if((analysisFilter.getShowFrequencyHistogramStat() & 8) > 0)
                 continuousFeatureAnalysisServiceList.get(4).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns , analysisFilter , i);
+
+            continuousFeatureAnalysisServiceList.get(5).selectContinuousStatisticResult(descriptiveStatistic ,rows , tbColumns , analysisFilter , i);
+//            selectColumnExceptionValue(descriptiveStatistic ,rows , tbColumns , i);
         }
 
         return descriptiveStatistic;
-    }
-
-    private void selectColumnExceptionValue(DescriptiveStatistic descriptiveStatistic, List<List<Object>> rows, List<TbColumn> tbColumns, int i)
-    {
-        List<Double> exceptionVals = new ArrayList<>();
-        double whisker_lower = descriptiveStatistic.getQuarter1() - 1.5 * (descriptiveStatistic.getQuarter3() - descriptiveStatistic.getQuarter1());
-        double whisker_upper = descriptiveStatistic.getQuarter3() + 1.5 * (descriptiveStatistic.getQuarter3() - descriptiveStatistic.getQuarter1());
-        for(List<Object> row : rows)
-        {
-            if(row.get(i) != null)
-            {
-                double val = Double.parseDouble(row.get(i).toString());
-                if(val > whisker_upper || val <  whisker_lower)
-                {
-                    if(!exceptionVals.contains(val))
-                        exceptionVals.add(val);
-                }
-            }
-        }
-        descriptiveStatistic.setExceptionVals(exceptionVals);
     }
 }

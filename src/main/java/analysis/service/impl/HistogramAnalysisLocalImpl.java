@@ -67,6 +67,7 @@ public class HistogramAnalysisLocalImpl implements ContinuousFeatureAnalysisServ
         }
 
         Collections.sort(frequencyUnits);
+        frequencyHistogramAnalysis.setTbColumn(tbColumns.get(i).clone());
         frequencyHistogramAnalysis.setFrequencyUnits(frequencyUnits);
         descriptiveStatistic.setFrequencyHistogramAnalysis(frequencyHistogramAnalysis);
     }

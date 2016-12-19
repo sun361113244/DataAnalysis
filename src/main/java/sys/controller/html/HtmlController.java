@@ -13,6 +13,12 @@ public class HtmlController
         return "forward:/html/homepage.html";
     }
 
+    @RequestMapping("/dataquery.action")
+    public String dataquery()
+    {
+        return "forward:/analysis/html/dataquery.html";
+    }
+
     @RequestMapping("/login.action")
     public String login()
     {

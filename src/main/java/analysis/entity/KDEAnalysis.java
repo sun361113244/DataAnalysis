@@ -4,8 +4,19 @@ import java.util.List;
 
 public class KDEAnalysis
 {
+    private TbColumn tbColumn;
     private List<XYPoint> xyPoints;
     private List<XYPoint> cdfPoints;
+
+    public TbColumn getTbColumn()
+    {
+        return tbColumn;
+    }
+
+    public void setTbColumn(TbColumn tbColumn)
+    {
+        this.tbColumn = tbColumn;
+    }
 
     public List<XYPoint> getXyPoints()
     {

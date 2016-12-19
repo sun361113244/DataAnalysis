@@ -26,7 +26,7 @@ public class ArgsCheckAspects
     @Resource
     private JdbcUtil jdbcUtil;
 
-    @Before("execution(public org.springframework.web.servlet.ModelAndView analysis.api..*(..))")
+    @Before("execution(public org.springframework.web.servlet.ModelAndView analysis.api..summary(..))")
     public void beforecheck(JoinPoint jp) throws Exception
     {
         List<Object> args = Arrays.asList(jp.getArgs());

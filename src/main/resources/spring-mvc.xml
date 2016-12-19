@@ -37,6 +37,7 @@
 
     <bean id = "JsonView" class="sys.view.JsonView"></bean>
     <bean id = "DataTablesAjaxView" class="sys.view.DataTablesAjaxView"></bean>
+    <bean id = "DataTablesNullAjaxView" class="sys.view.DataTablesNullAjaxView"></bean>
     <bean id = "DataTablesServerSideView" class="sys.view.DataTablesServerSideView"></bean>
     <bean id = "zTreeView" class="sys.view.zTreeView"></bean>
 

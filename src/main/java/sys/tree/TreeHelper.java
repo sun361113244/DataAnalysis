@@ -63,7 +63,6 @@ public class TreeHelper
             String keyId = String.valueOf(id);
 
             nodeMap.put(keyId, treeNode);
-            // System.out.println("keyId: " +keyId);
         }
 
         return nodeMap;
@@ -92,7 +91,6 @@ public class TreeHelper
                 } else
                 {
                     parentNode.addChildNode(treeNode);
-                    // System.out.println("childId: " +treeNode.getSelfId()+" parentId: "+parentNode.getSelfId());
                 }
             }
         }
