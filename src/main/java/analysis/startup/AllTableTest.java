@@ -9,9 +9,6 @@ public class AllTableTest
 //    @Resource
 //    private JdbcUtil jdbcUtil;
 
-    @Resource
-    private CorrelationAnalysisLocalController api;
-
     public void handler() throws Exception
     {
 //        List<String> tblNames = jdbcUtil.selectAllTables();

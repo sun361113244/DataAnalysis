@@ -5,6 +5,17 @@ public class XYPoint implements Comparable<XYPoint>
     private double x;
     private double y;
 
+    public XYPoint()
+    {
+
+    }
+
+    public XYPoint(double x , double y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     public double getX()
     {
         return x;

@@ -40,6 +40,7 @@
     <bean id = "DataTablesNullAjaxView" class="sys.view.DataTablesNullAjaxView"></bean>
     <bean id = "DataTablesServerSideView" class="sys.view.DataTablesServerSideView"></bean>
     <bean id = "zTreeView" class="sys.view.zTreeView"></bean>
+    <bean id = "ApiReturnView" class="sys.view.ApiReturnView"></bean>
 
     <mvc:resources mapping="/static/**" location="/static/" />
 

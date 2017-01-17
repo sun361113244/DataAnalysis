@@ -1,7 +1,8 @@
 class helloworld
 {
-  def main(args: Array[String]) {
-    println("Hello World")
+  def main(args: Array[String]): Unit =
+  {
+    "Hello Word".foreach(println);
   }
 
 }

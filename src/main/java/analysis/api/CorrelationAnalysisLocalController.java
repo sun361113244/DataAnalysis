@@ -9,6 +9,7 @@ import util.Config;
 import util.ExecutorContext;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -24,21 +25,33 @@ public class CorrelationAnalysisLocalController
     @RequestMapping("/summary")
     public ModelAndView summary(AnalysisFilter analysisFilter) throws Exception
     {
-        ModelAndView mav = new ModelAndView("JsonView");
+        ModelAndView mav = new ModelAndView("ApiReturnView");
 
         CorrelationAnalysisLocalJob job = new CorrelationAnalysisLocalJob(analysisFilter);
         Future<Map<String , Object>> correlationAnalysis = executorContext.submit(job);
 
         Map<String , Object> futureRes = correlationAnalysis.get(Config.ANALYSE_TIMEOUT, TimeUnit.SECONDS);
 
-        List<CorrelationAnalysisVo> correlationAnalysisesVos =
-                CorrelationAnalysisVo.toVoList((List<CorrelationAnalysis>)futureRes.get("correlationAnalysises"));
         List<DescriptiveStatisticVo> descriptiveStatisticVos =
                 DescriptiveStatisticVo.toVoList((List<DescriptiveStatistic>)futureRes.get("descriptiveStatistics"));
 
-        mav.addObject("descriptiveAnalysis_summary" , descriptiveStatisticVos);
-        mav.addObject("correlationAnalysis_summary" , correlationAnalysisesVos);
-        mav.addObject("result" , 1);
+        List<CorrelationAnalysisVo> correlationAnalysisesVos =
+                CorrelationAnalysisVo.toVoList((List<CorrelationAnalysis>)futureRes.get("correlationAnalysises"));
+
+        List<Object> datas = new ArrayList<>();
+        datas.add(descriptiveStatisticVos);
+        datas.add(correlationAnalysisesVos);
+        List<String> controllerName = new ArrayList<>();
+        controllerName.add("descriptiveAnalysis_summary");
+        controllerName.add("correlationAnalysis_summary");
+
+        ApiReturn apiReturn = new ApiReturn();
+        apiReturn.setTaskid(analysisFilter.getTaskid());
+        apiReturn.setReturn_code(0);
+        apiReturn.setControllerName(controllerName);
+        apiReturn.setData(datas);
+
+        mav.addObject("apiReturn" , apiReturn);
 
         return mav;
     }

@@ -1,15 +1,17 @@
 package sys.echarts.component;
 
+import java.util.List;
+
 public class EchartsLegendBean
 {
-    private String[] data;
+    private List<String> data;
 
-    public String[] getData()
+    public List<String> getData()
     {
         return data;
     }
 
-    public void setData(String[] data)
+    public void setData(List<String> data)
     {
         this.data = data;
     }

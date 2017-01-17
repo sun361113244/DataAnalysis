@@ -1,10 +1,14 @@
 package analysis.entity;
 
+import java.util.List;
+
 public class CorrelationAnalysis
 {
     private TbColumn tb_col1;
 
     private TbColumn tb_col2;
+
+    private List<XYPoint> xyPoint;
 
     private long n;
 
@@ -204,5 +208,15 @@ public class CorrelationAnalysis
     public void setxSumSquares(double xSumSquares)
     {
         this.xSumSquares = xSumSquares;
+    }
+
+    public List<XYPoint> getXyPoint()
+    {
+        return xyPoint;
+    }
+
+    public void setXyPoint(List<XYPoint> xyPoint)
+    {
+        this.xyPoint = xyPoint;
     }
 }

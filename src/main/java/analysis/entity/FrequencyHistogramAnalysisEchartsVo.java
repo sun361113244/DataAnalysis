@@ -19,15 +19,14 @@ public class FrequencyHistogramAnalysisEchartsVo
     {
         if(frequencyHistogramAnalysis.getFrequencyUnits() != null)
         {
-            this.title = new EChartsTitleBean();
-            this.title.setText(frequencyHistogramAnalysis.getTbColumn().getCol_name());
+            this.title = new EChartsTitleBean(frequencyHistogramAnalysis.getTbColumn().getCol_name());
 
             this.tooltip = new EChartsToolTipBean();
 
             this.legend = new EchartsLegendBean();
-            String[] flegend = new String[1];
-            flegend[0] = "数量";
-            this.legend.setData(flegend);
+            List<String> legends = new ArrayList<>();
+            legends.add("数量");
+            this.legend.setData(legends);
 
             yAxis = new EChartsBarYAxisBean();
 

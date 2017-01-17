@@ -14,7 +14,7 @@
     <context:annotation-config/>
 
     <!-- 扫描文件（自动将service层注入） -->
-    <context:component-scan base-package="analysis.service , analysis.api , util , analysis.startup , rbac.service.impl"/>
+    <context:component-scan base-package="analysis.service , util , analysis.startup , rbac.service.impl"/>
 
     <import resource="spring-mybatis-rbac.xml"/>
     <import resource="spring-mybatis-analysis.xml"/>

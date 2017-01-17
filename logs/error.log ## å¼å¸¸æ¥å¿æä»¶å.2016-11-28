@@ -1,9 +1,0 @@
-2016-11-28 18:59:38  [ main:0 ] - [ INFO ]  Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
-2016-11-28 18:59:38  [ main:21 ] - [ INFO ]  Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@3dfc5fb8, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@467aecef, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4d50efb8, org.springframework.test.context.transaction.TransactionalTestExecutionListener@7e2d773b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2173f6d9]
-2016-11-28 18:59:38  [ main:113 ] - [ INFO ]  Loading XML bean definitions from class path resource [spring.xml]
-2016-11-28 18:59:38  [ main:598 ] - [ INFO ]  Refreshing org.springframework.context.support.GenericApplicationContext@43bd930a: analysis.startup date [Mon Nov 28 18:59:38 CST 2016]; root of context hierarchy
-2016-11-28 18:59:38  [ main:729 ] - [ INFO ]  Loading properties file from class path resource [jdbc.properties]
-2016-11-28 18:59:38  [ main:737 ] - [ INFO ]  JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
-2016-11-28 18:59:39  [ main:1248 ] - [ INFO ]  {dataSource-1} inited
-2016-11-28 18:59:39  [ Thread-1:1280 ] - [ INFO ]  Closing org.springframework.context.support.GenericApplicationContext@43bd930a: analysis.startup date [Mon Nov 28 18:59:38 CST 2016]; root of context hierarchy
-2016-11-28 18:59:39  [ Thread-1:1283 ] - [ INFO ]  {dataSource-1} closed

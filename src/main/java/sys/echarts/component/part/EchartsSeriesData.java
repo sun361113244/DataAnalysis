@@ -4,6 +4,8 @@ public abstract class EchartsSeriesData
 {
     private String type;
 
+    private String name;
+
     public String getType()
     {
         return type;
@@ -12,5 +14,15 @@ public abstract class EchartsSeriesData
     public void setType(String type)
     {
         this.type = type;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 }

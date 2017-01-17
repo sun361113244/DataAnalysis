@@ -4,29 +4,107 @@ import util.Config;
 
 public class AnalysisFilter
 {
-    private String tblName;
-    private int showFrequencyHistogramStat = 1;
+    private String taskid;
+    private String ip;
+    private Integer port;
+    private String user;
+    private String pwd;
+    private String db;
+    private String schema;
+    private String table;
+    private String db_type;
 
+    private int showFrequencyHistogramStat = 1;
     private double r2 = Config.GFI;
 
-    public String getTblName()
+    public String getTaskid()
     {
-        return tblName;
+        return taskid;
     }
 
-    public void setTblName(String tblName)
+    public void setTaskid(String taskid)
     {
-        this.tblName = tblName;
+        this.taskid = taskid;
     }
 
-    public int getShowFrequencyHistogramStat()
+    public String getIp()
     {
-        return showFrequencyHistogramStat;
+        return ip;
     }
 
-    public void setShowFrequencyHistogramStat(int showFrequencyHistogramStat)
+    public void setIp(String ip)
     {
-        this.showFrequencyHistogramStat = showFrequencyHistogramStat;
+        this.ip = ip;
+    }
+
+    public Integer getPort()
+    {
+        return port;
+    }
+
+    public void setPort(Integer port)
+    {
+        this.port = port;
+    }
+
+    public String getUser()
+    {
+        return user;
+    }
+
+    public void setUser(String user)
+    {
+        this.user = user;
+    }
+
+    public String getPwd()
+    {
+        return pwd;
+    }
+
+    public void setPwd(String pwd)
+    {
+        this.pwd = pwd;
+    }
+
+    public String getDb()
+    {
+        return db;
+    }
+
+    public void setDb(String db)
+    {
+        this.db = db;
+    }
+
+    public String getSchema()
+    {
+        return schema;
+    }
+
+    public void setSchema(String schema)
+    {
+        this.schema = schema;
+    }
+
+    public String getTable()
+    {
+        return table;
+    }
+
+    public void setTable(String table)
+    {
+        this.table = table;
+    }
+
+    public String getDb_type()
+    {
+        return db_type;
+    }
+
+    public void setDb_type(String db_type)
+    {
+        this.db_type = db_type;
     }
 
     public double getR2()
@@ -37,5 +115,15 @@ public class AnalysisFilter
     public void setR2(double r2)
     {
         this.r2 = r2;
+    }
+
+    public int getShowFrequencyHistogramStat()
+    {
+        return showFrequencyHistogramStat;
+    }
+
+    public void setShowFrequencyHistogramStat(int showFrequencyHistogramStat)
+    {
+        this.showFrequencyHistogramStat = showFrequencyHistogramStat;
     }
 }

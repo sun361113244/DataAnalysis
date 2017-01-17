@@ -34,7 +34,7 @@ public class ArgsCheckAspects
             throw new ArgsException("不存在表名!");
 
         AnalysisFilter analysisFilter = (AnalysisFilter)args.get(0);
-        String tblName = analysisFilter.getTblName();
+        String tblName = analysisFilter.getTable();
         if(tblName == null || tblName.length() > 100 || tblName.contains(";") || tblName.contains("("))
             throw new ArgsException("表名异常!");
 

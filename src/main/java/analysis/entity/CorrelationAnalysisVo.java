@@ -39,6 +39,8 @@ public class CorrelationAnalysisVo
 
     private String msg;
 
+    private RegressionAnalysisEchartsVo regressionAnalysisEchartsVo;
+
     public CorrelationAnalysisVo(CorrelationAnalysis correlationAnalysis)
     {
         this.tb_col1 = correlationAnalysis.getTb_col1();
@@ -59,7 +61,10 @@ public class CorrelationAnalysisVo
         this.totalSumSquares = String.format("%.2f", correlationAnalysis.getTotalSumSquares() == 0 ? 0 : correlationAnalysis.getTotalSumSquares());
         this.xSumSquares = String.format("%.2f", correlationAnalysis.getxSumSquares() == 0 ? 0 : correlationAnalysis.getxSumSquares());
 
-        this.msg = String.format("\"%s\" 每增长 1 ,\"%s\" %s 约%.2f<br/>" ,
+        if(correlationAnalysis.getXyPoint() != null)
+            this.regressionAnalysisEchartsVo = new RegressionAnalysisEchartsVo(correlationAnalysis);
+
+        this.msg = String.format("\"%s\" 每增长 1 ,\"%s\" %s 约%.2f" ,
                 correlationAnalysis.getTb_col1() != null && correlationAnalysis.getTb_col1().getCol_name() != null ?  correlationAnalysis.getTb_col1().getCol_name() : "",
                 correlationAnalysis.getTb_col2() != null && correlationAnalysis.getTb_col2().getCol_name() != null ?  correlationAnalysis.getTb_col2().getCol_name() : "",
                 correlationAnalysis.getSlope() >= 0 ? "增长" : "减少" ,
@@ -100,19 +105,9 @@ public class CorrelationAnalysisVo
         this.tb_col2 = tb_col2;
     }
 
-    public String getN()
-    {
-        return n;
-    }
-
     public void setN(String n)
     {
         this.n = n;
-    }
-
-    public String getIntercept()
-    {
-        return intercept;
     }
 
     public void setIntercept(String intercept)
@@ -120,19 +115,9 @@ public class CorrelationAnalysisVo
         this.intercept = intercept;
     }
 
-    public String getInterceptStdErr()
-    {
-        return interceptStdErr;
-    }
-
     public void setInterceptStdErr(String interceptStdErr)
     {
         this.interceptStdErr = interceptStdErr;
-    }
-
-    public String getSlope()
-    {
-        return slope;
     }
 
     public void setSlope(String slope)
@@ -140,19 +125,9 @@ public class CorrelationAnalysisVo
         this.slope = slope;
     }
 
-    public String getSlopeStdErr()
-    {
-        return slopeStdErr;
-    }
-
     public void setSlopeStdErr(String slopeStdErr)
     {
         this.slopeStdErr = slopeStdErr;
-    }
-
-    public String getSlopeConfidenceIntercal()
-    {
-        return slopeConfidenceIntercal;
     }
 
     public void setSlopeConfidenceIntercal(String slopeConfidenceIntercal)
@@ -160,19 +135,9 @@ public class CorrelationAnalysisVo
         this.slopeConfidenceIntercal = slopeConfidenceIntercal;
     }
 
-    public String getR2()
-    {
-        return r2;
-    }
-
     public void setR2(String r2)
     {
         this.r2 = r2;
-    }
-
-    public String getSignificance()
-    {
-        return significance;
     }
 
     public void setSignificance(String significance)
@@ -180,19 +145,9 @@ public class CorrelationAnalysisVo
         this.significance = significance;
     }
 
-    public String getMeanSquareError()
-    {
-        return meanSquareError;
-    }
-
     public void setMeanSquareError(String meanSquareError)
     {
         this.meanSquareError = meanSquareError;
-    }
-
-    public String getRegressionSumSquare()
-    {
-        return regressionSumSquare;
     }
 
     public void setRegressionSumSquare(String regressionSumSquare)
@@ -200,19 +155,9 @@ public class CorrelationAnalysisVo
         this.regressionSumSquare = regressionSumSquare;
     }
 
-    public String getSumofCrossProducts()
-    {
-        return sumofCrossProducts;
-    }
-
     public void setSumofCrossProducts(String sumofCrossProducts)
     {
         this.sumofCrossProducts = sumofCrossProducts;
-    }
-
-    public String getSumSquaredErrors()
-    {
-        return sumSquaredErrors;
     }
 
     public void setSumSquaredErrors(String sumSquaredErrors)
@@ -220,19 +165,9 @@ public class CorrelationAnalysisVo
         this.sumSquaredErrors = sumSquaredErrors;
     }
 
-    public String getTotalSumSquares()
-    {
-        return totalSumSquares;
-    }
-
     public void setTotalSumSquares(String totalSumSquares)
     {
         this.totalSumSquares = totalSumSquares;
-    }
-
-    public String getxSumSquares()
-    {
-        return xSumSquares;
     }
 
     public void setxSumSquares(String xSumSquares)
@@ -248,5 +183,15 @@ public class CorrelationAnalysisVo
     public void setMsg(String msg)
     {
         this.msg = msg;
+    }
+
+    public RegressionAnalysisEchartsVo getRegressionAnalysisEchartsVo()
+    {
+        return regressionAnalysisEchartsVo;
+    }
+
+    public void setRegressionAnalysisEchartsVo(RegressionAnalysisEchartsVo regressionAnalysisEchartsVo)
+    {
+        this.regressionAnalysisEchartsVo = regressionAnalysisEchartsVo;
     }
 }

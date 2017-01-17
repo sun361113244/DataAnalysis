@@ -23,9 +23,6 @@ public class JsonView extends AbstractView
     protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
                                            HttpServletResponse response) throws Exception
     {
-        model.remove("analysisFilter");
-        model.remove("org.springframework.validation.BindingResult.analysisFilter");
-
         response.setContentType(CONTENT_TYPE);
         response.setCharacterEncoding(CharacterEncoding);
         response.getWriter().write(JSON.toJSONString(model));

@@ -79,12 +79,12 @@ public class DescriptiveStatisticVo implements Serializable
                     descriptiveStatistic.getKurtosis() >= -2 * Math.sqrt((double)24/descriptiveStatistic.getN()) &&
                     descriptiveStatistic.getKurtosis() <= -2 * Math.sqrt((double)24/descriptiveStatistic.getN()))
             {
-                sb.append(String.format("数据符合均值%s ,方差%s正态分布 ." ,this.getMean() , this.variance ));
+                sb.append(String.format("数据符合均值%s ,方差%s正态分布 ." ,this.mean , this.variance ));
             }
             if(descriptiveStatistic.getSkewness() < -1 * Math.sqrt((double)6/descriptiveStatistic.getN()))
-                sb.append(String.format("大多数值在高处.中位数是%s." ,this.getMedian() ));
+                sb.append(String.format("大多数值在高处.中位数是%s." ,this.median ));
             if(descriptiveStatistic.getSkewness() > 1 * Math.sqrt((double)6/descriptiveStatistic.getN()))
-                sb.append(String.format("大多数值在低处.中位数是%s." ,this.getMedian() ));
+                sb.append(String.format("大多数值在低处.中位数是%s." ,this.median ));
             if(this.exceptionVals!= null && this.exceptionVals.size() != 0)
             {
                 sb.append("低位异常值:");
@@ -131,19 +131,9 @@ public class DescriptiveStatisticVo implements Serializable
         this.tbCol = tbCol;
     }
 
-    public String getMin()
-    {
-        return min;
-    }
-
     public void setMin(String min)
     {
         this.min = min;
-    }
-
-    public String getMean()
-    {
-        return mean;
     }
 
     public void setMean(String mean)
@@ -151,19 +141,9 @@ public class DescriptiveStatisticVo implements Serializable
         this.mean = mean;
     }
 
-    public String getMax()
-    {
-        return max;
-    }
-
     public void setMax(String max)
     {
         this.max = max;
-    }
-
-    public String getGeometricMean()
-    {
-        return geometricMean;
     }
 
     public void setGeometricMean(String geometricMean)
@@ -171,19 +151,9 @@ public class DescriptiveStatisticVo implements Serializable
         this.geometricMean = geometricMean;
     }
 
-    public String getN()
-    {
-        return n;
-    }
-
     public void setN(String n)
     {
         this.n = n;
-    }
-
-    public String getSum()
-    {
-        return sum;
     }
 
     public void setSum(String sum)
@@ -191,19 +161,9 @@ public class DescriptiveStatisticVo implements Serializable
         this.sum = sum;
     }
 
-    public String getSumOfSquares()
-    {
-        return sumOfSquares;
-    }
-
     public void setSumOfSquares(String sumOfSquares)
     {
         this.sumOfSquares = sumOfSquares;
-    }
-
-    public String getStandardDeviation()
-    {
-        return standardDeviation;
     }
 
     public void setStandardDeviation(String standardDeviation)
@@ -211,19 +171,9 @@ public class DescriptiveStatisticVo implements Serializable
         this.standardDeviation = standardDeviation;
     }
 
-    public String getVariance()
-    {
-        return variance;
-    }
-
     public void setVariance(String variance)
     {
         this.variance = variance;
-    }
-
-    public String getPercentiles()
-    {
-        return percentiles;
     }
 
     public void setPercentiles(String percentiles)
@@ -231,19 +181,9 @@ public class DescriptiveStatisticVo implements Serializable
         this.percentiles = percentiles;
     }
 
-    public String getKurtosis()
-    {
-        return kurtosis;
-    }
-
     public void setKurtosis(String kurtosis)
     {
         this.kurtosis = kurtosis;
-    }
-
-    public String getMedian()
-    {
-        return median;
     }
 
     public void setMedian(String median)
@@ -261,19 +201,9 @@ public class DescriptiveStatisticVo implements Serializable
         this.groupRatios = groupRatios;
     }
 
-    public String getSkewness()
-    {
-        return skewness;
-    }
-
     public void setSkewness(String skewness)
     {
         this.skewness = skewness;
-    }
-
-    public FrequencyHistogramAnalysisVo getFrequencyHistogramAnalysis()
-    {
-        return frequencyHistogramAnalysis;
     }
 
     public void setFrequencyHistogramAnalysis(FrequencyHistogramAnalysisVo frequencyHistogramAnalysis)

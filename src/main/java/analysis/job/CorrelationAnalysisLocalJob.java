@@ -36,10 +36,10 @@ public class CorrelationAnalysisLocalJob implements AnalysisJob
     @Override
     public Map<String , Object> call() throws Exception
     {
-        String sql = String.format("select * from %s " , analysisFilter.getTblName());
+        String sql = String.format("select * from %s " , analysisFilter.getTable());
         List<List<Object>> dataLists = jdbcUtil.findMoreResult(sql , null);
 
-        List<TbColumn> tbColumns = columnService.loadSchema(analysisFilter.getTblName(), dataLists);
+        List<TbColumn> tbColumns = columnService.loadSchema(analysisFilter.getTable(), dataLists);
         List<DescriptiveStatistic> descriptiveStatistics = descriptiveStatisticsLocalService.selectDescriptiveStatistics(dataLists ,tbColumns, analysisFilter);
         List<CorrelationAnalysis> correlationAnalysises = correlationAnalysisLocalService.selectSummaryInfo(dataLists , tbColumns);
 

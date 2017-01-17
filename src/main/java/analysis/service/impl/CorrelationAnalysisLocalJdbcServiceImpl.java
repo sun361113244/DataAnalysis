@@ -3,6 +3,7 @@ package analysis.service.impl;
 import analysis.entity.CorrelationAnalysis;
 import analysis.entity.FeatureType;
 import analysis.entity.TbColumn;
+import analysis.entity.XYPoint;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.springframework.stereotype.Service;
 import analysis.service.CorrelationAnalysisLocalService;
@@ -27,11 +28,16 @@ public class CorrelationAnalysisLocalJdbcServiceImpl implements CorrelationAnaly
                         tbColumns.get(j).getFeatureType() == FeatureType.CONTINUOUS)
                 {
                     SimpleRegression regression = new SimpleRegression();
-
+                    List<XYPoint> xyPoints = new ArrayList<>();
                     for(List<Object> row : rows)
                     {
                         if(row.get(i) != null && row.get(j) != null)
+                        {
                             regression.addData(Double.parseDouble(row.get(i).toString()) , Double.parseDouble(row.get(j).toString()));
+
+                            XYPoint xyPoint = new XYPoint(Double.parseDouble(row.get(i).toString()) , Double.parseDouble(row.get(j).toString()));
+                            xyPoints.add(xyPoint);
+                        }
                     }
 
                     CorrelationAnalysis correlationAnalysis = new CorrelationAnalysis();
@@ -52,6 +58,7 @@ public class CorrelationAnalysisLocalJdbcServiceImpl implements CorrelationAnaly
                     correlationAnalysis.setSumSquaredErrors(regression.getSumSquaredErrors());
                     correlationAnalysis.setTotalSumSquares(regression.getTotalSumSquares());
                     correlationAnalysis.setxSumSquares(regression.getXSumSquares());
+                    correlationAnalysis.setXyPoint(xyPoints);
 
                     correlationAnalysises.add(correlationAnalysis);
                 }
