@@ -15,7 +15,7 @@ public class AnalysisFilter
     private String db_type;
 
     private int showFrequencyHistogramStat = 1;
-    private double r2 = Config.GFI;
+    private double r2 = Config.REGRESSION_GFI;
 
     public String getTaskid()
     {

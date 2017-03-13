@@ -24,6 +24,7 @@ public class DescriptiveStatisticVo implements Serializable
     private String median;
     private List<GroupRatioVo> groupRatios;
     private FrequencyHistogramAnalysisVo frequencyHistogramAnalysis;
+    private ClassifyAnalysisEchartsVo classifyAnalysisEchartsVo;
     private FrequencyHistogramAnalysisEchartsVo frequencyHistogramAnalysisEchartsVo;
     private KDEAnalysisEchartsVo kdeAnalysisEchartsVo;
     private List<ExceptionValueVo> exceptionVals;
@@ -46,7 +47,10 @@ public class DescriptiveStatisticVo implements Serializable
         this.median = String.format("%.2f", descriptiveStatistic.getMedian() == 0 ? 0 : descriptiveStatistic.getMedian());
 
         if(descriptiveStatistic.getGroupRatios() != null)
+        {
             this.groupRatios = GroupRatioVo.toVolist(descriptiveStatistic.getGroupRatios());
+            this.classifyAnalysisEchartsVo = new ClassifyAnalysisEchartsVo(descriptiveStatistic.getGroupRatios());
+        }
 
         if(descriptiveStatistic.getFrequencyHistogramAnalysis() != null)
             this.frequencyHistogramAnalysis = new FrequencyHistogramAnalysisVo(descriptiveStatistic.getFrequencyHistogramAnalysis());
@@ -204,6 +208,16 @@ public class DescriptiveStatisticVo implements Serializable
     public void setSkewness(String skewness)
     {
         this.skewness = skewness;
+    }
+
+    public ClassifyAnalysisEchartsVo getClassifyAnalysisEchartsVo()
+    {
+        return classifyAnalysisEchartsVo;
+    }
+
+    public void setClassifyAnalysisEchartsVo(ClassifyAnalysisEchartsVo classifyAnalysisEchartsVo)
+    {
+        this.classifyAnalysisEchartsVo = classifyAnalysisEchartsVo;
     }
 
     public void setFrequencyHistogramAnalysis(FrequencyHistogramAnalysisVo frequencyHistogramAnalysis)

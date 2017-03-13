@@ -52,7 +52,7 @@ public class RegressionAnalysisSparkImpl implements RegressionAnalysis ,Serializ
                             }
                     );
 
-                    if(labeledPointJavaRDD.count() < Config.MIN_REG_DOT)
+                    if(labeledPointJavaRDD.count() < Config.REGRESSION_MIN_REG_DOT)
                         continue;
                     RegressionRes regressionRes = linearRegressionWithSGD(labeledPointJavaRDD , 100);
 

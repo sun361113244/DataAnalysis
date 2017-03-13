@@ -24,8 +24,16 @@ public class Config
 
     public static final long ANALYSE_TIMEOUT = Long.parseLong(analysisBundle.getString("analyse_timeout"));
 
-    public static final int MIN_REG_DOT = Integer.parseInt(analysisBundle.getString("minimum_regress_dot"));
+    public static final int ROW_MAX_COUNT = Integer.parseInt(analysisBundle.getString("row_max_count"));
 
-    public static final double GFI = Double.parseDouble(analysisBundle.getString("goodness_of_fit"));
+    public static final int COLUMN_MAX_COUNT = Integer.parseInt(analysisBundle.getString("column_max_count"));
+
+    // --------------------------------------------------------------------------------------------------
+
+    public static final int REGRESSION_MIN_REG_DOT = Integer.parseInt(analysisBundle.getString("regression_minimum_regress_dot"));
+
+    public static final double REGRESSION_GFI = Double.parseDouble(analysisBundle.getString("regression_goodness_of_fit"));
+
+    public static final int REGRESSION_SIMPLING_MAX_COUNT = Integer.parseInt(analysisBundle.getString("regression_simpling_max_count"));
 
 }

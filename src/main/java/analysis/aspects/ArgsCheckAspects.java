@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import util.Config;
 import util.JdbcUtil;
 
 import javax.annotation.Resource;
@@ -19,9 +20,9 @@ import java.util.List;
 @Order(2)
 public class ArgsCheckAspects
 {
-    private final int LOCALRECORDMAX = 10000;
+    private final int LOCALRECORDMAX = Config.ROW_MAX_COUNT;
 
-    private final int LOCALCOLUMNMAX = 50;
+    private final int LOCALCOLUMNMAX = Config.COLUMN_MAX_COUNT;
 
     @Resource
     private JdbcUtil jdbcUtil;

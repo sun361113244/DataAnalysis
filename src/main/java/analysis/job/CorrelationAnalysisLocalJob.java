@@ -41,7 +41,7 @@ public class CorrelationAnalysisLocalJob implements AnalysisJob
 
         List<TbColumn> tbColumns = columnService.loadSchema(analysisFilter.getTable(), dataLists);
         List<DescriptiveStatistic> descriptiveStatistics = descriptiveStatisticsLocalService.selectDescriptiveStatistics(dataLists ,tbColumns, analysisFilter);
-        List<CorrelationAnalysis> correlationAnalysises = correlationAnalysisLocalService.selectSummaryInfo(dataLists , tbColumns);
+        List<CorrelationAnalysis> correlationAnalysises = correlationAnalysisLocalService.selectSummaryInfo(dataLists , tbColumns , descriptiveStatistics , analysisFilter);
 
         checkRegressionResult(tbColumns , descriptiveStatistics ,correlationAnalysises , analysisFilter.getR2());
 

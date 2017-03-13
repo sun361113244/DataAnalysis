@@ -22,6 +22,7 @@ public class HistogramAnalysisLocalImpl implements ContinuousFeatureAnalysisServ
         double interval = 3.5 * descriptiveStatistic.getStandardDeviation() / Math.sqrt(descriptiveStatistic.getN());
         int groupNum = (int) (Math.abs(descriptiveStatistic.getMax() - descriptiveStatistic.getMin()) / interval > 100 ? 100 :
                 Math.abs(descriptiveStatistic.getMax() - descriptiveStatistic.getMin()) / interval) + 1;
+        interval = groupNum >= 100 ? (descriptiveStatistic.getMax() - descriptiveStatistic.getMin()) / 100 : interval;
 
         double[] interval_upper = new double[groupNum + 1];
 

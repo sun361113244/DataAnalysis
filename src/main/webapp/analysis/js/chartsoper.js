@@ -48,6 +48,15 @@ function selectTableSummaryCharts()
                             var myChart = echarts.init(document.getElementById(id));
                             myChart.setOption(kdeoption);
                         }
+                        if(descriptiveSummary[i].classifyAnalysisEchartsVo != null)
+                        {
+                            var id = "classifyDiagram" + i;
+                            var classifyoption = descriptiveSummary[i].classifyAnalysisEchartsVo;
+                            $('#table_summary_display').append("<div id='"+ id +"' style='width: 360px;height:240px;'></div>");
+
+                            var myChart = echarts.init(document.getElementById(id));
+                            myChart.setOption(classifyoption);
+                        }
                         if(descriptiveSummary[i].msg != null)
                         {
                             $('#table_summary_display').append("<b>" + descriptiveSummary[i].msg +"</b>");

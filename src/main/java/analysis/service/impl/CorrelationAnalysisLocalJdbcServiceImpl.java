@@ -1,12 +1,10 @@
 package analysis.service.impl;
 
-import analysis.entity.CorrelationAnalysis;
-import analysis.entity.FeatureType;
-import analysis.entity.TbColumn;
-import analysis.entity.XYPoint;
+import analysis.entity.*;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.springframework.stereotype.Service;
 import analysis.service.CorrelationAnalysisLocalService;
+import util.Config;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ import java.util.List;
 public class CorrelationAnalysisLocalJdbcServiceImpl implements CorrelationAnalysisLocalService
 {
     @Override
-    public List<CorrelationAnalysis> selectSummaryInfo(List<List<Object>> rows, List<TbColumn> tbColumns) throws SQLException
+    public List<CorrelationAnalysis> selectSummaryInfo(List<List<Object>> rows, List<TbColumn> tbColumns, List<DescriptiveStatistic> descriptiveStatistics, AnalysisFilter analysisFilter) throws SQLException
     {
         List<CorrelationAnalysis> correlationAnalysises = new ArrayList<>();
 
@@ -29,14 +27,20 @@ public class CorrelationAnalysisLocalJdbcServiceImpl implements CorrelationAnaly
                 {
                     SimpleRegression regression = new SimpleRegression();
                     List<XYPoint> xyPoints = new ArrayList<>();
+
+                    int interval = rows.size() > Config.REGRESSION_SIMPLING_MAX_COUNT ? rows.size() / Config.REGRESSION_SIMPLING_MAX_COUNT : 1;
+                    int num = 0;
                     for(List<Object> row : rows)
                     {
                         if(row.get(i) != null && row.get(j) != null)
                         {
                             regression.addData(Double.parseDouble(row.get(i).toString()) , Double.parseDouble(row.get(j).toString()));
 
-                            XYPoint xyPoint = new XYPoint(Double.parseDouble(row.get(i).toString()) , Double.parseDouble(row.get(j).toString()));
-                            xyPoints.add(xyPoint);
+                            if((num++) % interval == 0)
+                            {
+                                XYPoint xyPoint = new XYPoint(Double.parseDouble(row.get(i).toString()) , Double.parseDouble(row.get(j).toString()));
+                                xyPoints.add(xyPoint);
+                            }
                         }
                     }
 
@@ -61,6 +65,7 @@ public class CorrelationAnalysisLocalJdbcServiceImpl implements CorrelationAnaly
                     correlationAnalysis.setXyPoint(xyPoints);
 
                     correlationAnalysises.add(correlationAnalysis);
+
                 }
             }
         }
