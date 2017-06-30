@@ -1,0 +1,4 @@
+github地址:git@192.168.1.46:zhichaos/dataanalysis.git
+1.在spider下jdbc.properties中选择相应的数据库连接地址.
+2.编译方式:mvn clean
+3.mvn package
